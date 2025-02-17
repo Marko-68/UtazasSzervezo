@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,5 +21,11 @@ namespace UtazasSzervezo_Library
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Flight> Flights { get; set; }
         public DbSet<Review> Reviews { get; set; }
+        
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
+        }
+
     }
 }
