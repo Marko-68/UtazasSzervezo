@@ -19,7 +19,9 @@ namespace UtazasSzervezo_API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            var connectionString = builder.Configuration.GetConnectionString("SQLServerIdentityConnection ") ?? throw new InvalidOperationException("Connection string 'SQLServerIdentityConnection' not found.");
+            var connectionString = builder.Configuration.GetConnectionString("SQLServerIdentityConnection") ?? throw new InvalidOperationException("Connection string 'SQLServerIdentityConnection' not found.");
+
+
             builder.Services.AddDbContext<UtazasSzervezoDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
