@@ -10,8 +10,6 @@ namespace UtazasSzervezo_API
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddControllersWithViews();
-
             // Add services to the container.
 
             builder.Services.AddControllers();
@@ -19,34 +17,21 @@ namespace UtazasSzervezo_API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            var connectionString = builder.Configuration.GetConnectionString("SQLServerIdentityConnection") ?? throw new InvalidOperationException("Connection string 'SQLServerIdentityConnection' not found.");
-
-
-            builder.Services.AddDbContext<UtazasSzervezoDbContext>(options =>
-                options.UseSqlServer(connectionString));
-
-            builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-                    .AddEntityFrameworkStores<UtazasSzervezoDbContext>();
-
             var app = builder.Build();
 
-            if (!app.Environment.IsDevelopment())
+            // Configure the HTTP request pipeline.
+            if (app.Environment.IsDevelopment())
             {
-                app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
+                app.UseSwagger();
+                app.UseSwaggerUI();
             }
 
             app.UseHttpsRedirection();
 
-            app.UseStaticFiles();
-            app.UseRouting();
-
-            app.UseAuthentication();
             app.UseAuthorization();
 
-            app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            app.MapControllers();
 
             app.Run();
         }
