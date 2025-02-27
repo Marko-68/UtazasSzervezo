@@ -15,7 +15,7 @@ namespace UtazasSzervezo_Library.Models
         [Required]
         public string Description { get; set; }
         [Required]
-        public int Type { get; set; }
+        public int Type { get; set; } //hotel,apartman
         [Required]
         public int Number_of_rooms { get; set; }
         [Required]
@@ -32,6 +32,7 @@ namespace UtazasSzervezo_Library.Models
         [Required]
         public int Available_rooms { get; set; }
         public string? Dinning { get; set; }
+        //breakfast,half-board,all-inclusive
 
         public ICollection<AccommodationAmenities> AccommodationAmenities { get; set; }
     }
