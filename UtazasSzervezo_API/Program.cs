@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using UtazasSzervezo_Library;
+using UtazasSzervezo_Library.Models;
 
 namespace UtazasSzervezo_API
 {

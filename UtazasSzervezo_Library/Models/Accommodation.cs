@@ -31,5 +31,8 @@ namespace UtazasSzervezo_Library.Models
         public int? Star_rating { get; set; }
         [Required]
         public int Available_rooms { get; set; }
+        public string? Dinning { get; set; }
+
+        public ICollection<AccommodationAmenities> AccommodationAmenities { get; set; }
     }
 }
