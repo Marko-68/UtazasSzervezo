@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using UtazasSzervezo_Library;
 using UtazasSzervezo_Library.Models;
+using UtazasSzervezo_Library.Services;
 
 namespace UtazasSzervezo_API
 {
@@ -14,9 +15,19 @@ namespace UtazasSzervezo_API
             // Add services to the container.
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            //DBContext injection
+            builder.Services.AddDbContext<UtazasSzervezoDbContext>(options =>
+            options.UseMySql(
+                builder.Configuration.GetConnectionString("DefaultConnection"),
+                new MySqlServerVersion(new Version(8, 0, 2))
+            ));
+
+            //Service injections
+            builder.Services.AddScoped<AccommodationService>();
 
             var app = builder.Build();
 
