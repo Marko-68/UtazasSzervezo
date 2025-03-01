@@ -24,16 +24,17 @@ namespace UtazasSzervezo_Library
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder); // Ensures Identity Tables are configured properly
+            base.OnModelCreating(modelBuilder); 
 
-            // Example: Customize Identity table names if needed
-            modelBuilder.Entity<User>().ToTable("Users");
+            /*modelBuilder.Entity<User>().ToTable("Users");
             modelBuilder.Entity<IdentityRole>().ToTable("Roles");
-            modelBuilder.Entity<IdentityUserRole<string>>().ToTable("UserRoles");
+            modelBuilder.Entity<IdentityUserRole<string>>().ToTable("UserRoles");*/
 
+            //keys
             modelBuilder.Entity<AccommodationAmenities>()
                 .HasKey(aa => new { aa.Accommodation_id, aa.Amentry_id });
 
+            //relationships
             modelBuilder.Entity<AccommodationAmenities>()
                 .HasOne(aa => aa.Accommodation)
                 .WithMany(a => a.AccommodationAmenities)
@@ -43,6 +44,8 @@ namespace UtazasSzervezo_Library
                 .HasOne(aa => aa.Amenity)
                 .WithMany(a => a.AccommodationAmenities)
                 .HasForeignKey(aa => aa.Amentry_id);
+
+
         }
 
     }

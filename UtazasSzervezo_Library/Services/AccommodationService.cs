@@ -26,6 +26,11 @@ namespace UtazasSzervezo_Library.Services
             return await _context.Accommodations.FindAsync(id);
         }
 
-        
+        public async Task CreateAccommodation(Accommodation accommodation)
+        {
+            _context.Accommodations.Add(accommodation);
+            await _context.SaveChangesAsync();  
+        }
+
     }
 }
