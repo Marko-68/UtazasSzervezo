@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,20 +22,21 @@ namespace UtazasSzervezo_Library
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Flight> Flights { get; set; }
         public DbSet<Review> Reviews { get; set; }
+
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder); 
+            
+            base.OnModelCreating(modelBuilder);
 
             /*modelBuilder.Entity<User>().ToTable("Users");
             modelBuilder.Entity<IdentityRole>().ToTable("Roles");
             modelBuilder.Entity<IdentityUserRole<string>>().ToTable("UserRoles");*/
 
-            //keys
+            //relationships
             modelBuilder.Entity<AccommodationAmenities>()
                 .HasKey(aa => new { aa.Accommodation_id, aa.Amentry_id });
 
-            //relationships
             modelBuilder.Entity<AccommodationAmenities>()
                 .HasOne(aa => aa.Accommodation)
                 .WithMany(a => a.AccommodationAmenities)
@@ -46,6 +48,17 @@ namespace UtazasSzervezo_Library
                 .HasForeignKey(aa => aa.Amentry_id);
 
 
+
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                var connectionString = "Your_MySQL_Connection_String_Here";
+                optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString),
+                    b => b.MigrationsAssembly("UtazasSzervezo_API"));
+            }
         }
 
     }

@@ -4,7 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>aspnet-UtazasSzervezo_UI-4412e04a-a578-4468-94f7-2c798715ff93</UserSecretsId>
+    <UserSecretsId>aspnet-UtazasSzervezo_UI-eb0bc22c-3f9e-4287-8440-822ec35166a5</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +13,10 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.13" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UtazasSzervezo_Library\UtazasSzervezo_Library.csproj" />
   </ItemGroup>
 
 </Project>

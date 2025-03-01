@@ -21,10 +21,23 @@ namespace UtazasSzervezo_API
 
             //DBContext injection
             builder.Services.AddDbContext<UtazasSzervezoDbContext>(options =>
-            options.UseMySql(
-                builder.Configuration.GetConnectionString("DefaultConnection"),
-                new MySqlServerVersion(new Version(8, 0, 2))
+            options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
+                ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection")),
+                b => b.MigrationsAssembly("UtazasSzervezo_Library")
             ));
+
+
+
+            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+            .AddEntityFrameworkStores<UtazasSzervezoDbContext>();
+
+
+            //CORS engedélyezése a frontend számára
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins",
+                    builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            });
 
             //Service injections
             builder.Services.AddScoped<AccommodationService>();
