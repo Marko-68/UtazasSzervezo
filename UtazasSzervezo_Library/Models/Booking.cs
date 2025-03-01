@@ -9,7 +9,7 @@ namespace UtazasSzervezo_Library.Models
 {
     public class Booking
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         public int? Accommodation_id { get; set; }
         public Accommodation? Accommodation { get; set; }
         public int? Flight_id { get; set; }

@@ -13,14 +13,14 @@ namespace UtazasSzervezo_API.Controllers
             _accommodationService = accommodationService;
         }
 
-        [HttpGet]
+        [HttpGet("api/Accommodation")]
         public async Task<IActionResult> GetAll()
         {
             var accommodations = await _accommodationService.GetAllAccommodations();
             return Ok(accommodations);
         }
 
-        [HttpGet]
+        [HttpGet("api/Accommodation/{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var accommodation = await _accommodationService.GetAccommodationById(id);
