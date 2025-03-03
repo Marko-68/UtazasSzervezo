@@ -47,8 +47,6 @@ namespace UtazasSzervezo_Library
                 .WithMany(a => a.AccommodationAmenities)
                 .HasForeignKey(aa => aa.Amentry_id);
 
-
-
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

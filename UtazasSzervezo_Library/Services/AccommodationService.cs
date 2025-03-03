@@ -28,8 +28,33 @@ namespace UtazasSzervezo_Library.Services
 
         public async Task CreateAccommodation(Accommodation accommodation)
         {
+            var acc = new Accommodation()
+            {
+                Name = accommodation.Name,
+                Description = accommodation.Description,
+                Type = accommodation.Type,
+                Number_of_rooms = accommodation.Number_of_rooms,
+                Max_person = accommodation.Max_person,
+                Address = accommodation.Address,
+                City = accommodation.City,
+                Country = accommodation.Country,
+                Price_per_night = accommodation.Price_per_night,
+                Available_rooms = accommodation.Available_rooms,
+                Dinning = accommodation.Dinning
+            };
+
             _context.Accommodations.Add(accommodation);
             await _context.SaveChangesAsync();  
+        }
+
+        public async Task<bool> DeleteAccommodation(int id)
+        {
+            var accommodation = await _context.Accommodations.FindAsync(id);
+            if (accommodation == null) return false;
+
+            _context.Accommodations.Remove(accommodation);
+            await _context.SaveChangesAsync();
+            return true;
         }
 
     }

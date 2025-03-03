@@ -37,5 +37,29 @@ namespace UtazasSzervezo_API.Controllers
             return Ok();
         }
 
+
+       /* [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] Accommodation accommodation)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var success = await _accommodationService.UpdateAccommodation(id, accommodation);
+            if (!success)
+                return NotFound();
+
+            return NoContent();
+        }*/
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var success = await _accommodationService.DeleteAccommodation(id);
+            if (!success)
+                return NotFound();
+
+            return NoContent();
+        }
+
     }
 }
