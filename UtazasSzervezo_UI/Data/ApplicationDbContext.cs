@@ -9,4 +9,14 @@ public class ApplicationDbContext : IdentityDbContext
         : base(options)
     {
     }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        if (!optionsBuilder.IsConfigured)
+        {
+            var connectionString = "server=localhost;database=UtazasSzervezoIdentityDB;user=root;password=;";
+            optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString),
+                b => b.MigrationsAssembly("UtazasSzervezo_API"));
+        }
+    }
 }

@@ -12,7 +12,7 @@ using UtazasSzervezo_Library.Models;
 
 namespace UtazasSzervezo_Library
 {
-    public class UtazasSzervezoDbContext : IdentityDbContext<User>
+    public class UtazasSzervezoDbContext : IdentityDbContext<IdentityUser>
     {
         public UtazasSzervezoDbContext(DbContextOptions<UtazasSzervezoDbContext> options)
            : base(options) { }
@@ -29,9 +29,9 @@ namespace UtazasSzervezo_Library
             
             base.OnModelCreating(modelBuilder);
 
-            /*modelBuilder.Entity<User>().ToTable("Users");
+            modelBuilder.Entity<User>().ToTable("Users");
             modelBuilder.Entity<IdentityRole>().ToTable("Roles");
-            modelBuilder.Entity<IdentityUserRole<string>>().ToTable("UserRoles");*/
+            modelBuilder.Entity<IdentityUserRole<string>>().ToTable("UserRoles");
 
             //relationships
             modelBuilder.Entity<AccommodationAmenities>()
@@ -55,7 +55,7 @@ namespace UtazasSzervezo_Library
         {
             if (!optionsBuilder.IsConfigured)
             {
-                var connectionString = "Your_MySQL_Connection_String_Here";
+                var connectionString = "server=localhost;database=UtazasSzervezoIdentityDB;user=root;password=;";
                 optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString),
                     b => b.MigrationsAssembly("UtazasSzervezo_API"));
             }

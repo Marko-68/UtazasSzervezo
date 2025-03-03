@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using UtazasSzervezo_Library;
+using UtazasSzervezo_UI.Data;
 using UtazasSzervezo_UI.Services;
 
 namespace UtazasSzervezo_UI;
@@ -12,13 +14,21 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
-       var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-        builder.Services.AddDbContext<UtazasSzervezoDbContext>(options =>
-            options.UseSqlServer(connectionString));
+        //var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+        // builder.Services.AddDbContext<UtazasSzervezoDbContext>(options =>
+        //     options.UseSqlServer(connectionString));
+        //var connectionString = "server=localhost;database=UtazasSzervezoIdentityDB;user=root;password=;";
+        builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseMySql(
+                "server=localhost;database=UtazasSzervezoIdentityDB;user=root;password=;"
+                , ServerVersion.AutoDetect("server=localhost;database=UtazasSzervezoIdentityDB;user=root;password=;")
+            )
+        );
+        
         builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
         builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            .AddEntityFrameworkStores<UtazasSzervezoDbContext>();
+            .AddEntityFrameworkStores<ApplicationDbContext>();
         builder.Services.AddRazorPages();
 
         //CORS engedélyezése a frontend számára
