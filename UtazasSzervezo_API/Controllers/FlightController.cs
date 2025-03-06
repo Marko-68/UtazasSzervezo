@@ -5,35 +5,35 @@ namespace UtazasSzervezo_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BookingController : ControllerBase
+    public class FlightController : ControllerBase
     {
-        private readonly BookingService _bookingService;
-        public BookingController(BookingService bookingService)
+        private readonly FlighService _flightService;
+        public FlightController(FlighService flightService)
         {
-            _bookingService = bookingService;
+            _flightService = flightService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var bookings = await _bookingService.GetAllBookings();
-            return Ok(bookings);
+            var flights = await _flightService.GetAllFlights();
+            return Ok(flights);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var bookings = await _bookingService.GetBookingById(id);
-            if (bookings == null)
+            var flights = await _flightService.GetFlightById(id);
+            if (flights == null)
                 return NotFound();
-            return Ok(bookings);
+            return Ok(flights);
         }
 
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var success = await _bookingService.DeleteBooking(id);
+            var success = await _flightService.DeleteFlight(id);
             if (!success)
                 return NotFound();
 

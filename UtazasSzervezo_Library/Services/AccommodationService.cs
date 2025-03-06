@@ -26,26 +26,27 @@ namespace UtazasSzervezo_Library.Services
             return await _context.Accommodations.FindAsync(id);
         }
 
-        public async Task CreateAccommodation(Accommodation accommodation)
+        public async Task<Accommodation> CreateAccommodation(Accommodation accommodation)
         {
-            var acc = new Accommodation()
-            {
-                Name = accommodation.Name,
-                Description = accommodation.Description,
-                Type = accommodation.Type,
-                Number_of_rooms = accommodation.Number_of_rooms,
-                Max_person = accommodation.Max_person,
-                Address = accommodation.Address,
-                City = accommodation.City,
-                Country = accommodation.Country,
-                Price_per_night = accommodation.Price_per_night,
-                Available_rooms = accommodation.Available_rooms,
-                Dinning = accommodation.Dinning
-            };
-
             _context.Accommodations.Add(accommodation);
-            await _context.SaveChangesAsync();  
+            await _context.SaveChangesAsync();
+            return accommodation;
         }
+
+        /*var acc = new Accommodation()
+        {
+            Name = accommodation.Name,
+            Description = accommodation.Description,
+            Type = accommodation.Type,
+            Number_of_rooms = accommodation.Number_of_rooms,
+            Max_person = accommodation.Max_person,
+            Address = accommodation.Address,
+            City = accommodation.City,
+            Country = accommodation.Country,
+            Price_per_night = accommodation.Price_per_night,
+            Available_rooms = accommodation.Available_rooms,
+            Dinning = accommodation.Dinning
+        };*/
 
         public async Task<bool> DeleteAccommodation(int id)
         {

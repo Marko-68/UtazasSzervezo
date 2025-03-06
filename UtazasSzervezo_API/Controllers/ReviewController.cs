@@ -1,43 +1,45 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using UtazasSzervezo_Library.Models;
 using UtazasSzervezo_Library.Services;
 
 namespace UtazasSzervezo_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BookingController : ControllerBase
+    public class ReviewController : ControllerBase
     {
-        private readonly BookingService _bookingService;
-        public BookingController(BookingService bookingService)
+        private readonly ReviewService _reviewService;
+        public ReviewController(ReviewService reviewService)
         {
-            _bookingService = bookingService;
+            _reviewService = reviewService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var bookings = await _bookingService.GetAllBookings();
-            return Ok(bookings);
+            var reviews = await _reviewService.GetAllReviews();
+            return Ok(reviews);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var bookings = await _bookingService.GetBookingById(id);
-            if (bookings == null)
+            var reviews = await _reviewService.GetReviewById(id);
+            if (reviews == null)
                 return NotFound();
-            return Ok(bookings);
+            return Ok(reviews);
         }
 
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var success = await _bookingService.DeleteBooking(id);
+            var success = await _reviewService.DeleteReview(id);
             if (!success)
                 return NotFound();
 
             return NoContent();
         }
+
     }
 }
