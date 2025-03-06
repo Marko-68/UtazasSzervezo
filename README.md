@@ -1,3 +1,3 @@
 Migration létrehozása:
-  Add-Migration InitialIdentity -context ApplicationDbContext -Project UtazasSzervezo_UI
-  update-database
+  Update-Database -StartupProject UtazasSzervezo_API -Project UtazasSzervezo_Library
+  Update-Database -Context ApplicationDbContext -StartupProject UtazasSzervezo_UI -Project UtazasSzervezo_UI
