@@ -15,6 +15,7 @@ namespace UtazasSzervezo_Library.Models
         public Accommodation Accommodation { get; set; }
         public int? Flight_id { get; set; }
         public Flight Flight { get; set; }
+        //Rating 1-10
         public int Rating { get; set; }
         public string Comment { get; set; }
         public DateTime Created_at { get; set; }

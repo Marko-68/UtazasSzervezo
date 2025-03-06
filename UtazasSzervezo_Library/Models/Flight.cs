@@ -17,6 +17,7 @@ namespace UtazasSzervezo_Library.Models
         [Required]
         public DateTime Arrival_time { get; set; }
         [Required]
+        //TODO stringlength [VIE]
         public string Departure_airport { get; set; }
         [Required]
         public string Destination_airport { get; set; }

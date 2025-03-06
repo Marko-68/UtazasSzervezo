@@ -13,6 +13,6 @@ namespace UtazasSzervezo_Library.Models
         [Required]
         public string Name { get; set; }
 
-        public ICollection<AccommodationAmenities> AccommodationAmenities { get; set; }
+        public ICollection<AccommodationAmenities>? AccommodationAmenities { get; set; }
     }
 }
