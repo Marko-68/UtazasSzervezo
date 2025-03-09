@@ -18,17 +18,17 @@ public class Program
         // builder.Services.AddDbContext<UtazasSzervezoDbContext>(options =>
         //     options.UseSqlServer(connectionString));
         //var connectionString = "server=localhost;database=UtazasSzervezoIdentityDB;user=root;password=;";
-        builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        builder.Services.AddDbContext<UtazasSzervezoDbContext>(options =>
             options.UseMySql(
-                "server=localhost;database=UtazasSzervezoIdentityDB;user=root;password=;"
-                , ServerVersion.AutoDetect("server=localhost;database=UtazasSzervezoIdentityDB;user=root;password=;")
+                "server=localhost;database=UtazasSzervezobB;user=root;password=;"
+                , ServerVersion.AutoDetect("server=localhost;database=UtazasSzervezoDb;user=root;password=;")
             )
         );
         
         builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
         builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            .AddEntityFrameworkStores<ApplicationDbContext>();
+            .AddEntityFrameworkStores<UtazasSzervezoDbContext>();
         builder.Services.AddRazorPages();
 
         //CORS engedélyezése a frontend számára
