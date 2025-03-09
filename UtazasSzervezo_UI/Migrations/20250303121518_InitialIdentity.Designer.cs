@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using UtazasSzervezo_UI.Data;
+using UtazasSzervezo_Library;
 
 #nullable disable
 
 namespace UtazasSzervezo_UI.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(UtazasSzervezoDbContext))]
     [Migration("20250303121518_InitialIdentity")]
     partial class InitialIdentity
     {

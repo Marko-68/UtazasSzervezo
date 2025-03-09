@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using UtazasSzervezo_Library;
-using UtazasSzervezo_UI.Data;
 using UtazasSzervezo_UI.Services;
 
 namespace UtazasSzervezo_UI;

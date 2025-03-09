@@ -19,4 +19,8 @@
     <ProjectReference Include="..\UtazasSzervezo_Library\UtazasSzervezo_Library.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\" />
+  </ItemGroup>
+
 </Project>
