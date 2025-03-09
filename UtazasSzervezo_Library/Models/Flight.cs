@@ -9,23 +9,25 @@ namespace UtazasSzervezo_Library.Models
 {
     public class Flight
     {
-        public int Id { get; set; }
+        [Key]
+        public int id { get; set; }
         [Required]
-        public string Airline { get; set; }
+        public string airline { get; set; }
         [Required]
-        public DateTime Departure_time { get; set; }
+        public DateTime departure_time { get; set; }
         [Required]
-        public DateTime Arrival_time { get; set; }
+        public DateTime arrival_time { get; set; }
         [Required]
-        //TODO stringlength [VIE]
-        public string Departure_airport { get; set; }
+        [StringLength(3)]
+        public string departure_airport { get; set; }
         [Required]
-        public string Destination_airport { get; set; }
+        [StringLength(3)]
+        public string destination_airport { get; set; }
         [Required]
-        public int Duration { get; set; }
+        public int duration { get; set; }
         [Required]
-        public int Available_seats { get; set; }
+        public int available_seats { get; set; }
         [Required]
-        public decimal Price { get; set; }
+        public decimal price { get; set; }
     }
 }

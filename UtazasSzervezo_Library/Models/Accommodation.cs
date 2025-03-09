@@ -9,32 +9,33 @@ namespace UtazasSzervezo_Library.Models
 {
     public class Accommodation
     {
-        public int Id { get; set; }
+        [Key]
+        public int id { get; set; }
         [Required]
-        public string Name { get; set; }
+        public string name { get; set; }
         [Required]
-        public string Description { get; set; }
+        public string description { get; set; }
         [Required]
         //selectable string list 
-        public int Type { get; set; } //hotel,apartman
+        public int type { get; set; } //hotel,apartman
         [Required]
-        public int Number_of_rooms { get; set; }
+        public int number_of_rooms { get; set; }
         [Required]
-        public int Max_person { get; set; }
+        public int max_person { get; set; }
         [Required]
-        public string Address { get; set; }
+        public string address { get; set; }
         [Required]
-        public string City { get; set; }
+        public string city { get; set; }
         [Required]
-        public string Country { get; set; }
+        public string country { get; set; }
         [Required]
-        public decimal Price_per_night { get; set; }
-        public int? Star_rating { get; set; }
+        public decimal price_per_night { get; set; }
+        public int? star_rating { get; set; }
         [Required]
-        public int Available_rooms { get; set; }
+        public int available_rooms { get; set; }
         //breakfast,half-board,all-inclusive
         //selectable string list 
-        public string? Dinning { get; set; }
+        public string? dinning { get; set; }
 
         public ICollection<AccommodationAmenities>? AccommodationAmenities { get; set; }
     }

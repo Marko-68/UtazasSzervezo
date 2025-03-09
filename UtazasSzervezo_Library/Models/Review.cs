@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,16 +9,19 @@ namespace UtazasSzervezo_Library.Models
 {
     public class Review
     {
-        public int Id { get; set; }
-        public int User_id { get; set; }
+        [Key]
+        public int id { get; set; }
+        public int user_id { get; set; }
         public User User { get; set; }
-        public int? Accommodation_id { get; set; }
+        public int? accommodation_id { get; set; }
         public Accommodation Accommodation { get; set; }
-        public int? Flight_id { get; set; }
+        public int? flight_id { get; set; }
         public Flight Flight { get; set; }
         //Rating 1-10
-        public int Rating { get; set; }
-        public string Comment { get; set; }
-        public DateTime Created_at { get; set; }
+        [Required]
+        [Range(1, 10)]
+        public int rating { get; set; }
+        public string comment { get; set; }
+        public DateTime created_at { get; set; }
     }
 }

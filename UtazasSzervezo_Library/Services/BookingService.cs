@@ -26,6 +26,13 @@ namespace UtazasSzervezo_Library.Services
             return await _context.Bookings.FindAsync(id);
         }
 
+        public async Task<Booking> CreateBooking(Booking booking)
+        {
+            _context.Bookings.Add(booking);
+            await _context.SaveChangesAsync();
+            return booking;
+        }
+
         public async Task<bool> DeleteBooking(int id)
         {
             var booking = await _context.Bookings.FindAsync(id);

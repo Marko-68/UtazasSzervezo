@@ -31,7 +31,7 @@ namespace UtazasSzervezo_Library.Services
             var am = new Amenity()
             {
                 AccommodationAmenities = amenities.AccommodationAmenities,
-                Name = amenities.Name,
+                name = amenities.name,
             };
 
             _context.Amenities.Add(amenities);

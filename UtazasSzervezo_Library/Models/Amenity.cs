@@ -9,9 +9,10 @@ namespace UtazasSzervezo_Library.Models
 {
     public class Amenity
     {
-        public int Id { get; set; }
+        [Key]
+        public int id { get; set; }
         [Required]
-        public string Name { get; set; }
+        public string name { get; set; }
 
         public ICollection<AccommodationAmenities>? AccommodationAmenities { get; set; }
     }

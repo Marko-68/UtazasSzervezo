@@ -9,20 +9,21 @@ namespace UtazasSzervezo_Library.Models
 {
     public class Booking
     {
-        public int Id { get; set; }
-        public int? Accommodation_id { get; set; }
+        [Key]
+        public int id { get; set; }
+        public int? accommodation_id { get; set; }
         public Accommodation? Accommodation { get; set; }
-        public int? Flight_id { get; set; }
+        public int? flight_id { get; set; }
         public Flight? Flight { get; set; }
         [Required]
-        public DateTime Start_date { get; set; }
+        public DateTime start_date { get; set; }
         [Required]
-        public DateTime End_date { get; set; }
+        public DateTime end_date { get; set; }
         [Required]
-        public string Description { get; set; }
+        public string description { get; set; }
         [Required]
-        public string Status { get; set; }
-        public string? Special_request { get; set; }
+        public string status { get; set; }
+        public string? special_request { get; set; }
         [Required]
         public decimal total_price { get; set; }
     }

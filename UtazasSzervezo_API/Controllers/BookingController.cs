@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using UtazasSzervezo_Library.Models;
 using UtazasSzervezo_Library.Services;
 
 namespace UtazasSzervezo_API.Controllers
@@ -27,6 +28,14 @@ namespace UtazasSzervezo_API.Controllers
             if (bookings == null)
                 return NotFound();
             return Ok(bookings);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Create(Booking booking)
+        {
+            await _bookingService.CreateBooking(booking);
+            return Ok();
         }
 
 
