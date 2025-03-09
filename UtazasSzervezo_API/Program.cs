@@ -41,6 +41,12 @@ namespace UtazasSzervezo_API
 
             //Service injections
             builder.Services.AddScoped<AccommodationService>();
+            builder.Services.AddScoped<BookingService>(); 
+            builder.Services.AddScoped<FlighService>();
+            builder.Services.AddScoped<ReviewService>();
+            builder.Services.AddScoped<AmenityService>();
+            builder.Services.AddScoped<AccommodationAmenitiesService>();
+
 
             var app = builder.Build();
 

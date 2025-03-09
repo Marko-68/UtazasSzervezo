@@ -30,6 +30,13 @@ namespace UtazasSzervezo_API.Controllers
             return Ok(reviews);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Create(Review review)
+        {
+            await _reviewService.CreateReview(review);
+            return Ok();
+        }
+
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)

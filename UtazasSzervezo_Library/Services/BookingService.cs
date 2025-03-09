@@ -28,10 +28,20 @@ namespace UtazasSzervezo_Library.Services
 
         public async Task<Booking> CreateBooking(Booking booking)
         {
+            if (booking.Accommodation != null)
+            {
+                _context.Accommodations.Add(booking.Accommodation);
+            }
+            if (booking.Flight != null)
+            {
+                _context.Flights.Add(booking.Flight);
+            }
+
             _context.Bookings.Add(booking);
             await _context.SaveChangesAsync();
             return booking;
         }
+
 
         public async Task<bool> DeleteBooking(int id)
         {

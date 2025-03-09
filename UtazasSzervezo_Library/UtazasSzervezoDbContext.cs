@@ -35,7 +35,7 @@ namespace UtazasSzervezo_Library
 
             //relationships
             modelBuilder.Entity<AccommodationAmenities>()
-                .HasKey(aa => new { aa.accommodation_id, aa.amentry_id });
+                .HasKey(aa => new { aa.accommodation_id, aa.amenity_id });
 
             modelBuilder.Entity<AccommodationAmenities>()
                 .HasOne(aa => aa.Accommodation)
@@ -45,7 +45,7 @@ namespace UtazasSzervezo_Library
             modelBuilder.Entity<AccommodationAmenities>()
                 .HasOne(aa => aa.Amenity)
                 .WithMany(a => a.AccommodationAmenities)
-                .HasForeignKey(aa => aa.amentry_id);
+                .HasForeignKey(aa => aa.amenity_id);
 
         }
 
