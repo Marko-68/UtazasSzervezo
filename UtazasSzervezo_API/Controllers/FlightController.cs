@@ -38,6 +38,17 @@ namespace UtazasSzervezo_API.Controllers
         }
 
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] Flight flight)
+        {
+            var success = await _flightService.UpdateFlight(id, flight);
+            if (!success)
+                return NotFound(new { message = "Flight not found" });
+
+            return Ok(flight);
+        }
+
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

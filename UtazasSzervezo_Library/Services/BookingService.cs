@@ -42,6 +42,23 @@ namespace UtazasSzervezo_Library.Services
             return booking;
         }
 
+        public async Task<bool> UpdateBooking(int id, Booking booking)
+        {
+            var existing = await _context.Bookings.FindAsync(id);
+            if (existing == null)
+            {
+                return false;
+            }
+
+            existing.description = booking.description;
+            existing.start_date = booking.start_date;
+            existing.end_date = booking.end_date;
+            existing.total_price = booking.total_price;
+
+            _context.Bookings.Update(existing);
+            await _context.SaveChangesAsync();
+            return true;
+        }
 
         public async Task<bool> DeleteBooking(int id)
         {

@@ -37,6 +37,16 @@ namespace UtazasSzervezo_API.Controllers
             return Ok();
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] Amenity amenity)
+        {
+            var success = await _amenityService.UpdateAmenity(id, amenity);
+            if (!success)
+                return NotFound(new { message = "Amenity not found" });
+
+            return Ok(amenity);
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

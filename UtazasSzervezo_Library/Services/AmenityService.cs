@@ -38,6 +38,20 @@ namespace UtazasSzervezo_Library.Services
             return amenity;
         }
 
+        public async Task<bool> UpdateAmenity(int id, Amenity amenity)
+        {
+            var existing = await _context.Amenities.FindAsync(id);
+            if (existing == null)
+            {
+                return false;
+            }
+
+            existing.name = amenity.name;
+
+            _context.Amenities.Update(existing);
+            await _context.SaveChangesAsync();
+            return true;
+        }
 
         public async Task<bool> DeleteAmenity(int id)
         {

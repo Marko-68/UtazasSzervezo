@@ -32,6 +32,28 @@ namespace UtazasSzervezo_Library.Services
             await _context.SaveChangesAsync();
         }
 
+        public async Task<bool> UpdateFlight(int id, Flight flight)
+        {
+            var existing = await _context.Flights.FindAsync(id);
+            if (existing == null)
+            {
+                return false;
+            }
+
+            existing.airline = flight.airline;
+            existing.price = flight.price;
+            existing.departure_time = flight.departure_time;
+            existing.arrival_time = flight.arrival_time;
+            existing.departure_airport = flight.departure_airport;
+            existing.destination_airport = flight.destination_airport;
+            existing.available_seats = flight.available_seats;
+            existing.duration = flight.duration;
+
+            _context.Flights.Update(existing);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
         public async Task<bool> DeleteFlight(int id)
         {
             var flight = await _context.Flights.FindAsync(id);
