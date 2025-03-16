@@ -26,7 +26,6 @@ namespace UtazasSzervezo_Library
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<User>().ToTable("Users");
@@ -49,15 +48,15 @@ namespace UtazasSzervezo_Library
 
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
                 var connectionString = "server=localhost;database=UtazasSzervezoIdentityDB;user=root;password=;";
                 optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString),
-                    b => b.MigrationsAssembly("UtazasSzervezo_API"));
+                    b => b.MigrationsAssembly("UtazasSzervezo_Libray"));
             }
-        }
+        }*/
 
     }
 }

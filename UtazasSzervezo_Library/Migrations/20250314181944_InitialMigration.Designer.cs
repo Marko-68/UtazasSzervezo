@@ -12,8 +12,8 @@ using UtazasSzervezo_Library;
 namespace UtazasSzervezo_Library.Migrations
 {
     [DbContext(typeof(UtazasSzervezoDbContext))]
-    [Migration("20250303114048_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250314181944_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -229,221 +229,226 @@ namespace UtazasSzervezo_Library.Migrations
 
             modelBuilder.Entity("UtazasSzervezo_Library.Models.Accommodation", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<string>("Address")
+                    b.Property<string>("address")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("Available_rooms")
+                    b.Property<int>("available_rooms")
                         .HasColumnType("int");
 
-                    b.Property<string>("City")
+                    b.Property<string>("city")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Country")
+                    b.Property<string>("country")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Description")
+                    b.Property<string>("description")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Dinning")
+                    b.Property<string>("dinning")
                         .HasColumnType("longtext");
 
-                    b.Property<int>("Max_person")
+                    b.Property<int>("max_person")
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("name")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("Number_of_rooms")
+                    b.Property<int>("number_of_rooms")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Price_per_night")
+                    b.Property<decimal>("price_per_night")
                         .HasColumnType("decimal(65,30)");
 
-                    b.Property<int?>("Star_rating")
+                    b.Property<int?>("star_rating")
                         .HasColumnType("int");
 
-                    b.Property<int>("Type")
+                    b.Property<int>("type")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
                     b.ToTable("Accommodations");
                 });
 
             modelBuilder.Entity("UtazasSzervezo_Library.Models.AccommodationAmenities", b =>
                 {
-                    b.Property<int>("Accommodation_id")
+                    b.Property<int?>("accommodation_id")
                         .HasColumnType("int");
 
-                    b.Property<int>("Amentry_id")
+                    b.Property<int?>("amenity_id")
                         .HasColumnType("int");
 
-                    b.HasKey("Accommodation_id", "Amentry_id");
+                    b.Property<int>("id")
+                        .HasColumnType("int");
 
-                    b.HasIndex("Amentry_id");
+                    b.HasKey("accommodation_id", "amenity_id");
+
+                    b.HasIndex("amenity_id");
 
                     b.ToTable("AccommodationsAmenities");
                 });
 
             modelBuilder.Entity("UtazasSzervezo_Library.Models.Amenity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<string>("Name")
+                    b.Property<string>("name")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
                     b.ToTable("Amenities");
                 });
 
             modelBuilder.Entity("UtazasSzervezo_Library.Models.Booking", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<int?>("AccommodationId")
+                    b.Property<int?>("Accommodationid")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Accommodation_id")
+                    b.Property<int?>("Flightid")
                         .HasColumnType("int");
 
-                    b.Property<string>("Description")
+                    b.Property<int?>("accommodation_id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("description")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("End_date")
+                    b.Property<DateTime>("end_date")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int?>("FlightId")
+                    b.Property<int?>("flight_id")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Flight_id")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Special_request")
+                    b.Property<string>("special_request")
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("Start_date")
+                    b.Property<DateTime>("start_date")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("Status")
+                    b.Property<string>("status")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<decimal>("total_price")
                         .HasColumnType("decimal(65,30)");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
-                    b.HasIndex("AccommodationId");
+                    b.HasIndex("Accommodationid");
 
-                    b.HasIndex("FlightId");
+                    b.HasIndex("Flightid");
 
                     b.ToTable("Bookings");
                 });
 
             modelBuilder.Entity("UtazasSzervezo_Library.Models.Flight", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<string>("Airline")
+                    b.Property<string>("airline")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("Arrival_time")
+                    b.Property<DateTime>("arrival_time")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("Available_seats")
+                    b.Property<int>("available_seats")
                         .HasColumnType("int");
 
-                    b.Property<string>("Departure_airport")
+                    b.Property<string>("departure_airport")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(3)
+                        .HasColumnType("varchar(3)");
 
-                    b.Property<DateTime>("Departure_time")
+                    b.Property<DateTime>("departure_time")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("Destination_airport")
+                    b.Property<string>("destination_airport")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(3)
+                        .HasColumnType("varchar(3)");
 
-                    b.Property<int>("Duration")
+                    b.Property<int>("duration")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Price")
+                    b.Property<decimal>("price")
                         .HasColumnType("decimal(65,30)");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
                     b.ToTable("Flights");
                 });
 
             modelBuilder.Entity("UtazasSzervezo_Library.Models.Review", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<int>("AccommodationId")
+                    b.Property<int>("Accommodationid")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Accommodation_id")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Comment")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime>("Created_at")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("FlightId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Flight_id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Rating")
+                    b.Property<int>("Flightid")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
-                    b.Property<int>("User_id")
+                    b.Property<int?>("accommodation_id")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<string>("comment")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
-                    b.HasIndex("AccommodationId");
+                    b.Property<DateTime>("created_at")
+                        .HasColumnType("datetime(6)");
 
-                    b.HasIndex("FlightId");
+                    b.Property<int?>("flight_id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("rating")
+                        .HasColumnType("int");
+
+                    b.Property<int>("user_id")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("Accommodationid");
+
+                    b.HasIndex("Flightid");
 
                     b.HasIndex("UserId");
 
@@ -531,13 +536,13 @@ namespace UtazasSzervezo_Library.Migrations
                 {
                     b.HasOne("UtazasSzervezo_Library.Models.Accommodation", "Accommodation")
                         .WithMany("AccommodationAmenities")
-                        .HasForeignKey("Accommodation_id")
+                        .HasForeignKey("accommodation_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("UtazasSzervezo_Library.Models.Amenity", "Amenity")
                         .WithMany("AccommodationAmenities")
-                        .HasForeignKey("Amentry_id")
+                        .HasForeignKey("amenity_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -550,11 +555,11 @@ namespace UtazasSzervezo_Library.Migrations
                 {
                     b.HasOne("UtazasSzervezo_Library.Models.Accommodation", "Accommodation")
                         .WithMany()
-                        .HasForeignKey("AccommodationId");
+                        .HasForeignKey("Accommodationid");
 
                     b.HasOne("UtazasSzervezo_Library.Models.Flight", "Flight")
                         .WithMany()
-                        .HasForeignKey("FlightId");
+                        .HasForeignKey("Flightid");
 
                     b.Navigation("Accommodation");
 
@@ -565,13 +570,13 @@ namespace UtazasSzervezo_Library.Migrations
                 {
                     b.HasOne("UtazasSzervezo_Library.Models.Accommodation", "Accommodation")
                         .WithMany()
-                        .HasForeignKey("AccommodationId")
+                        .HasForeignKey("Accommodationid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("UtazasSzervezo_Library.Models.Flight", "Flight")
                         .WithMany()
-                        .HasForeignKey("FlightId")
+                        .HasForeignKey("Flightid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

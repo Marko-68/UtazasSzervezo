@@ -19,7 +19,7 @@ public class Program
         //var connectionString = "server=localhost;database=UtazasSzervezoIdentityDB;user=root;password=;";
         builder.Services.AddDbContext<UtazasSzervezoDbContext>(options =>
             options.UseMySql(
-                "server=localhost;database=UtazasSzervezobB;user=root;password=;"
+                "server=localhost;database=UtazasSzervezoDb;user=root;password=;"
                 , ServerVersion.AutoDetect("server=localhost;database=UtazasSzervezoDb;user=root;password=;")
             )
         );

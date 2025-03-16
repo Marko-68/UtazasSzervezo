@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace UtazasSzervezo_Library.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,30 +19,30 @@ namespace UtazasSzervezo_Library.Migrations
                 name: "Accommodations",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(type: "longtext", nullable: false)
+                    name = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Description = table.Column<string>(type: "longtext", nullable: false)
+                    description = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Type = table.Column<int>(type: "int", nullable: false),
-                    Number_of_rooms = table.Column<int>(type: "int", nullable: false),
-                    Max_person = table.Column<int>(type: "int", nullable: false),
-                    Address = table.Column<string>(type: "longtext", nullable: false)
+                    type = table.Column<int>(type: "int", nullable: false),
+                    number_of_rooms = table.Column<int>(type: "int", nullable: false),
+                    max_person = table.Column<int>(type: "int", nullable: false),
+                    address = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    City = table.Column<string>(type: "longtext", nullable: false)
+                    city = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Country = table.Column<string>(type: "longtext", nullable: false)
+                    country = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Price_per_night = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
-                    Star_rating = table.Column<int>(type: "int", nullable: true),
-                    Available_rooms = table.Column<int>(type: "int", nullable: false),
-                    Dinning = table.Column<string>(type: "longtext", nullable: true)
+                    price_per_night = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
+                    star_rating = table.Column<int>(type: "int", nullable: true),
+                    available_rooms = table.Column<int>(type: "int", nullable: false),
+                    dinning = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Accommodations", x => x.Id);
+                    table.PrimaryKey("PK_Accommodations", x => x.id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -50,14 +50,14 @@ namespace UtazasSzervezo_Library.Migrations
                 name: "Amenities",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(type: "longtext", nullable: false)
+                    name = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Amenities", x => x.Id);
+                    table.PrimaryKey("PK_Amenities", x => x.id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -100,23 +100,23 @@ namespace UtazasSzervezo_Library.Migrations
                 name: "Flights",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Airline = table.Column<string>(type: "longtext", nullable: false)
+                    airline = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Departure_time = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    Arrival_time = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    Departure_airport = table.Column<string>(type: "longtext", nullable: false)
+                    departure_time = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    arrival_time = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    departure_airport = table.Column<string>(type: "varchar(3)", maxLength: 3, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Destination_airport = table.Column<string>(type: "longtext", nullable: false)
+                    destination_airport = table.Column<string>(type: "varchar(3)", maxLength: 3, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Duration = table.Column<int>(type: "int", nullable: false),
-                    Available_seats = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(65,30)", nullable: false)
+                    duration = table.Column<int>(type: "int", nullable: false),
+                    available_seats = table.Column<int>(type: "int", nullable: false),
+                    price = table.Column<decimal>(type: "decimal(65,30)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Flights", x => x.Id);
+                    table.PrimaryKey("PK_Flights", x => x.id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -143,23 +143,24 @@ namespace UtazasSzervezo_Library.Migrations
                 name: "AccommodationsAmenities",
                 columns: table => new
                 {
-                    Accommodation_id = table.Column<int>(type: "int", nullable: false),
-                    Amentry_id = table.Column<int>(type: "int", nullable: false)
+                    accommodation_id = table.Column<int>(type: "int", nullable: false),
+                    amenity_id = table.Column<int>(type: "int", nullable: false),
+                    id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AccommodationsAmenities", x => new { x.Accommodation_id, x.Amentry_id });
+                    table.PrimaryKey("PK_AccommodationsAmenities", x => new { x.accommodation_id, x.amenity_id });
                     table.ForeignKey(
-                        name: "FK_AccommodationsAmenities_Accommodations_Accommodation_id",
-                        column: x => x.Accommodation_id,
+                        name: "FK_AccommodationsAmenities_Accommodations_accommodation_id",
+                        column: x => x.accommodation_id,
                         principalTable: "Accommodations",
-                        principalColumn: "Id",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AccommodationsAmenities_Amenities_Amentry_id",
-                        column: x => x.Amentry_id,
+                        name: "FK_AccommodationsAmenities_Amenities_amenity_id",
+                        column: x => x.amenity_id,
                         principalTable: "Amenities",
-                        principalColumn: "Id",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
@@ -271,35 +272,35 @@ namespace UtazasSzervezo_Library.Migrations
                 name: "Bookings",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Accommodation_id = table.Column<int>(type: "int", nullable: true),
-                    AccommodationId = table.Column<int>(type: "int", nullable: true),
-                    Flight_id = table.Column<int>(type: "int", nullable: true),
-                    FlightId = table.Column<int>(type: "int", nullable: true),
-                    Start_date = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    End_date = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    Description = table.Column<string>(type: "longtext", nullable: false)
+                    accommodation_id = table.Column<int>(type: "int", nullable: true),
+                    Accommodationid = table.Column<int>(type: "int", nullable: true),
+                    flight_id = table.Column<int>(type: "int", nullable: true),
+                    Flightid = table.Column<int>(type: "int", nullable: true),
+                    start_date = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    end_date = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    description = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Status = table.Column<string>(type: "longtext", nullable: false)
+                    status = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Special_request = table.Column<string>(type: "longtext", nullable: true)
+                    special_request = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     total_price = table.Column<decimal>(type: "decimal(65,30)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Bookings", x => x.Id);
+                    table.PrimaryKey("PK_Bookings", x => x.id);
                     table.ForeignKey(
-                        name: "FK_Bookings_Accommodations_AccommodationId",
-                        column: x => x.AccommodationId,
+                        name: "FK_Bookings_Accommodations_Accommodationid",
+                        column: x => x.Accommodationid,
                         principalTable: "Accommodations",
-                        principalColumn: "Id");
+                        principalColumn: "id");
                     table.ForeignKey(
-                        name: "FK_Bookings_Flights_FlightId",
-                        column: x => x.FlightId,
+                        name: "FK_Bookings_Flights_Flightid",
+                        column: x => x.Flightid,
                         principalTable: "Flights",
-                        principalColumn: "Id");
+                        principalColumn: "id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -359,34 +360,34 @@ namespace UtazasSzervezo_Library.Migrations
                 name: "Reviews",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    User_id = table.Column<int>(type: "int", nullable: false),
+                    user_id = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Accommodation_id = table.Column<int>(type: "int", nullable: true),
-                    AccommodationId = table.Column<int>(type: "int", nullable: false),
-                    Flight_id = table.Column<int>(type: "int", nullable: true),
-                    FlightId = table.Column<int>(type: "int", nullable: false),
-                    Rating = table.Column<int>(type: "int", nullable: false),
-                    Comment = table.Column<string>(type: "longtext", nullable: false)
+                    accommodation_id = table.Column<int>(type: "int", nullable: true),
+                    Accommodationid = table.Column<int>(type: "int", nullable: false),
+                    flight_id = table.Column<int>(type: "int", nullable: true),
+                    Flightid = table.Column<int>(type: "int", nullable: false),
+                    rating = table.Column<int>(type: "int", nullable: false),
+                    comment = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                    created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Reviews", x => x.Id);
+                    table.PrimaryKey("PK_Reviews", x => x.id);
                     table.ForeignKey(
-                        name: "FK_Reviews_Accommodations_AccommodationId",
-                        column: x => x.AccommodationId,
+                        name: "FK_Reviews_Accommodations_Accommodationid",
+                        column: x => x.Accommodationid,
                         principalTable: "Accommodations",
-                        principalColumn: "Id",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Reviews_Flights_FlightId",
-                        column: x => x.FlightId,
+                        name: "FK_Reviews_Flights_Flightid",
+                        column: x => x.Flightid,
                         principalTable: "Flights",
-                        principalColumn: "Id",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Reviews_Users_UserId",
@@ -398,9 +399,9 @@ namespace UtazasSzervezo_Library.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AccommodationsAmenities_Amentry_id",
+                name: "IX_AccommodationsAmenities_amenity_id",
                 table: "AccommodationsAmenities",
-                column: "Amentry_id");
+                column: "amenity_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -429,24 +430,24 @@ namespace UtazasSzervezo_Library.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Bookings_AccommodationId",
+                name: "IX_Bookings_Accommodationid",
                 table: "Bookings",
-                column: "AccommodationId");
+                column: "Accommodationid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Bookings_FlightId",
+                name: "IX_Bookings_Flightid",
                 table: "Bookings",
-                column: "FlightId");
+                column: "Flightid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reviews_AccommodationId",
+                name: "IX_Reviews_Accommodationid",
                 table: "Reviews",
-                column: "AccommodationId");
+                column: "Accommodationid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reviews_FlightId",
+                name: "IX_Reviews_Flightid",
                 table: "Reviews",
-                column: "FlightId");
+                column: "Flightid");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reviews_UserId",
