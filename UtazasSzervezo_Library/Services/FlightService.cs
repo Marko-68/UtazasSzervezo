@@ -8,10 +8,10 @@ using UtazasSzervezo_Library.Models;
 
 namespace UtazasSzervezo_Library.Services
 {
-    public class FlighService
+    public class FlightService
     {
         private readonly UtazasSzervezoDbContext _context;
-        public FlighService(UtazasSzervezoDbContext context)
+        public FlightService(UtazasSzervezoDbContext context)
         {
             _context = context;
         }
@@ -26,6 +26,11 @@ namespace UtazasSzervezo_Library.Services
             return await _context.Flights.FindAsync(id);
         }
 
+        public async Task CreateFlight(Flight flight)
+        {
+            _context.Flights.Add(flight);
+            await _context.SaveChangesAsync();
+        }
 
         public async Task<bool> DeleteFlight(int id)
         {

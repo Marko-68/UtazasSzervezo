@@ -30,23 +30,51 @@ namespace UtazasSzervezo_Library.Services
         {
             _context.Accommodations.Add(accommodation);
             await _context.SaveChangesAsync();
+
+            // Amenity-k hozzáadása
+            if (accommodation.AccommodationAmenities != null && accommodation.AccommodationAmenities.Any())
+            {
+                foreach (var accommodationAmenity in accommodation.AccommodationAmenities)
+                {
+                    var exists = await _context.AccommodationsAmenities
+                        .AnyAsync(aa => aa.accommodation_id == accommodation.id && aa.amenity_id == accommodationAmenity.amenity_id);
+
+                    if (!exists)
+                    {
+                        accommodationAmenity.accommodation_id = accommodation.id;
+                        _context.AccommodationsAmenities.Add(accommodationAmenity);
+                    }
+                }
+                await _context.SaveChangesAsync();
+            }
+
             return accommodation;
         }
 
-        /*var acc = new Accommodation()
+        public async Task<bool> UpdateAccommodation(int id, Accommodation accommodation)
         {
-            Name = accommodation.Name,
-            Description = accommodation.Description,
-            Type = accommodation.Type,
-            Number_of_rooms = accommodation.Number_of_rooms,
-            Max_person = accommodation.Max_person,
-            Address = accommodation.Address,
-            City = accommodation.City,
-            Country = accommodation.Country,
-            Price_per_night = accommodation.Price_per_night,
-            Available_rooms = accommodation.Available_rooms,
-            Dinning = accommodation.Dinning
-        };*/
+            var existing = await _context.Accommodations.FindAsync(id);
+            if (existing == null)
+            {
+                return false;
+            }
+
+            existing.name = accommodation.name;
+            existing.description = accommodation.description;
+            existing.type = accommodation.type;
+            existing.number_of_rooms = accommodation.number_of_rooms;
+            existing.max_person = accommodation.max_person;
+            existing.address = accommodation.address;
+            existing.city = accommodation.city;
+            existing.country = accommodation.country;
+            existing.price_per_night = accommodation.price_per_night;
+            existing.available_rooms = accommodation.available_rooms;
+            existing.dinning = accommodation.dinning;
+
+            _context.Accommodations.Update(existing);
+            await _context.SaveChangesAsync();
+            return true;
+        }
 
         public async Task<bool> DeleteAccommodation(int id)
         {
@@ -57,6 +85,5 @@ namespace UtazasSzervezo_Library.Services
             await _context.SaveChangesAsync();
             return true;
         }
-
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace UtazasSzervezo_Library.Models
@@ -11,11 +12,15 @@ namespace UtazasSzervezo_Library.Models
     {
         [Key]
         public int id { get; set; }
+        [Required]
         public int user_id { get; set; }
+        [JsonIgnore]
         public User User { get; set; }
         public int? accommodation_id { get; set; }
+        [JsonIgnore]
         public Accommodation Accommodation { get; set; }
         public int? flight_id { get; set; }
+        [JsonIgnore]
         public Flight Flight { get; set; }
         //Rating 1-10
         [Required]

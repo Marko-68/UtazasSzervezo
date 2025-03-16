@@ -28,15 +28,6 @@ namespace UtazasSzervezo_Library.Services
 
         public async Task<Review> CreateReview(Review review)
         {
-            if (review.Accommodation != null)
-            {
-                _context.Accommodations.Add(review.Accommodation);
-            }
-            if (review.Flight != null)
-            {
-                _context.Flights.Add(review.Flight);
-            }
-
             _context.Reviews.Add(review);
             await _context.SaveChangesAsync();
             return review;

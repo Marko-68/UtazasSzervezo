@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using UtazasSzervezo_Library.Models;
 using UtazasSzervezo_Library.Services;
 
@@ -31,25 +32,24 @@ namespace UtazasSzervezo_API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Accommodation accommodation)
+        public async Task<IActionResult> Create([FromBody] Accommodation accommodation)
         {
-            await _accommodationService.CreateAccommodation(accommodation);
-            return Ok();
+            if (accommodation == null)
+                return BadRequest(new { message = "Invalid accommodation data" });
+
+            var createdAccommodation = await _accommodationService.CreateAccommodation(accommodation);
+            return CreatedAtAction(nameof(GetById), new { id = createdAccommodation.id }, createdAccommodation);
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] Accommodation accommodation)
+        {
+            var success = await _accommodationService.UpdateAccommodation(id, accommodation);
+            if (!success)
+                return NotFound(new { message = "Accommodation not found" });
 
-        /* [HttpPut("{id}")]
-         public async Task<IActionResult> Update(int id, [FromBody] Accommodation accommodation)
-         {
-             if (!ModelState.IsValid)
-                 return BadRequest(ModelState);
-
-             var success = await _accommodationService.UpdateAccommodation(id, accommodation);
-             if (!success)
-                 return NotFound();
-
-             return NoContent();
-         }*/
+            return Ok(accommodation);
+        }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
@@ -60,6 +60,5 @@ namespace UtazasSzervezo_API.Controllers
 
             return NoContent();
         }
-
     }
 }

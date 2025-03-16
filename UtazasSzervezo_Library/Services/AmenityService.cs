@@ -26,17 +26,18 @@ namespace UtazasSzervezo_Library.Services
             return await _context.Amenities.FindAsync(id);
         }
 
-        public async Task CreateAmenity(Amenity amenities)
+        public async Task<Amenity> CreateAmenity(Amenity amenity)
         {
-            var am = new Amenity()
+            if (amenity.AccommodationAmenities != null && !amenity.AccommodationAmenities.Any())
             {
-                AccommodationAmenities = amenities.AccommodationAmenities,
-                name = amenities.name,
-            };
+                amenity.AccommodationAmenities = null;
+            }
 
-            _context.Amenities.Add(amenities);
+            _context.Amenities.Add(amenity);
             await _context.SaveChangesAsync();
+            return amenity;
         }
+
 
         public async Task<bool> DeleteAmenity(int id)
         {

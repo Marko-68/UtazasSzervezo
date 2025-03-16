@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -11,6 +12,7 @@ namespace UtazasSzervezo_Library.Models
     public class Accommodation
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
         [Required]
         public string name { get; set; }
@@ -18,7 +20,7 @@ namespace UtazasSzervezo_Library.Models
         public string description { get; set; }
         [Required]
         //selectable string list 
-        public int type { get; set; } //hotel,apartman
+        public string type { get; set; }
         [Required]
         public int number_of_rooms { get; set; }
         [Required]
@@ -31,6 +33,7 @@ namespace UtazasSzervezo_Library.Models
         public string country { get; set; }
         [Required]
         public decimal price_per_night { get; set; }
+        [Range(1,5)]
         public int? star_rating { get; set; }
         [Required]
         public int available_rooms { get; set; }
@@ -38,7 +41,7 @@ namespace UtazasSzervezo_Library.Models
         //selectable string list 
         public string? dinning { get; set; }
 
-        [JsonIgnore]
+
         public ICollection<AccommodationAmenities>? AccommodationAmenities { get; set; }
     }
 }

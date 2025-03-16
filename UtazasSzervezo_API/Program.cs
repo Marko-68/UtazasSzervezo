@@ -42,10 +42,9 @@ namespace UtazasSzervezo_API
             //Service injections
             builder.Services.AddScoped<AccommodationService>();
             builder.Services.AddScoped<BookingService>(); 
-            builder.Services.AddScoped<FlighService>();
+            builder.Services.AddScoped<FlightService>();
             builder.Services.AddScoped<ReviewService>();
             builder.Services.AddScoped<AmenityService>();
-            builder.Services.AddScoped<AccommodationAmenitiesService>();
 
 
             var app = builder.Build();
@@ -56,6 +55,8 @@ namespace UtazasSzervezo_API
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseCors("AllowAllOrigins");
 
             app.UseHttpsRedirection();
 

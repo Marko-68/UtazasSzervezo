@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using UtazasSzervezo_Library.Models;
 using UtazasSzervezo_Library.Services;
 
 namespace UtazasSzervezo_API.Controllers
@@ -7,8 +8,8 @@ namespace UtazasSzervezo_API.Controllers
     [ApiController]
     public class FlightController : ControllerBase
     {
-        private readonly FlighService _flightService;
-        public FlightController(FlighService flightService)
+        private readonly FlightService _flightService;
+        public FlightController(FlightService flightService)
         {
             _flightService = flightService;
         }
@@ -27,6 +28,13 @@ namespace UtazasSzervezo_API.Controllers
             if (flights == null)
                 return NotFound();
             return Ok(flights);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(Flight flight)
+        {
+            await _flightService.CreateFlight(flight);
+            return Ok();
         }
 
 

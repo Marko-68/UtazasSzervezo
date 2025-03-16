@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace UtazasSzervezo_Library.Models
@@ -12,8 +13,10 @@ namespace UtazasSzervezo_Library.Models
         [Key]
         public int id { get; set; }
         public int? accommodation_id { get; set; }
+        [JsonIgnore]
         public Accommodation? Accommodation { get; set; }
         public int? flight_id { get; set; }
+        [JsonIgnore]
         public Flight? Flight { get; set; }
         [Required]
         public DateTime start_date { get; set; }
@@ -26,5 +29,7 @@ namespace UtazasSzervezo_Library.Models
         public string? special_request { get; set; }
         [Required]
         public decimal total_price { get; set; }
+
+        //TODO: képek
     }
 }
