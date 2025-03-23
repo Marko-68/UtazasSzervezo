@@ -4,7 +4,7 @@ using UtazasSzervezo_Library.Services;
 
 namespace UtazasSzervezo_API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Review")]
     [ApiController]
     public class ReviewAPIController : ControllerBase
     {

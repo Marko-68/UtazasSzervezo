@@ -5,7 +5,7 @@ using UtazasSzervezo_Library.Services;
 
 namespace UtazasSzervezo_API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Accommodation")]
     [ApiController]
     public class AccommodationAPIController : ControllerBase
     {
