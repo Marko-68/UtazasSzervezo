@@ -7,10 +7,10 @@ namespace UtazasSzervezo_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccommodationController : ControllerBase
+    public class AccommodationAPIController : ControllerBase
     {
         private readonly AccommodationService _accommodationService;
-        public AccommodationController(AccommodationService accommodationService)
+        public AccommodationAPIController(AccommodationService accommodationService)
         {
             _accommodationService = accommodationService;
         }

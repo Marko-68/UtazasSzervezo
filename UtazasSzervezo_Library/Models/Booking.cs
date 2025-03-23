@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -28,6 +29,7 @@ namespace UtazasSzervezo_Library.Models
         public string status { get; set; }
         public string? special_request { get; set; }
         [Required]
+        [Precision(10, 2)]
         public decimal total_price { get; set; }
 
         //TODO: képek

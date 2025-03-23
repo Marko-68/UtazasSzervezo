@@ -12,8 +12,8 @@ using UtazasSzervezo_Library;
 namespace UtazasSzervezo_Library.Migrations
 {
     [DbContext(typeof(UtazasSzervezoDbContext))]
-    [Migration("20250314181944_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20250322104711_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -235,6 +235,9 @@ namespace UtazasSzervezo_Library.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("id"));
 
+                    b.Property<string>("ImgUrl")
+                        .HasColumnType("longtext");
+
                     b.Property<string>("address")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -268,13 +271,15 @@ namespace UtazasSzervezo_Library.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("price_per_night")
-                        .HasColumnType("decimal(65,30)");
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
 
                     b.Property<int?>("star_rating")
                         .HasColumnType("int");
 
-                    b.Property<int>("type")
-                        .HasColumnType("int");
+                    b.Property<string>("type")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.HasKey("id");
 
@@ -287,9 +292,6 @@ namespace UtazasSzervezo_Library.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("amenity_id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("id")
                         .HasColumnType("int");
 
                     b.HasKey("accommodation_id", "amenity_id");
@@ -354,7 +356,8 @@ namespace UtazasSzervezo_Library.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<decimal>("total_price")
-                        .HasColumnType("decimal(65,30)");
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
 
                     b.HasKey("id");
 
@@ -400,7 +403,8 @@ namespace UtazasSzervezo_Library.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("price")
-                        .HasColumnType("decimal(65,30)");
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
 
                     b.HasKey("id");
 
@@ -415,14 +419,13 @@ namespace UtazasSzervezo_Library.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<int>("Accommodationid")
+                    b.Property<int?>("Accommodationid")
                         .HasColumnType("int");
 
-                    b.Property<int>("Flightid")
+                    b.Property<int?>("Flightid")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<int?>("accommodation_id")
@@ -570,21 +573,15 @@ namespace UtazasSzervezo_Library.Migrations
                 {
                     b.HasOne("UtazasSzervezo_Library.Models.Accommodation", "Accommodation")
                         .WithMany()
-                        .HasForeignKey("Accommodationid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Accommodationid");
 
                     b.HasOne("UtazasSzervezo_Library.Models.Flight", "Flight")
                         .WithMany()
-                        .HasForeignKey("Flightid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Flightid");
 
                     b.HasOne("UtazasSzervezo_Library.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Accommodation");
 

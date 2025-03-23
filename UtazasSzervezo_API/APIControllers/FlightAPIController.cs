@@ -6,10 +6,10 @@ namespace UtazasSzervezo_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FlightController : ControllerBase
+    public class FlightAPIController : ControllerBase
     {
         private readonly FlightService _flightService;
-        public FlightController(FlightService flightService)
+        public FlightAPIController(FlightService flightService)
         {
             _flightService = flightService;
         }

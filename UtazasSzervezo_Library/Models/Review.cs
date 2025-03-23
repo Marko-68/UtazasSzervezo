@@ -15,13 +15,13 @@ namespace UtazasSzervezo_Library.Models
         [Required]
         public int user_id { get; set; }
         [JsonIgnore]
-        public User User { get; set; }
+        //public User? User { get; set; }
         public int? accommodation_id { get; set; }
         [JsonIgnore]
-        public Accommodation Accommodation { get; set; }
+        public Accommodation? Accommodation { get; set; }
         public int? flight_id { get; set; }
         [JsonIgnore]
-        public Flight Flight { get; set; }
+        public Flight? Flight { get; set; }
         //Rating 1-10
         [Required]
         [Range(1, 10)]

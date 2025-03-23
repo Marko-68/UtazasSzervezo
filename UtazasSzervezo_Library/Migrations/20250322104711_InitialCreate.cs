@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace UtazasSzervezo_Library.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -25,7 +25,8 @@ namespace UtazasSzervezo_Library.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     description = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    type = table.Column<int>(type: "int", nullable: false),
+                    type = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     number_of_rooms = table.Column<int>(type: "int", nullable: false),
                     max_person = table.Column<int>(type: "int", nullable: false),
                     address = table.Column<string>(type: "longtext", nullable: false)
@@ -34,10 +35,12 @@ namespace UtazasSzervezo_Library.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     country = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    price_per_night = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
+                    price_per_night = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     star_rating = table.Column<int>(type: "int", nullable: true),
                     available_rooms = table.Column<int>(type: "int", nullable: false),
                     dinning = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ImgUrl = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
@@ -112,7 +115,7 @@ namespace UtazasSzervezo_Library.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     duration = table.Column<int>(type: "int", nullable: false),
                     available_seats = table.Column<int>(type: "int", nullable: false),
-                    price = table.Column<decimal>(type: "decimal(65,30)", nullable: false)
+                    price = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -144,8 +147,7 @@ namespace UtazasSzervezo_Library.Migrations
                 columns: table => new
                 {
                     accommodation_id = table.Column<int>(type: "int", nullable: false),
-                    amenity_id = table.Column<int>(type: "int", nullable: false),
-                    id = table.Column<int>(type: "int", nullable: false)
+                    amenity_id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -286,7 +288,7 @@ namespace UtazasSzervezo_Library.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     special_request = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    total_price = table.Column<decimal>(type: "decimal(65,30)", nullable: false)
+                    total_price = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -363,12 +365,12 @@ namespace UtazasSzervezo_Library.Migrations
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     user_id = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "varchar(255)", nullable: false)
+                    UserId = table.Column<string>(type: "varchar(255)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     accommodation_id = table.Column<int>(type: "int", nullable: true),
-                    Accommodationid = table.Column<int>(type: "int", nullable: false),
+                    Accommodationid = table.Column<int>(type: "int", nullable: true),
                     flight_id = table.Column<int>(type: "int", nullable: true),
-                    Flightid = table.Column<int>(type: "int", nullable: false),
+                    Flightid = table.Column<int>(type: "int", nullable: true),
                     rating = table.Column<int>(type: "int", nullable: false),
                     comment = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -381,20 +383,17 @@ namespace UtazasSzervezo_Library.Migrations
                         name: "FK_Reviews_Accommodations_Accommodationid",
                         column: x => x.Accommodationid,
                         principalTable: "Accommodations",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "id");
                     table.ForeignKey(
                         name: "FK_Reviews_Flights_Flightid",
                         column: x => x.Flightid,
                         principalTable: "Flights",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "id");
                     table.ForeignKey(
                         name: "FK_Reviews_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 

@@ -27,7 +27,6 @@ namespace UtazasSzervezo_API
             ));
 
 
-
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
             .AddEntityFrameworkStores<UtazasSzervezoDbContext>();
 
@@ -55,6 +54,14 @@ namespace UtazasSzervezo_API
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+
+                SeedData.EnsurePopulated(app);
+            }
+
 
             app.UseCors("AllowAllOrigins");
 

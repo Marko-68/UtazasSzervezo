@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -32,6 +33,7 @@ namespace UtazasSzervezo_Library.Models
         [Required]
         public string country { get; set; }
         [Required]
+        [Precision(10, 2)]
         public decimal price_per_night { get; set; }
         [Range(1,5)]
         public int? star_rating { get; set; }
@@ -41,6 +43,8 @@ namespace UtazasSzervezo_Library.Models
         //selectable string list 
         public string? dinning { get; set; }
 
+        //List
+        public List<string>? ImgUrl { get; set; }
 
         public ICollection<AccommodationAmenities>? AccommodationAmenities { get; set; }
     }

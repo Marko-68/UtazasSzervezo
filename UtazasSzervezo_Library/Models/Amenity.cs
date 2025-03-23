@@ -16,7 +16,7 @@ namespace UtazasSzervezo_Library.Models
         public int id { get; set; }
         [Required]
         public string name { get; set; }
-
+        [JsonIgnore]
         public ICollection<AccommodationAmenities>? AccommodationAmenities { get; set; }
     }
 }

@@ -6,10 +6,10 @@ namespace UtazasSzervezo_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ReviewController : ControllerBase
+    public class ReviewAPIController : ControllerBase
     {
         private readonly ReviewService _reviewService;
-        public ReviewController(ReviewService reviewService)
+        public ReviewAPIController(ReviewService reviewService)
         {
             _reviewService = reviewService;
         }

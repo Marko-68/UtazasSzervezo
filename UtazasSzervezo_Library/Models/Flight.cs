@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -28,6 +29,7 @@ namespace UtazasSzervezo_Library.Models
         [Required]
         public int available_seats { get; set; }
         [Required]
+        [Precision(10, 2)]
         public decimal price { get; set; }
     }
 }

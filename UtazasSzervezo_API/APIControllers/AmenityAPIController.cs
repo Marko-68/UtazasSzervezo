@@ -6,10 +6,10 @@ namespace UtazasSzervezo_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AmenityController : ControllerBase
+    public class AmenityAPIController : ControllerBase
     {
         private readonly AmenityService _amenityService;
-        public AmenityController(AmenityService amenityService)
+        public AmenityAPIController(AmenityService amenityService)
         {
             _amenityService = amenityService;
         }

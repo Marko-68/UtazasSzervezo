@@ -6,10 +6,10 @@ namespace UtazasSzervezo_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BookingController : ControllerBase
+    public class BookingAPIController : ControllerBase
     {
         private readonly BookingService _bookingService;
-        public BookingController(BookingService bookingService)
+        public BookingAPIController(BookingService bookingService)
         {
             _bookingService = bookingService;
         }
