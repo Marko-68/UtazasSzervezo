@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\images\Accommodation_img\Budhotel1.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.13" />
@@ -20,7 +24,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\" />
+    <Folder Include="Pages\Amenities\" />
+    <Folder Include="Pages\Bookings\" />
+    <Folder Include="Pages\Reviews\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\images\Accommodation_img\Budhotel1.jpg" />
   </ItemGroup>
 
 </Project>

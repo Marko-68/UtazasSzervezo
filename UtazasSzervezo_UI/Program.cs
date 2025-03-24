@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using UtazasSzervezo_Library;
@@ -8,7 +9,7 @@ namespace UtazasSzervezo_UI;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
@@ -27,10 +28,11 @@ public class Program
         builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
         builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<UtazasSzervezoDbContext>();
         builder.Services.AddRazorPages();
 
-        //CORS engedélyezése a frontend számára
+        //CORS engedélyezéses
         builder.Services.AddCors(options =>
         {
             options.AddPolicy("AllowAllOrigins",
@@ -38,6 +40,7 @@ public class Program
         });
 
         builder.Services.AddHttpClient<ApiService>();
+
 
         var app = builder.Build();
 
@@ -61,6 +64,39 @@ public class Program
         app.UseAuthorization();
 
         app.MapRazorPages();
+
+        //Roles
+        using(var scope = app.Services.CreateScope())
+        {
+            var RoleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var roles = new List<string> { "Admin" ,"User" };
+            foreach (var role in roles)
+            {
+                if (!RoleManager.RoleExistsAsync(role).Result)
+                {
+                    RoleManager.CreateAsync(new IdentityRole(role)).Wait();
+                }
+            }
+        }
+
+        using (var scope = app.Services.CreateScope())
+        {
+            var UserManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+
+            string email = "admin@gmail.com";
+            string password = "Admin1@";
+            
+            if(await UserManager.FindByEmailAsync(email) == null)
+            {
+                var user = new IdentityUser();
+                user.UserName = email;
+                user.Email = email;
+
+                await UserManager.CreateAsync(user, password);
+
+                await UserManager.AddToRoleAsync(user, "Admin");
+            }
+        }
 
         app.Run();
     }

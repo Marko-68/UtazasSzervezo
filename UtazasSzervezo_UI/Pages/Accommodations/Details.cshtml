@@ -1,0 +1,45 @@
+﻿@page "{id:int}"
+@model UtazasSzervezo_UI.Pages.Accommodations.DetailsModel
+@{
+    ViewData["Title"] = Model.Accommodation?.name ?? "Accommodation Details";
+}
+
+<div class="container">
+    @if (Model.Accommodation != null)
+    {
+        <div class="card">
+            <img  alt="@Model.Accommodation.name" class="card-img-top">
+            <div class="card-body">
+                <h1 class="card-title">@Model.Accommodation.name</h1>
+                <p class="card-text"><strong>Location:</strong> @Model.Accommodation.city, @Model.Accommodation.country</p>
+                <p class="card-text"><strong>Category:</strong> @Model.Accommodation.type</p>
+                <p class="card-text"><strong>Price per night:</strong> @Model.Accommodation.price_per_night</p>
+
+                <h3>Description</h3>
+                <p>@Model.Accommodation.description</p>
+
+                <h3>Amenities</h3>
+                <ul>
+                    @if (Model.Accommodation.AccommodationAmenities != null)
+                    {
+                        @foreach (var amenity in Model.Accommodation.AccommodationAmenities)
+                        {
+                            <li>@amenity.Amenity.name</li>
+                        }
+                    }
+                    else
+                    {
+                        <li>No amenities available.</li>
+                    }
+                </ul>
+
+                <a href="/Accommodations" class="btn btn-secondary">Back to List</a>
+                <a class="btn btn-primary">Book Now</a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <p class="text-danger">Accommodation not found.</p>
+    }
+</div>

@@ -1,0 +1,38 @@
+﻿@page
+@model UtazasSzervezo_UI.Pages.Accommodations.IndexModel
+@{
+    ViewData["Title"] = "Accommodations";
+}
+
+<div class="container py-5">
+    <h1 class="mb-4 fw-bold text-dark">Available Accommodations</h1>
+
+    <div class="row">
+        @foreach (var item in Model.Accommodations)
+        {
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card shadow-sm border-0">
+                    <img src="@item.cover_img" class="card-img-top" alt="@item.name">
+
+                    <div class="card-body">
+                        <span class="badge bg-primary">@item.type</span>
+                        <h5 class="card-title mt-2 fw-bold">@item.name</h5>
+
+                        <p class="text-muted mb-1">
+                            <i class="bi bi-geo-alt-fill text-danger"></i> @item.city, @item.country
+                        </p>
+
+                       @*  <p class="text-warning mb-2">
+                            <i class="bi bi-star-fill"></i> @item.Rating ⭐ (@item.ReviewsCount Reviews)
+                        </p> *@
+
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <span class="fw-bold text-dark">@item.price_per_night / Night</span>
+                            <a asp-page="Details" asp-route-id="@item.id" class="btn btn-primary">See Availability</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
