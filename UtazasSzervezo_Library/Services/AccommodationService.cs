@@ -11,6 +11,7 @@ namespace UtazasSzervezo_Library.Services
     public class AccommodationService
     {
         private readonly UtazasSzervezoDbContext _context;
+        public Accommodation? Accommodation { get; set; }
         public AccommodationService(UtazasSzervezoDbContext context)
         {
             _context = context;
@@ -18,11 +19,21 @@ namespace UtazasSzervezo_Library.Services
 
         public async Task<IEnumerable<Accommodation>> GetAllAccommodations()
         {
+            Accommodation = await _context.Accommodations
+                .Include(a => a.AccommodationAmenities)
+                .ThenInclude(aa => aa.Amenity)
+                .FirstOrDefaultAsync();
+
             return await _context.Accommodations.ToListAsync();
         }
 
         public async Task<Accommodation> GetAccommodationById(int id)
         {
+            Accommodation = await _context.Accommodations
+               .Include(a => a.AccommodationAmenities)
+               .ThenInclude(aa => aa.Amenity)
+               .FirstOrDefaultAsync(a => a.id == id);
+
             return await _context.Accommodations.FindAsync(id);
         }
 
@@ -53,6 +64,12 @@ namespace UtazasSzervezo_Library.Services
 
         public async Task<bool> UpdateAccommodation(int id, Accommodation accommodation)
         {
+
+            Accommodation = await _context.Accommodations
+               .Include(a => a.AccommodationAmenities)
+               .ThenInclude(aa => aa.Amenity)
+               .FirstOrDefaultAsync(a => a.id == id);
+
             var existing = await _context.Accommodations.FindAsync(id);
             if (existing == null)
             {
@@ -70,6 +87,8 @@ namespace UtazasSzervezo_Library.Services
             existing.price_per_night = accommodation.price_per_night;
             existing.available_rooms = accommodation.available_rooms;
             existing.dinning = accommodation.dinning;
+            existing.cover_img = accommodation.cover_img;
+            //TODO: Amenity
 
             _context.Accommodations.Update(existing);
             await _context.SaveChangesAsync();

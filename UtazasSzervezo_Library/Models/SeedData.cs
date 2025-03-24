@@ -35,7 +35,8 @@ namespace UtazasSzervezo_Library.Models
                             price_per_night = 150,
                             star_rating = 4,
                             available_rooms = 25,
-                            dinning = "Breakfast"
+                            dinning = "Breakfast",
+                            cover_img = "./images/Accommodation_img/budhotel1.jpg"
                         },
                         new Accommodation
                         {
@@ -50,7 +51,8 @@ namespace UtazasSzervezo_Library.Models
                             price_per_night = 200,
                             star_rating = 3,
                             available_rooms = 10,
-                            dinning = "Half-board"
+                            dinning = "Half-board",
+                            cover_img = "./images/Accommodation_img/aparthotel-gievont-boutique.jpg"
                         }
                     );
                 }
@@ -111,33 +113,33 @@ namespace UtazasSzervezo_Library.Models
                     );
                 }
 
-                //if (!context.Bookings.Any())
-                //{
-                //    context.Bookings.AddRange(
-                //        new Booking
-                //        {
-                //            accommodation_id = 1,
-                //            flight_id = 1,
-                //            start_date = DateTime.Now.AddDays(10),
-                //            end_date = DateTime.Now.AddDays(15),
-                //            description = "vacation",
-                //            status = "Confirmed",
-                //            special_request = "Late check-in",
-                //            total_price = 749
-                //        },
-                //        new Booking
-                //        {
-                //            accommodation_id = 2,
-                //            flight_id = 2,
-                //            start_date = DateTime.Now.AddDays(20),
-                //            end_date = DateTime.Now.AddDays(25),
-                //            description = "Winter getaway",
-                //            status = "Pending",
-                //            special_request = "Extra blanket",
-                //            total_price = 999
-                //        }
-                //    );
-                //}
+                if (!context.Bookings.Any())
+                {
+                    context.Bookings.AddRange(
+                        new Booking
+                        {
+                            accommodation_id = 1,
+                            flight_id = 1,
+                            start_date = DateTime.Now.AddDays(10),
+                            end_date = DateTime.Now.AddDays(15),
+                            description = "vacation",
+                            status = "Confirmed",
+                            special_request = "Late check-in",
+                            total_price = 749
+                        },
+                        new Booking
+                        {
+                            accommodation_id = 2,
+                            flight_id = 2,
+                            start_date = DateTime.Now.AddDays(20),
+                            end_date = DateTime.Now.AddDays(25),
+                            description = "Winter getaway",
+                            status = "Pending",
+                            special_request = "Extra blanket",
+                            total_price = 999
+                        }
+                    );
+                }
 
                 //if (!context.Reviews.Any())
                 //{

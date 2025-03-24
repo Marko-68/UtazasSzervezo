@@ -40,11 +40,11 @@ namespace UtazasSzervezo_Library.Models
         [Required]
         public int available_rooms { get; set; }
         //breakfast,half-board,all-inclusive
-        //selectable string list 
+        //selectable 
         public string? dinning { get; set; }
 
-        //List
-        public List<string>? ImgUrl { get; set; }
+        public string? cover_img { get; set; }
+        public List<string>? images_url { get; set; }
 
         public ICollection<AccommodationAmenities>? AccommodationAmenities { get; set; }
     }

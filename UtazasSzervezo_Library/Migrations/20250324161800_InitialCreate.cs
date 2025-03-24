@@ -40,7 +40,9 @@ namespace UtazasSzervezo_Library.Migrations
                     available_rooms = table.Column<int>(type: "int", nullable: false),
                     dinning = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    ImgUrl = table.Column<string>(type: "longtext", nullable: true)
+                    cover_img = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    images_url = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
@@ -307,6 +309,38 @@ namespace UtazasSzervezo_Library.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "Reviews",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    user_id = table.Column<int>(type: "int", nullable: false),
+                    accommodation_id = table.Column<int>(type: "int", nullable: true),
+                    Accommodationid = table.Column<int>(type: "int", nullable: true),
+                    flight_id = table.Column<int>(type: "int", nullable: true),
+                    Flightid = table.Column<int>(type: "int", nullable: true),
+                    rating = table.Column<int>(type: "int", nullable: false),
+                    comment = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reviews", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Reviews_Accommodations_Accommodationid",
+                        column: x => x.Accommodationid,
+                        principalTable: "Accommodations",
+                        principalColumn: "id");
+                    table.ForeignKey(
+                        name: "FK_Reviews_Flights_Flightid",
+                        column: x => x.Flightid,
+                        principalTable: "Flights",
+                        principalColumn: "id");
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -355,45 +389,6 @@ namespace UtazasSzervezo_Library.Migrations
                         principalTable: "Roles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "Reviews",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    user_id = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "varchar(255)", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    accommodation_id = table.Column<int>(type: "int", nullable: true),
-                    Accommodationid = table.Column<int>(type: "int", nullable: true),
-                    flight_id = table.Column<int>(type: "int", nullable: true),
-                    Flightid = table.Column<int>(type: "int", nullable: true),
-                    rating = table.Column<int>(type: "int", nullable: false),
-                    comment = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Reviews", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_Reviews_Accommodations_Accommodationid",
-                        column: x => x.Accommodationid,
-                        principalTable: "Accommodations",
-                        principalColumn: "id");
-                    table.ForeignKey(
-                        name: "FK_Reviews_Flights_Flightid",
-                        column: x => x.Flightid,
-                        principalTable: "Flights",
-                        principalColumn: "id");
-                    table.ForeignKey(
-                        name: "FK_Reviews_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -449,11 +444,6 @@ namespace UtazasSzervezo_Library.Migrations
                 column: "Flightid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reviews_UserId",
-                table: "Reviews",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
                 table: "Roles",
                 column: "NormalizedName",
@@ -493,6 +483,9 @@ namespace UtazasSzervezo_Library.Migrations
                 name: "UserRoles");
 
             migrationBuilder.DropTable(
+                name: "Users");
+
+            migrationBuilder.DropTable(
                 name: "Amenities");
 
             migrationBuilder.DropTable(
@@ -500,9 +493,6 @@ namespace UtazasSzervezo_Library.Migrations
 
             migrationBuilder.DropTable(
                 name: "Flights");
-
-            migrationBuilder.DropTable(
-                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Roles");

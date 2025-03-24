@@ -20,6 +20,7 @@ namespace UtazasSzervezo_API
             builder.Services.AddSwaggerGen();
 
             //DBContext injection
+            
             builder.Services.AddDbContext<UtazasSzervezoDbContext>(options =>
             options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
                 ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection")),

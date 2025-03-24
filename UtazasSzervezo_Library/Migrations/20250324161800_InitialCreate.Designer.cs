@@ -12,7 +12,7 @@ using UtazasSzervezo_Library;
 namespace UtazasSzervezo_Library.Migrations
 {
     [DbContext(typeof(UtazasSzervezoDbContext))]
-    [Migration("20250322104711_InitialCreate")]
+    [Migration("20250324161800_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -235,9 +235,6 @@ namespace UtazasSzervezo_Library.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<string>("ImgUrl")
-                        .HasColumnType("longtext");
-
                     b.Property<string>("address")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -253,11 +250,17 @@ namespace UtazasSzervezo_Library.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("cover_img")
+                        .HasColumnType("longtext");
+
                     b.Property<string>("description")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("dinning")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("images_url")
                         .HasColumnType("longtext");
 
                     b.Property<int>("max_person")
@@ -425,9 +428,6 @@ namespace UtazasSzervezo_Library.Migrations
                     b.Property<int?>("Flightid")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("varchar(255)");
-
                     b.Property<int?>("accommodation_id")
                         .HasColumnType("int");
 
@@ -452,8 +452,6 @@ namespace UtazasSzervezo_Library.Migrations
                     b.HasIndex("Accommodationid");
 
                     b.HasIndex("Flightid");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Reviews");
                 });
@@ -579,15 +577,9 @@ namespace UtazasSzervezo_Library.Migrations
                         .WithMany()
                         .HasForeignKey("Flightid");
 
-                    b.HasOne("UtazasSzervezo_Library.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
                     b.Navigation("Accommodation");
 
                     b.Navigation("Flight");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("UtazasSzervezo_Library.Models.User", b =>
