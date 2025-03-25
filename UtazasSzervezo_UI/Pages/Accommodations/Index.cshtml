@@ -7,6 +7,14 @@
 <div class="container py-5">
     <h1 class="mb-4 fw-bold text-dark">Available Accommodations</h1>
 
+    <form method="get" class="mb-4">
+        <div class="input-group">
+            <input type="text" name="SearchString" class="form-control" placeholder="Search..."
+                   value="@Model.SearchString" />
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
+
     <div class="row">
         @foreach (var item in Model.Accommodations)
         {
@@ -22,7 +30,7 @@
                             <i class="bi bi-geo-alt-fill text-danger"></i> @item.city, @item.country
                         </p>
 
-                       @*  <p class="text-warning mb-2">
+                        @*  <p class="text-warning mb-2">
                             <i class="bi bi-star-fill"></i> @item.Rating ⭐ (@item.ReviewsCount Reviews)
                         </p> *@
 
