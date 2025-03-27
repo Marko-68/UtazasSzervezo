@@ -10,10 +10,11 @@
     <form method="get" class="mb-4">
         <div class="input-group">
             <input type="text" name="SearchString" class="form-control" placeholder="Search..."
-                   value="@Model.SearchString" />
+            value="@Model.SearchString" />
             <button type="submit" class="btn btn-primary">Search</button>
         </div>
     </form>
+
 
     <div class="row">
         @foreach (var item in Model.Accommodations)
@@ -23,14 +24,23 @@
                     <img src="@item.cover_img" class="card-img-top" alt="@item.name">
 
                     <div class="card-body">
+                        
                         <span class="badge bg-primary">@item.type</span>
+
+                        <span class="badge bg-warning">
+                            @for (int i = 0; i < item.star_rating; i++)
+                            {
+                                @:★ 
+                            }
+                        </span>
+
                         <h5 class="card-title mt-2 fw-bold">@item.name</h5>
 
                         <p class="text-muted mb-1">
                             <i class="bi bi-geo-alt-fill text-danger"></i> @item.city, @item.country
                         </p>
 
-                        @*  <p class="text-warning mb-2">
+                        @*<p class="text-warning mb-2">
                             <i class="bi bi-star-fill"></i> @item.Rating ⭐ (@item.ReviewsCount Reviews)
                         </p> *@
 
