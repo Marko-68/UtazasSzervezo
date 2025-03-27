@@ -53,6 +53,38 @@ namespace UtazasSzervezo_Library.Models
                             available_rooms = 10,
                             dinning = "Half-board",
                             cover_img = "./images/Accommodation_img/aparthotel-gievont-boutique.jpg"
+                        },
+                        new Accommodation
+                        {
+                            name = "Beach Resort",
+                            description = "Luxury resort right on the beach with private access.",
+                            type = "Resort",
+                            number_of_rooms = 100,
+                            max_person = 3,
+                            address = "789 Coastal Avenue",
+                            city = "Split",
+                            country = "Croatia",
+                            price_per_night = 300,
+                            star_rating = 5,
+                            available_rooms = 40,
+                            dinning = "All-inclusive",
+                            cover_img = "./images/Accommodation_img/beach-resort.jpg"
+                        },
+                        new Accommodation
+                        {
+                            name = "City Apartments",
+                            description = "Modern apartments in the city center.",
+                            type = "Apartment",
+                            number_of_rooms = 30,
+                            max_person = 2,
+                            address = "101 Downtown Street",
+                            city = "Berlin",
+                            country = "Germany",
+                            price_per_night = 120,
+                            star_rating = 4,
+                            available_rooms = 15,
+                            dinning = "Self-catering",
+                            cover_img = "./images/Accommodation_img/city-apartment.jpg"
                         }
                     );
                 }
@@ -81,6 +113,22 @@ namespace UtazasSzervezo_Library.Models
                         new Amenity
                         {
                             name = "Swimming Pool"
+                        },
+                        new Amenity
+                        {
+                            name = "Air Conditioning"
+                        },
+                        new Amenity
+                        {
+                            name = "Fitness Center"
+                        },
+                        new Amenity
+                        {
+                            name = "Spa"
+                        },
+                        new Amenity
+                        {
+                            name = "Pet Friendly"
                         }
                     );
                 }
@@ -109,6 +157,28 @@ namespace UtazasSzervezo_Library.Models
                             duration = 180,
                             available_seats = 200,
                             price = 79
+                        },
+                        new Flight
+                        {
+                            airline = "Lufthansa",
+                            departure_time = DateTime.Now.AddDays(5),
+                            arrival_time = DateTime.Now.AddDays(5).AddHours(1.5),
+                            departure_airport = "BUD",
+                            destination_airport = "MUC",
+                            duration = 90,
+                            available_seats = 180,
+                            price = 129
+                        },
+                        new Flight
+                        {
+                            airline = "British Airways",
+                            departure_time = DateTime.Now.AddDays(8),
+                            arrival_time = DateTime.Now.AddDays(8).AddHours(2.5),
+                            departure_airport = "BUD",
+                            destination_airport = "LHR",
+                            duration = 150,
+                            available_seats = 220,
+                            price = 159
                         }
                     );
                 }
@@ -141,27 +211,27 @@ namespace UtazasSzervezo_Library.Models
                     );
                 }
 
-                //if (!context.Reviews.Any())
-                //{
-                //    context.Reviews.AddRange(
-                //        new Review
-                //        {
-                //            user_id = 1,
-                //            accommodation_id = 1,
-                //            rating = 9,
-                //            comment = "Great experience!",
-                //            created_at = DateTime.Now
-                //        },
-                //        new Review
-                //        {
-                //            user_id = 1,
-                //            flight_id = 1,
-                //            rating = 8,
-                //            comment = "Comfortable flight.",
-                //            created_at = DateTime.Now
-                //        }
-                //    );
-                //}
+                if (!context.Reviews.Any())
+                {
+                    context.Reviews.AddRange(
+                        new Review
+                        {
+                            user_id = 1,
+                            accommodation_id = 1,
+                            rating = 9,
+                            comment = "Great experience!",
+                            created_at = DateTime.Now
+                        },
+                        new Review
+                        {
+                            user_id = 1,
+                            flight_id = 1,
+                            rating = 8,
+                            comment = "Comfortable flight.",
+                            created_at = DateTime.Now
+                        }
+                    );
+                }
 
                 context.SaveChanges();
             }
