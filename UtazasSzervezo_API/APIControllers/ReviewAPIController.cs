@@ -30,8 +30,16 @@ namespace UtazasSzervezo_API.Controllers
             return Ok(reviews);
         }
 
+        //ez nem kell az WPF-hez
+        [HttpGet("byaccommodation/{accommodationId}")]
+        public async Task<IActionResult> GetByAccommodationId(int accommodationId)
+        {
+            var reviews = await _reviewService.GetReviewsByAccommodationId(accommodationId);
+            return Ok(reviews);
+        }
+
         [HttpPost]
-        public async Task<IActionResult> Create(Review review)
+        public async Task<IActionResult> Create([FromBody]Review review)
         {
             await _reviewService.CreateReview(review);
             return Ok();

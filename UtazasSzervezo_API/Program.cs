@@ -28,7 +28,7 @@ namespace UtazasSzervezo_API
             ));
 
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+            builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
             .AddEntityFrameworkStores<UtazasSzervezoDbContext>();
 
 
