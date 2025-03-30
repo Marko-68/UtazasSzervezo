@@ -8,25 +8,32 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\Amenities\**" />
+    <Compile Remove="Pages\Reviews\**" />
+    <Content Remove="Pages\Amenities\**" />
+    <Content Remove="Pages\Reviews\**" />
+    <EmbeddedResource Remove="Pages\Amenities\**" />
+    <EmbeddedResource Remove="Pages\Reviews\**" />
+    <None Remove="Pages\Amenities\**" />
+    <None Remove="Pages\Reviews\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="wwwroot\images\Accommodation_img\Budhotel1.jpg" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.13" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.13" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.13" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\UtazasSzervezo_Library\UtazasSzervezo_Library.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Pages\Amenities\" />
-    <Folder Include="Pages\Bookings\" />
-    <Folder Include="Pages\Reviews\" />
   </ItemGroup>
 
   <ItemGroup>
