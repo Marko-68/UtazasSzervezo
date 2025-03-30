@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UtazasSzervezo_Library;
 
@@ -11,13 +12,15 @@ using UtazasSzervezo_Library;
 namespace UtazasSzervezo_Library.Migrations
 {
     [DbContext(typeof(UtazasSzervezoDbContext))]
-    partial class UtazasSzervezoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250327195425_InitialCreateUI")]
+    partial class InitialCreateUI
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.12")
+                .HasAnnotation("ProductVersion", "8.0.13")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
@@ -368,9 +371,6 @@ namespace UtazasSzervezo_Library.Migrations
                     b.Property<int?>("Flightid")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("varchar(255)");
-
                     b.Property<int?>("accommodation_id")
                         .HasColumnType("int");
 
@@ -387,17 +387,14 @@ namespace UtazasSzervezo_Library.Migrations
                     b.Property<int>("rating")
                         .HasColumnType("int");
 
-                    b.Property<string>("user_id")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<int>("user_id")
+                        .HasColumnType("int");
 
                     b.HasKey("id");
 
                     b.HasIndex("Accommodationid");
 
                     b.HasIndex("Flightid");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Reviews");
                 });
@@ -570,15 +567,9 @@ namespace UtazasSzervezo_Library.Migrations
                         .WithMany()
                         .HasForeignKey("Flightid");
 
-                    b.HasOne("UtazasSzervezo_Library.Models.User", "User")
-                        .WithMany("Reviews")
-                        .HasForeignKey("UserId");
-
                     b.Navigation("Accommodation");
 
                     b.Navigation("Flight");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("UtazasSzervezo_Library.Models.Accommodation", b =>
@@ -594,8 +585,6 @@ namespace UtazasSzervezo_Library.Migrations
             modelBuilder.Entity("UtazasSzervezo_Library.Models.User", b =>
                 {
                     b.Navigation("Bookings");
-
-                    b.Navigation("Reviews");
                 });
 #pragma warning restore 612, 618
         }

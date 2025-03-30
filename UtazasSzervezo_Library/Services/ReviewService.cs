@@ -26,6 +26,13 @@ namespace UtazasSzervezo_Library.Services
             return await _context.Reviews.FindAsync(id);
         }
 
+        public async Task<List<Review>> GetReviewsByAccommodationId(int accommodationId)
+        {
+            return await _context.Reviews
+                .Where(r => r.accommodation_id == accommodationId)
+                .ToListAsync();
+        }
+
         public async Task<Review> CreateReview(Review review)
         {
             _context.Reviews.Add(review);

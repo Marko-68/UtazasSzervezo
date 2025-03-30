@@ -32,6 +32,11 @@ namespace UtazasSzervezo_Library.Models
         [Precision(10, 2)]
         public decimal total_price { get; set; }
 
+        public string user_id { get; set; }
+
+        [JsonIgnore]
+        public User User { get; set; }
+
         //TODO: képek
     }
 }

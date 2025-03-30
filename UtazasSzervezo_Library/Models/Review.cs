@@ -13,9 +13,9 @@ namespace UtazasSzervezo_Library.Models
         [Key]
         public int id { get; set; }
         [Required]
-        public int user_id { get; set; }
+        public string user_id { get; set; }
         [JsonIgnore]
-        //public User? User { get; set; }
+        public User User { get; set; }
         public int? accommodation_id { get; set; }
         [JsonIgnore]
         public Accommodation? Accommodation { get; set; }

@@ -12,7 +12,7 @@ using UtazasSzervezo_Library.Models;
 
 namespace UtazasSzervezo_Library
 {
-    public class UtazasSzervezoDbContext : IdentityDbContext<IdentityUser>
+    public class UtazasSzervezoDbContext : IdentityDbContext<User>
     {
         public UtazasSzervezoDbContext(DbContextOptions<UtazasSzervezoDbContext> options)
            : base(options) { }

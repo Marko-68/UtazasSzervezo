@@ -36,7 +36,10 @@ namespace UtazasSzervezo_Library.Models
                             star_rating = 4,
                             available_rooms = 25,
                             dinning = "Breakfast",
-                            cover_img = "./images/Accommodation_img/budhotel1.jpg"
+                            cover_img = "./images/Accommodation_img/budhotel1.jpg",
+                            images_url = ["./images/Accommodation_img/acc1_1_images.jpg",
+                                          "./images/Accommodation_img/acc1_2_images.jpg",
+                                          "./images/Accommodation_img/acc1_3_images.jpg"]
                         },
                         new Accommodation
                         {
@@ -183,55 +186,55 @@ namespace UtazasSzervezo_Library.Models
                     );
                 }
 
-                if (!context.Bookings.Any())
-                {
-                    context.Bookings.AddRange(
-                        new Booking
-                        {
-                            accommodation_id = 1,
-                            flight_id = 1,
-                            start_date = DateTime.Now.AddDays(10),
-                            end_date = DateTime.Now.AddDays(15),
-                            description = "vacation",
-                            status = "Confirmed",
-                            special_request = "Late check-in",
-                            total_price = 749
-                        },
-                        new Booking
-                        {
-                            accommodation_id = 2,
-                            flight_id = 2,
-                            start_date = DateTime.Now.AddDays(20),
-                            end_date = DateTime.Now.AddDays(25),
-                            description = "Winter getaway",
-                            status = "Pending",
-                            special_request = "Extra blanket",
-                            total_price = 999
-                        }
-                    );
-                }
+                //if (!context.Bookings.Any())
+                //{
+                //    context.Bookings.AddRange(
+                //        new Booking
+                //        {
+                //            accommodation_id = 1,
+                //            flight_id = 1,
+                //            start_date = DateTime.Now.AddDays(10),
+                //            end_date = DateTime.Now.AddDays(15),
+                //            description = "vacation",
+                //            status = "Confirmed",
+                //            special_request = "Late check-in",
+                //            total_price = 749
+                //        },
+                //        new Booking
+                //        {
+                //            accommodation_id = 2,
+                //            flight_id = 2,
+                //            start_date = DateTime.Now.AddDays(20),
+                //            end_date = DateTime.Now.AddDays(25),
+                //            description = "Winter getaway",
+                //            status = "Pending",
+                //            special_request = "Extra blanket",
+                //            total_price = 999
+                //        }
+                //    );
+                //}
 
-                if (!context.Reviews.Any())
-                {
-                    context.Reviews.AddRange(
-                        new Review
-                        {
-                            user_id = 1,
-                            accommodation_id = 1,
-                            rating = 9,
-                            comment = "Great experience!",
-                            created_at = DateTime.Now
-                        },
-                        new Review
-                        {
-                            user_id = 1,
-                            flight_id = 1,
-                            rating = 8,
-                            comment = "Comfortable flight.",
-                            created_at = DateTime.Now
-                        }
-                    );
-                }
+                //if (!context.Reviews.Any())
+                //{
+                //    context.Reviews.AddRange(
+                //        new Review
+                //        {
+                //            user_id = 1,
+                //            accommodation_id = 1,
+                //            rating = 9,
+                //            comment = "Great experience!",
+                //            created_at = DateTime.Now
+                //        },
+                //        new Review
+                //        {
+                //            user_id = 1,
+                //            flight_id = 1,
+                //            rating = 8,
+                //            comment = "Comfortable flight.",
+                //            created_at = DateTime.Now
+                //        }
+                //    );
+                //}
 
                 context.SaveChanges();
             }
