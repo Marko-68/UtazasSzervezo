@@ -1,108 +1,103 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UtazasSzervezo_Library.Models;
+﻿using UtazasSzervezo_Library.Models;
+using UtazasSzervezo_Library;
+using Microsoft.EntityFrameworkCore;
 
-namespace UtazasSzervezo_Library.Services
+public class AccommodationService
 {
-    public class AccommodationService
+    private readonly UtazasSzervezoDbContext _context;
+
+    public AccommodationService(UtazasSzervezoDbContext context)
     {
-        private readonly UtazasSzervezoDbContext _context;
-        public Accommodation? Accommodation { get; set; }
-        public AccommodationService(UtazasSzervezoDbContext context)
+        _context = context;
+    }
+
+    public async Task<IEnumerable<Accommodation>> GetAllAccommodations()
+    {
+        return await _context.Accommodations
+            .Include(a => a.AccommodationAmenities)
+            .ThenInclude(aa => aa.Amenity)
+            .ToListAsync();
+    }
+
+    public async Task<Accommodation?> GetAccommodationById(int id)
+    {
+        return await _context.Accommodations
+            .Include(a => a.AccommodationAmenities)
+            .ThenInclude(aa => aa.Amenity)
+            .FirstOrDefaultAsync(a => a.id == id);
+    }
+
+    public async Task<Accommodation> CreateAccommodation(Accommodation accommodation)
+    {
+        _context.Accommodations.Add(accommodation);
+        await _context.SaveChangesAsync();
+
+        if (accommodation.AccommodationAmenities != null && accommodation.AccommodationAmenities.Any())
         {
-            _context = context;
-        }
-
-        public async Task<IEnumerable<Accommodation>> GetAllAccommodations()
-        {
-            Accommodation = await _context.Accommodations
-                .Include(a => a.AccommodationAmenities)
-                .ThenInclude(aa => aa.Amenity)
-                .FirstOrDefaultAsync();
-
-            return await _context.Accommodations.ToListAsync();
-        }
-
-        public async Task<Accommodation> GetAccommodationById(int id)
-        {
-            Accommodation = await _context.Accommodations
-               .Include(a => a.AccommodationAmenities)
-               .ThenInclude(aa => aa.Amenity)
-               .FirstOrDefaultAsync(a => a.id == id);
-
-            return await _context.Accommodations.FindAsync(id);
-        }
-
-        public async Task<Accommodation> CreateAccommodation(Accommodation accommodation)
-        {
-            _context.Accommodations.Add(accommodation);
-            await _context.SaveChangesAsync();
-
-            // Amenity-k hozzáadása
-            if (accommodation.AccommodationAmenities != null && accommodation.AccommodationAmenities.Any())
+            foreach (var accommodationAmenity in accommodation.AccommodationAmenities)
             {
-                foreach (var accommodationAmenity in accommodation.AccommodationAmenities)
+                var exists = await _context.AccommodationsAmenities
+                    .AnyAsync(aa => aa.accommodation_id == accommodation.id &&
+                                   aa.amenity_id == accommodationAmenity.amenity_id);
+
+                if (!exists)
                 {
-                    var exists = await _context.AccommodationsAmenities
-                        .AnyAsync(aa => aa.accommodation_id == accommodation.id && aa.amenity_id == accommodationAmenity.amenity_id);
-
-                    if (!exists)
-                    {
-                        accommodationAmenity.accommodation_id = accommodation.id;
-                        _context.AccommodationsAmenities.Add(accommodationAmenity);
-                    }
+                    accommodationAmenity.accommodation_id = accommodation.id;
+                    _context.AccommodationsAmenities.Add(accommodationAmenity);
                 }
-                await _context.SaveChangesAsync();
             }
-
-            return accommodation;
+            await _context.SaveChangesAsync();
         }
 
-        public async Task<bool> UpdateAccommodation(int id, Accommodation accommodation)
+        return accommodation;
+    }
+
+    public async Task<bool> UpdateAccommodation(int id, Accommodation accommodation)
+    {
+        var existing = await _context.Accommodations
+            .Include(a => a.AccommodationAmenities)
+            .FirstOrDefaultAsync(a => a.id == id);
+
+        if (existing == null) return false;
+
+        //alapvető tulajdonságok frissítése
+        _context.Entry(existing).CurrentValues.SetValues(accommodation);
+
+        //Amenitties
+        if (accommodation.AccommodationAmenities != null)
         {
-
-            Accommodation = await _context.Accommodations
-               .Include(a => a.AccommodationAmenities)
-               .ThenInclude(aa => aa.Amenity)
-               .FirstOrDefaultAsync(a => a.id == id);
-
-            var existing = await _context.Accommodations.FindAsync(id);
-            if (existing == null)
+            foreach (var existingAmenity in existing.AccommodationAmenities.ToList())
             {
-                return false;
+                if (!accommodation.AccommodationAmenities.Any(a => a.amenity_id == existingAmenity.amenity_id))
+                {
+                    _context.AccommodationsAmenities.Remove(existingAmenity);
+                }
             }
 
-            existing.name = accommodation.name;
-            existing.description = accommodation.description;
-            existing.type = accommodation.type;
-            existing.number_of_rooms = accommodation.number_of_rooms;
-            existing.max_person = accommodation.max_person;
-            existing.address = accommodation.address;
-            existing.city = accommodation.city;
-            existing.country = accommodation.country;
-            existing.price_per_night = accommodation.price_per_night;
-            existing.available_rooms = accommodation.available_rooms;
-            existing.dinning = accommodation.dinning;
-            existing.cover_img = accommodation.cover_img;
-            //TODO: Amenity
-
-            _context.Accommodations.Update(existing);
-            await _context.SaveChangesAsync();
-            return true;
+            foreach (var newAmenity in accommodation.AccommodationAmenities)
+            {
+                if (!existing.AccommodationAmenities.Any(a => a.amenity_id == newAmenity.amenity_id))
+                {
+                    existing.AccommodationAmenities.Add(new AccommodationAmenities
+                    {
+                        accommodation_id = id,
+                        amenity_id = newAmenity.amenity_id
+                    });
+                }
+            }
         }
 
-        public async Task<bool> DeleteAccommodation(int id)
-        {
-            var accommodation = await _context.Accommodations.FindAsync(id);
-            if (accommodation == null) return false;
+        await _context.SaveChangesAsync();
+        return true;
+    }
 
-            _context.Accommodations.Remove(accommodation);
-            await _context.SaveChangesAsync();
-            return true;
-        }
+    public async Task<bool> DeleteAccommodation(int id)
+    {
+        var accommodation = await _context.Accommodations.FindAsync(id);
+        if (accommodation == null) return false;
+
+        _context.Accommodations.Remove(accommodation);
+        await _context.SaveChangesAsync();
+        return true;
     }
 }

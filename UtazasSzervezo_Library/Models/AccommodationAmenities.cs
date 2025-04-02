@@ -17,7 +17,6 @@ namespace UtazasSzervezo_Library.Models
         public Accommodation? Accommodation { get; set; }
         [Required]
         public int? amenity_id { get; set; }
-        [JsonIgnore]
         public Amenity? Amenity { get; set; }
     }
 }

@@ -8,10 +8,18 @@ namespace UtazasSzervezo_UI.Pages.Accommodations
     public class IndexModel : PageModel
     {
         private readonly HttpClient _httpClient;
-        public List<Accommodation> Accommodations { get; set; } = new();
+        public List<Accommodation> AllAccommodations { get; set; } = new();
+        public List<Accommodation> FilteredAccommodations { get; set; } = new();
+        public List<string> AccommodationTypes { get; set; } = new();
 
         [BindProperty(SupportsGet = true)]
-        public string? SearchString { get; set; } 
+        public string? SearchString { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public int? MaxPersons { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string? AccommodationType { get; set; }
 
         public IndexModel(HttpClient httpClient)
         {
@@ -24,30 +32,41 @@ namespace UtazasSzervezo_UI.Pages.Accommodations
             if (response.IsSuccessStatusCode)
             {
                 var json = await response.Content.ReadAsStringAsync();
-                var allAccommodations = JsonSerializer.Deserialize<List<Accommodation>>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                AllAccommodations = JsonSerializer.Deserialize<List<Accommodation>>(json,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ?? new List<Accommodation>();
 
-                Accommodations = Search(allAccommodations, SearchString);
-            }
-            else
-            {
-                Accommodations = new List<Accommodation>();
+                AccommodationTypes = AllAccommodations
+                    .Select(a => a.type)
+                    .Distinct()
+                    .OrderBy(t => t)
+                    .ToList();
+
+                FilteredAccommodations = ApplyFilters(AllAccommodations);
             }
         }
 
-        private List<Accommodation> Search(List<Accommodation>? accommodations, string? searchString)
+        private List<Accommodation> ApplyFilters(List<Accommodation> accommodations)
         {
-            if (accommodations == null) return new List<Accommodation>();
+            var filtered = accommodations.AsEnumerable();
 
-            if (!string.IsNullOrEmpty(searchString))
+            if (!string.IsNullOrEmpty(SearchString))
             {
-                return accommodations
-                    .Where(a => (a.name != null && a.name!.ToUpper().Contains(searchString.ToUpper())) ||
-                                (a.city != null && a.city!.ToUpper().Contains(searchString.ToUpper())) ||
-                                (a.country != null && a.country!.ToUpper().Contains(searchString.ToUpper())))
-                    .ToList();
+                filtered = filtered.Where(a =>
+                    (a.name != null && a.name.Contains(SearchString, StringComparison.OrdinalIgnoreCase)) ||
+                    (a.city != null && a.city.Contains(SearchString, StringComparison.OrdinalIgnoreCase)) ||
+                    (a.country != null && a.country.Contains(SearchString, StringComparison.OrdinalIgnoreCase)));
+            }
+            if (MaxPersons.HasValue)
+            {
+                filtered = filtered.Where(a => a.max_person >= MaxPersons.Value);
             }
 
-            return accommodations;
+            if (!string.IsNullOrEmpty(AccommodationType))
+            {
+                filtered = filtered.Where(a => a.type == AccommodationType);
+            }
+
+            return filtered.ToList();
         }
     }
 }
