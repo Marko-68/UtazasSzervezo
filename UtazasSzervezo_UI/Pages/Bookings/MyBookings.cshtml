@@ -1,0 +1,37 @@
+﻿@page
+@model UtazasSzervezo_UI.Pages.Bookings.MyBookingsModel
+@{
+}
+
+
+<div class="row">
+    @foreach (var item in Model.Bookings)
+    {
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+
+                    <span class="badge bg-primary">@item.</span>
+
+                    @if(item.accommodation_id != null || item.Accommodation != null)
+                    {
+                        <h5 class="card-title mt-2 fw-bold">@item.Accommodation.name</h5>
+                    }
+                    else if (item.flight_id != null || item.flight_id != null)
+                    {
+                        <h5 class="card-title mt-2 fw-bold">@item.Flight.departure_airport</h5>
+                    }
+
+                    <p class="text-muted mb-1">
+                        <i class="bi bi-geo-alt-fill text-danger"></i> @item.start_date, @item.end_date
+                    </p>
+
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <span class="fw-bold text-dark">@item.total_price</span>
+                        <a asp-page="Details" asp-route-id="@item.id" class="btn btn-primary">See Availability</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

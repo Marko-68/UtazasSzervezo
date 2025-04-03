@@ -1,7 +1,7 @@
 ﻿@page "{id:int}"
 @model UtazasSzervezo_UI.Pages.Accommodations.DetailsModel
 @{
-    ViewData["Title"] = Model.Accommodation?.name ?? "Accommodation Details";
+    ViewData["Title"] = "Accommodation Details";
 }
 
 <div class="container mt-5">
@@ -82,7 +82,7 @@
                                     <div class="d-flex align-items-center">
                                         <i class="bi bi-currency-dollar fs-3 me-3 text-primary"></i>
                                         <div>
-                                            <h5 class="mb-0">@Model.Accommodation.price_per_night.ToString("C")</h5>
+                                            <h5 class="mb-0">@Model.Accommodation.price_per_night</h5>
                                             <small class="text-muted">Per night</small>
                                         </div>
                                     </div>
@@ -113,7 +113,7 @@
                                 else
                                 {
                                     <div class="col-12">
-                                        <p class="text-muted">No amenities listed</p>
+                                        <p class="text-muted">No amenities available</p>
                                     </div>
                                 }
                             </div>
