@@ -27,8 +27,8 @@ public class Program
         })
         .AddRoles<IdentityRole>()
         .AddEntityFrameworkStores<UtazasSzervezoDbContext>();
-        builder.Services.AddRazorPages();
 
+        builder.Services.AddRazorPages();
 
         builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
