@@ -32,7 +32,7 @@ namespace UtazasSzervezo_API
             .AddEntityFrameworkStores<UtazasSzervezoDbContext>();
 
 
-            //CORS engedélyezése a frontend számára
+            //Add CORS
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowAllOrigins",

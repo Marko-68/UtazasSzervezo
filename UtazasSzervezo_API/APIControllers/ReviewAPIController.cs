@@ -39,12 +39,18 @@ namespace UtazasSzervezo_API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody]Review review)
+        public async Task<IActionResult> Create([FromBody] Review review)
         {
-            await _reviewService.CreateReview(review);
-            return Ok();
+            try
+            {
+                var createdReview = await _reviewService.CreateReview(review);
+                return CreatedAtAction(nameof(GetById), new { id = createdReview.id }, createdReview);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Save error");
+            }
         }
-
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)

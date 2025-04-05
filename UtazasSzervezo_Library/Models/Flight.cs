@@ -14,6 +14,8 @@ namespace UtazasSzervezo_Library.Models
         public int id { get; set; }
         [Required]
         public string airline { get; set; }
+
+        //public string planetype { get; set; }
         [Required]
         public DateTime departure_time { get; set; }
         [Required]
@@ -21,6 +23,15 @@ namespace UtazasSzervezo_Library.Models
         [Required]
         [StringLength(3)]
         public string departure_airport { get; set; }
+
+        /*
+         
+        public string departure_city { get; set; }
+        public string departure_country { get; set; }
+        public string detination_city { get; set; }
+        public string destination_country { get; set; }
+        
+         */
         [Required]
         [StringLength(3)]
         public string destination_airport { get; set; }

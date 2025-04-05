@@ -23,7 +23,7 @@ namespace UtazasSzervezo_Library
         public DbSet<Flight> Flights { get; set; }
         public DbSet<Review> Reviews { get; set; }
 
-        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -47,16 +47,6 @@ namespace UtazasSzervezo_Library
                 .HasForeignKey(aa => aa.amenity_id);
 
         }
-
-        /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                var connectionString = "server=localhost;database=UtazasSzervezoIdentityDB;user=root;password=;";
-                optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString),
-                    b => b.MigrationsAssembly("UtazasSzervezo_Libray"));
-            }
-        }*/
 
     }
 }

@@ -12,21 +12,29 @@ namespace UtazasSzervezo_Library.Models
     {
         [Key]
         public int id { get; set; }
+
         [Required]
-        public string user_id { get; set; }
+        public string? user_id { get; set; }
         [JsonIgnore]
-        public User User { get; set; }
+        public virtual User? User { get; set; }
+
         public int? accommodation_id { get; set; }
+
         [JsonIgnore]
         public Accommodation? Accommodation { get; set; }
+
         public int? flight_id { get; set; }
+
         [JsonIgnore]
         public Flight? Flight { get; set; }
-        //Rating 1-10
+
         [Required]
         [Range(1, 10)]
         public int rating { get; set; }
+
+        [Required]
         public string comment { get; set; }
+
         public DateTime created_at { get; set; }
     }
 }

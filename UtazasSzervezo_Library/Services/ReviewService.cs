@@ -37,7 +37,7 @@ namespace UtazasSzervezo_Library.Services
         {
             _context.Reviews.Add(review);
             await _context.SaveChangesAsync();
-            return review;
+            return review;   
         }
 
         public async Task<bool> DeleteReview(int id)
