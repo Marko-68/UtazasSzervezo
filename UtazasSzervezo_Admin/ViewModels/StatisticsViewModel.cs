@@ -18,7 +18,7 @@ namespace UtazasSzervezo_Admin.ViewModels
     {
         private readonly HttpClient _http = new HttpClient
         {
-            BaseAddress = new Uri("https://localhost:5133/") 
+            BaseAddress = new Uri("https://localhost:7258/") 
         };
 
         public SeriesCollection BookingsPerMonthSeries { get; set; } = new();
@@ -26,6 +26,7 @@ namespace UtazasSzervezo_Admin.ViewModels
 
         public SeriesCollection RevenuePerMonthSeries { get; set; } = new();
         public Func<double, string> CurrencyFormatter => value => value.ToString("C0", new CultureInfo("hu-HU"));
+        public Func<double, string> RevenuePerMonthLabels => value => value.ToString("C0", new CultureInfo("hu-HU"));
 
         public SeriesCollection PopularCitiesSeries { get; set; } = new();
         public ObservableCollection<string> CityLabels { get; set; } = new();

@@ -23,7 +23,7 @@ namespace UtazasSzervezo_Admin.ViewModels
         public ICommand EditCommand { get; }
         public ICommand DeleteCommand { get; }
 
-        private readonly HttpClient _http = new HttpClient { BaseAddress = new Uri("https://localhost:5133/") };
+        private readonly HttpClient _http = new HttpClient { BaseAddress = new Uri("https://localhost:7258/") };
 
         private Flight _selectedFlight;
         public Flight SelectedFlight

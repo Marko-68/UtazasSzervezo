@@ -24,7 +24,7 @@ namespace UtazasSzervezo_Admin.ViewModels
 
         private readonly HttpClient _http = new HttpClient
         {
-            BaseAddress = new Uri("https://localhost:5173/")
+            BaseAddress = new Uri("https://localhost:7258/")
         };
 
         private Accommodation _selectedAccommodation;

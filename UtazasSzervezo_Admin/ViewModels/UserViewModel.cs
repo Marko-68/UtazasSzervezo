@@ -22,7 +22,7 @@ namespace UtazasSzervezo_Admin.ViewModels
 
         private readonly HttpClient _http = new HttpClient
         {
-            BaseAddress = new Uri("https://localhost:5133/")
+            BaseAddress = new Uri("https://localhost:7258/")
         };
 
         private User _selectedUser;
