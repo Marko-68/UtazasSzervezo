@@ -5,32 +5,41 @@
              StartupUri="Views/MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
-            <Style x:Key="NavButtonStyle" TargetType="Button">
-                <Setter Property="Background" Value="Transparent"/>
-                <Setter Property="Foreground" Value="White"/>
+            <DropShadowEffect x:Key="DropShadowEffect"
+                      Color="Black"
+                      Direction="320"
+                      ShadowDepth="4"
+                      BlurRadius="10"
+                      Opacity="0.3"/>
+
+            <!-- Modern gombstílus -->
+            <Style x:Key="ModernNavButtonStyle" TargetType="Button">
+                <Setter Property="Margin" Value="0 0 0 12"/>
+                <Setter Property="Padding" Value="12 6"/>
                 <Setter Property="FontSize" Value="14"/>
-                <Setter Property="Padding" Value="20 10"/>
-                <Setter Property="Margin" Value="5 0"/>
-                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="FontWeight" Value="Normal"/>
+                <Setter Property="Foreground" Value="#2c3e50"/>
+                <Setter Property="Background" Value="#f5f5f5"/>
+                <Setter Property="BorderBrush" Value="#dcdcdc"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Cursor" Value="Hand"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
-                            <Border Background="{TemplateBinding Background}" 
-                                CornerRadius="4"
-                                Padding="{TemplateBinding Padding}">
-                                <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"/>
+                            <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="6">
+                                <ContentPresenter HorizontalAlignment="Left" Margin="10 0"/>
                             </Border>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
                 <Style.Triggers>
                     <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Background" Value="#555"/>
-                        <Setter Property="Cursor" Value="Hand"/>
-                    </Trigger>
-                    <Trigger Property="IsPressed" Value="True">
-                        <Setter Property="Background" Value="#666"/>
+                        <Setter Property="Background" Value="#e0f7fa"/>
+                        <Setter Property="BorderBrush" Value="#26c6da"/>
+                        <Setter Property="Foreground" Value="#00796b"/>
                     </Trigger>
                 </Style.Triggers>
             </Style>

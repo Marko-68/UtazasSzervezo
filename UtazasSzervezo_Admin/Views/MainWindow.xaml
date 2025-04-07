@@ -3,23 +3,52 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:UtazasSzervezo_Admin.Views"
+        xmlns:vm="clr-namespace:UtazasSzervezo_Admin.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Utazásszervező Admin" Height="600" Width="1000">
+
+    <Window.DataContext>
+        <vm:MainViewModel/>
+    </Window.DataContext>
+
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
-        <!-- Navigation Menu -->
-        <StackPanel Orientation="Horizontal" Background="#333">
-            <Button Content="Utazások" Command="{Binding NavigateCommand}" CommandParameter="travel" Style="{StaticResource NavButtonStyle}"/>
-            <Button Content="Felhasználók" Command="{Binding NavigateCommand}" CommandParameter="users" Style="{StaticResource NavButtonStyle}"/>
-            <Button Content="Statisztikák" Command="{Binding NavigateCommand}" CommandParameter="stats" Style="{StaticResource NavButtonStyle}"/>
-        </StackPanel>
+        <!-- Oldalsáv -->
+        <Border Grid.Column="0"
+        Background="#FFFFFF"
+        CornerRadius="0 10 10 0"
+        
+        Effect="{DynamicResource DropShadowEffect}" Margin="0,0,5,0">
+            <StackPanel VerticalAlignment="Top">
+                <TextBlock Text="✈️ Utazás Admin"
+                   FontWeight="Bold"
+                   FontSize="20"
+                   Foreground="#2c3e50"
+                   Margin="0 0 0 20" />
 
-        <!-- Content Area -->
-        <ContentControl Grid.Row="1" Content="{Binding CurrentView}"/>
+                <Button Content="🏨 Szállások"
+                Command="{Binding ShowAccommodationCommand}"
+                Style="{StaticResource ModernNavButtonStyle}" />
+
+                <Button Content="✈️ Repülőjáratok"
+                Command="{Binding ShowFlightCommand}"
+                Style="{StaticResource ModernNavButtonStyle}" />
+
+                <Button Content="👥 Felhasználók"
+                Command="{Binding ShowUserCommand}"
+                Style="{StaticResource ModernNavButtonStyle}" />
+
+                <Button Content="📊 Statisztikák"
+                Command="{Binding ShowStatisticsCommand}"
+                Style="{StaticResource ModernNavButtonStyle}" />
+            </StackPanel>
+        </Border>
+
+        <!-- Tartalom -->
+        <ContentControl Grid.Column="1" Content="{Binding CurrentViewModel}" />
     </Grid>
 </Window>
