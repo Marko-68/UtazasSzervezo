@@ -14,7 +14,7 @@ namespace UtazasSzervezo_Library.Models
         public int id { get; set; }
 
         [Required]
-        public string? user_id { get; set; }
+        public string user_id { get; set; }
         [JsonIgnore]
         public virtual User? User { get; set; }
 
@@ -34,7 +34,7 @@ namespace UtazasSzervezo_Library.Models
 
         [Required]
         public string comment { get; set; }
-
+        [Required]
         public DateTime created_at { get; set; }
     }
 }

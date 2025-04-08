@@ -28,7 +28,7 @@ namespace UtazasSzervezo_Library.Models
                             description = "A beautiful hotel with a great view.",
                             type = "Hotel",
                             number_of_rooms = 50,
-                            max_person = 2,
+                            guests = 2,
                             address = "123 Sunshine Street",
                             city = "Budapest",
                             country = "Hungary",
@@ -37,9 +37,9 @@ namespace UtazasSzervezo_Library.Models
                             available_rooms = 25,
                             dinning = "Breakfast",
                             cover_img = "./images/Accommodation_img/budhotel1.jpg",
-                            images_url = ["./images/Accommodation_img/acc1_1_images.jpg",
-                                          "./images/Accommodation_img/acc1_2_images.jpg",
-                                          "./images/Accommodation_img/acc1_3_images.jpg"]
+                            images_url = ["/images/Accommodation_img/acc1_1_images.jpg",
+                                          "/images/Accommodation_img/acc1_2_images.jpg",
+                                          "/images/Accommodation_img/acc1_3_images.jpg"]
                         },
                         new Accommodation
                         {
@@ -47,7 +47,7 @@ namespace UtazasSzervezo_Library.Models
                             description = "A cozy lodge in the mountains.",
                             type = "Lodge",
                             number_of_rooms = 20,
-                            max_person = 4,
+                            guests = 4,
                             address = "456 Mountain Road",
                             city = "Zakopane",
                             country = "Poland",
@@ -55,7 +55,10 @@ namespace UtazasSzervezo_Library.Models
                             star_rating = 3,
                             available_rooms = 10,
                             dinning = "Half-board",
-                            cover_img = "./images/Accommodation_img/aparthotel-gievont-boutique.jpg"
+                            cover_img = "./images/Accommodation_img/aparthotel-gievont-boutique.jpg",
+                            images_url = ["/images/Accommodation_img/acc2_1_images.jpg",
+                                          "/images/Accommodation_img/acc2_2_images.jpg",
+                                          "/images/Accommodation_img/acc3_3_images.jpg"]
                         },
                         new Accommodation
                         {
@@ -63,7 +66,7 @@ namespace UtazasSzervezo_Library.Models
                             description = "Luxury resort right on the beach with private access.",
                             type = "Resort",
                             number_of_rooms = 100,
-                            max_person = 3,
+                            guests = 3,
                             address = "789 Coastal Avenue",
                             city = "Split",
                             country = "Croatia",
@@ -71,41 +74,14 @@ namespace UtazasSzervezo_Library.Models
                             star_rating = 5,
                             available_rooms = 40,
                             dinning = "All-inclusive",
-                            cover_img = "./images/Accommodation_img/beach-resort.jpg"
-                        },
-                        new Accommodation
-                        {
-                            name = "City Apartments",
-                            description = "Modern apartments in the city center.",
-                            type = "Apartment",
-                            number_of_rooms = 30,
-                            max_person = 2,
-                            address = "101 Downtown Street",
-                            city = "Berlin",
-                            country = "Germany",
-                            price_per_night = 120,
-                            star_rating = 4,
-                            available_rooms = 15,
-                            dinning = "Self-catering",
-                            cover_img = "./images/Accommodation_img/city-apartment.jpg"
+                            cover_img = "./images/Accommodation_img/acc3_cover.jpg",
+                            images_url = ["/images/Accommodation_img/acc3_cover.jpg",
+                                          "/images/Accommodation_img/acc_3_1_images.jpg",
+                                          "/images/Accommodation_img/acc_3_2_images.jpg"]
                         }
                     );
                 }
-                //if (!context.AccommodationsAmenities.Any())
-                //{
-                //    context.AccommodationsAmenities.AddRange(
-                //        new AccommodationAmenities
-                //        {
-                //            accommodation_id = 1,
-                //            amenity_id = 1
-                //        },
-                //        new AccommodationAmenities
-                //        {
-                //            accommodation_id = 1,
-                //            amenity_id = 2
-                //        }
-                //    );
-                //}
+                context.SaveChanges();
                 if (!context.Amenities.Any())
                 {
                     context.Amenities.AddRange(
@@ -135,15 +111,57 @@ namespace UtazasSzervezo_Library.Models
                         }
                     );
                 }
-
+                context.SaveChanges();
+                if (!context.AccommodationsAmenities.Any())
+                {
+                    context.AccommodationsAmenities.AddRange(
+                        new AccommodationAmenities
+                        {
+                            accommodation_id = 1,
+                            amenity_id = 1
+                        },
+                        new AccommodationAmenities
+                        {
+                            accommodation_id = 1,
+                            amenity_id = 2
+                        },
+                        new AccommodationAmenities
+                        {
+                            accommodation_id = 2,
+                            amenity_id = 5
+                        },
+                        new AccommodationAmenities
+                        {
+                            accommodation_id = 2,
+                            amenity_id = 2
+                        },
+                        new AccommodationAmenities
+                        {
+                            accommodation_id = 3,
+                            amenity_id = 6
+                        },
+                        new AccommodationAmenities
+                        {
+                            accommodation_id = 3,
+                            amenity_id = 1
+                        }
+                    );
+                }
+                context.SaveChanges();
+                
                 if (!context.Flights.Any())
                 {
                     context.Flights.AddRange(
                         new Flight
                         {
                             airline = "Wizz Air",
+                            planetype = "Airbus A320",
                             departure_time = DateTime.Now.AddDays(10),
                             arrival_time = DateTime.Now.AddDays(10).AddHours(2),
+                            departure_city = "Budapest",
+                            departure_country = "Hungary",
+                            detination_city = "Vienna",
+                            destination_country = "Austria",
                             departure_airport = "BUD",
                             destination_airport = "VIE",
                             duration = 120,
@@ -153,8 +171,13 @@ namespace UtazasSzervezo_Library.Models
                         new Flight
                         {
                             airline = "Ryanair",
+                            planetype = "Boeing 737",
                             departure_time = DateTime.Now.AddDays(15),
                             arrival_time = DateTime.Now.AddDays(15).AddHours(3),
+                            departure_city = "Vienna",
+                            departure_country = "Austria",
+                            detination_city = "Barcelona",
+                            destination_country = "Spain",
                             departure_airport = "BUD",
                             destination_airport = "BCN",
                             duration = 180,
@@ -164,8 +187,13 @@ namespace UtazasSzervezo_Library.Models
                         new Flight
                         {
                             airline = "Lufthansa",
+                            planetype = "Airbus A320",
                             departure_time = DateTime.Now.AddDays(5),
                             arrival_time = DateTime.Now.AddDays(5).AddHours(1.5),
+                            departure_city = "Budapest",
+                            departure_country = "Hungary",
+                            detination_city = "Munich",
+                            destination_country = "Germany",
                             departure_airport = "BUD",
                             destination_airport = "MUC",
                             duration = 90,
@@ -175,8 +203,13 @@ namespace UtazasSzervezo_Library.Models
                         new Flight
                         {
                             airline = "British Airways",
+                            planetype = "Boeing 777",
                             departure_time = DateTime.Now.AddDays(8),
                             arrival_time = DateTime.Now.AddDays(8).AddHours(2.5),
+                            departure_city = "Vienna",
+                            departure_country = "Austria",
+                            detination_city = "London",
+                            destination_country = "United Kingdom",
                             departure_airport = "BUD",
                             destination_airport = "LHR",
                             duration = 150,
@@ -185,6 +218,7 @@ namespace UtazasSzervezo_Library.Models
                         }
                     );
                 }
+                context.SaveChanges();
 
                 //if (!context.Bookings.Any())
                 //{
@@ -219,18 +253,16 @@ namespace UtazasSzervezo_Library.Models
                 //    context.Reviews.AddRange(
                 //        new Review
                 //        {
-                //            user_id = 1,
                 //            accommodation_id = 1,
-                //            rating = 9,
-                //            comment = "Great experience!",
+                //            rating = 10,
+                //            comment = "amazing place!",
                 //            created_at = DateTime.Now
                 //        },
                 //        new Review
                 //        {
-                //            user_id = 1,
-                //            flight_id = 1,
-                //            rating = 8,
-                //            comment = "Comfortable flight.",
+                //            accommodation_id = 2,
+                //            rating = 9,
+                //            comment = "great location.",
                 //            created_at = DateTime.Now
                 //        }
                 //    );

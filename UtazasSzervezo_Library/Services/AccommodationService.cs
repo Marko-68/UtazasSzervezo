@@ -25,6 +25,7 @@ public class AccommodationService
             .Include(a => a.AccommodationAmenities)
             .ThenInclude(aa => aa.Amenity)
             .FirstOrDefaultAsync(a => a.id == id);
+
     }
 
     public async Task<Accommodation> CreateAccommodation(Accommodation accommodation)

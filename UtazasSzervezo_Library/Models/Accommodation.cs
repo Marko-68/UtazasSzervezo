@@ -25,7 +25,7 @@ namespace UtazasSzervezo_Library.Models
         [Required]
         public int number_of_rooms { get; set; }
         [Required]
-        public int max_person { get; set; }
+        public int guests { get; set; }
         [Required]
         public string address { get; set; }
         [Required]
