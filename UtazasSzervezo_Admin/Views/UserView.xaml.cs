@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace UtazasSzervezo_Admin.Views
 {
     /// <summary>
-    /// Interaction logic for AccommodationView.xaml
+    /// Interaction logic for UserView.xaml
     /// </summary>
-    public partial class AccommodationView : UserControl
+    public partial class UserView : UserControl
     {
-        public AccommodationView()
+        public UserView()
         {
             InitializeComponent();
         }
