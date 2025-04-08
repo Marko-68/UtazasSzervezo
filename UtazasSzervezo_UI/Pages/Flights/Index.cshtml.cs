@@ -16,6 +16,9 @@ namespace UtazasSzervezo_UI.Pages.Flights
         public string? Airline { get; set; }
 
         [BindProperty(SupportsGet = true)]
+        public int? MinPrice { get; set; }
+
+        [BindProperty(SupportsGet = true)]
         public int? MaxPrice { get; set; } = 500;
 
         public IndexModel(HttpClient httpClient)
@@ -40,6 +43,11 @@ namespace UtazasSzervezo_UI.Pages.Flights
         private List<Flight> ApplyFilters(List<Flight> flights)
         {
             var filtered = flights.AsEnumerable();
+
+            if (MinPrice.HasValue)
+            {
+                filtered = filtered.Where(f => f.price >= MinPrice.Value);
+            }
 
             if (MaxPrice.HasValue)
             {

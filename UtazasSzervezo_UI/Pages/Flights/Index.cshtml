@@ -10,7 +10,6 @@
     <h1 class="mb-4 fw-bold text-dark">Available Flights</h1>
 
     <div class="row">
-        <!-- Szűrők (Bal oldali panel) -->
         <div class="col-md-3">
             <form method="get">
                 <div class="mb-3">
@@ -40,7 +39,6 @@
             </form>
         </div>
 
-        <!-- Járatok listája -->
         <div class="col-md-9">
             <div class="flight-list">
                 @foreach (var flight in Model.FilteredFlights)
