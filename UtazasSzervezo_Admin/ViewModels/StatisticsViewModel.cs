@@ -18,7 +18,7 @@ namespace UtazasSzervezo_Admin.ViewModels
     {
         private readonly HttpClient _http = new HttpClient
         {
-            BaseAddress = new Uri("https://localhost:7258/") 
+            BaseAddress = new Uri("http://localhost:5133/") 
         };
 
         public SeriesCollection BookingsPerMonthSeries { get; set; } = new();

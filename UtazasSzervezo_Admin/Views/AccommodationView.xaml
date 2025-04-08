@@ -18,16 +18,18 @@
         <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
             <Button Content="Frissítés" Width="100" Margin="0 0 10 0" Command="{Binding LoadCommand}" />
             <Button Content="Új szállás" Width="100" Margin="0 0 10 0" Command="{Binding NewCommand}" />
-            <Button Content="Szerkesztés" Width="100" Margin="0 0 10 0" Command="{Binding EditCommand}" />
-            <Button Content="Törlés" Width="100" Command="{Binding DeleteCommand}" />
+            <Button Content="Szerkesztés" Width="100" Margin="0 0 10 0" Command="{Binding EditCommand}" CommandParameter="{Binding SelectedAccommodation}"/>
+            <Button Content="Törlés" Width="100" Command="{Binding DeleteCommand}" CommandParameter="{Binding SelectedAccommodation}"/>
         </StackPanel>
 
         <DataGrid Grid.Row="1"
                   ItemsSource="{Binding Accommodations}"
-                  SelectedItem="{Binding SelectedAccommodation, Mode=TwoWay}"
                   AutoGenerateColumns="False"
                   IsReadOnly="True"
-                  SelectionMode="Single">
+                  SelectedItem="{Binding SelectedAccommodation, Mode=TwoWay}"
+                  SelectionMode="Single"
+                  x:Name="datagrid">
+            
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding id}" Width="50"/>
                 <DataGridTextColumn Header="Név" Binding="{Binding name}" Width="*"/>

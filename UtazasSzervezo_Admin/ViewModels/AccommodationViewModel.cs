@@ -10,6 +10,7 @@ using UtazasSzervezo_Library.Models;
 using UtazasSzervezo_Admin.Commands;
 using System.Net.Http;
 using System.Text.Json;
+using UtazasSzervezo_Admin.Views;
 
 namespace UtazasSzervezo_Admin.ViewModels
 {
@@ -24,7 +25,7 @@ namespace UtazasSzervezo_Admin.ViewModels
 
         private readonly HttpClient _http = new HttpClient
         {
-            BaseAddress = new Uri("https://localhost:7258/")
+            BaseAddress = new Uri("http://localhost:5133/")
         };
 
         private Accommodation _selectedAccommodation;
@@ -41,13 +42,14 @@ namespace UtazasSzervezo_Admin.ViewModels
             EditCommand = new RelayCommand(_ => OpenEditor(SelectedAccommodation), _ => SelectedAccommodation != null);
             DeleteCommand = new RelayCommand(async _ => await DeleteAsync(), _ => SelectedAccommodation != null);
             _ = LoadAsync();
+
         }
 
         private async Task LoadAsync()
         {
             try
             {
-                var response = await _http.GetAsync("api/accommodations");
+                var response = await _http.GetAsync("api/Accommodation");
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
@@ -81,8 +83,8 @@ namespace UtazasSzervezo_Admin.ViewModels
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response = accommodation.id == 0
-                    ? await _http.PostAsync("api/accommodations", content)
-                    : await _http.PutAsync($"api/accommodations/{accommodation.id}", content);
+                    ? await _http.PostAsync("api/Accommodation", content)
+                    : await _http.PutAsync($"api/Accommodation/{accommodation.id}", content);
 
                 if (response.IsSuccessStatusCode)
                     await LoadAsync();
@@ -103,7 +105,7 @@ namespace UtazasSzervezo_Admin.ViewModels
             {
                 try
                 {
-                    var response = await _http.DeleteAsync($"api/accommodations/{SelectedAccommodation.id}");
+                    var response = await _http.DeleteAsync($"api/Accommodation/{SelectedAccommodation.id}");
                     if (response.IsSuccessStatusCode)
                         await LoadAsync();
                     else

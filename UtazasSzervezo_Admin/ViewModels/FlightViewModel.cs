@@ -23,7 +23,7 @@ namespace UtazasSzervezo_Admin.ViewModels
         public ICommand EditCommand { get; }
         public ICommand DeleteCommand { get; }
 
-        private readonly HttpClient _http = new HttpClient { BaseAddress = new Uri("https://localhost:7258/") };
+        private readonly HttpClient _http = new HttpClient { BaseAddress = new Uri("http://localhost:5133/") };
 
         private Flight _selectedFlight;
         public Flight SelectedFlight
@@ -45,7 +45,7 @@ namespace UtazasSzervezo_Admin.ViewModels
         {
             try
             {
-                var response = await _http.GetAsync("api/flights");
+                var response = await _http.GetAsync("api/Flight");
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
@@ -79,8 +79,8 @@ namespace UtazasSzervezo_Admin.ViewModels
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response = flight.id == 0
-                    ? await _http.PostAsync("api/flights", content)
-                    : await _http.PutAsync($"api/flights/{flight.id}", content);
+                    ? await _http.PostAsync("api/flight", content)
+                    : await _http.PutAsync($"api/flight/{flight.id}", content);
 
                 if (response.IsSuccessStatusCode)
                     await LoadAsync();
@@ -101,7 +101,7 @@ namespace UtazasSzervezo_Admin.ViewModels
             {
                 try
                 {
-                    var response = await _http.DeleteAsync($"api/flights/{SelectedFlight.id}");
+                    var response = await _http.DeleteAsync($"api/flight/{SelectedFlight.id}");
                     if (response.IsSuccessStatusCode)
                         await LoadAsync();
                     else

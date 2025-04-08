@@ -18,8 +18,8 @@
         <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
             <Button Content="Frissítés" Width="100" Margin="0 0 10 0" Command="{Binding LoadCommand}" />
             <Button Content="Új járat" Width="100" Margin="0 0 10 0" Command="{Binding NewCommand}" />
-            <Button Content="Szerkesztés" Width="100" Margin="0 0 10 0" Command="{Binding EditCommand}" />
-            <Button Content="Törlés" Width="100" Command="{Binding DeleteCommand}" />
+            <Button Content="Szerkesztés" Width="100" Margin="0 0 10 0" Command="{Binding EditCommand}" CommandParameter="{Binding SelectedFlight}"/>
+            <Button Content="Törlés" Width="100" Command="{Binding DeleteCommand}" CommandParameter="{Binding SelectedFlight}"/>
         </StackPanel>
 
         <DataGrid Grid.Row="1"
