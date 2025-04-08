@@ -3,6 +3,6 @@
   Update-Database -Context UtazasSzervezoDbContext -StartupProject UtazasSzervezo_UI -Project UtazasSzervezo_UI
 
 ##ToDo: <br/>
-    -User Api + Service
+    *User Api + Service
     *Statistic Api + Service
-    +Delete Reviews
+    *Delete Reviews
