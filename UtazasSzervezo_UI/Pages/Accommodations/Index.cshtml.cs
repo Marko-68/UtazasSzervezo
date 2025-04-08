@@ -14,9 +14,14 @@ namespace UtazasSzervezo_UI.Pages.Accommodations
 
         [BindProperty(SupportsGet = true)]
         public string? SearchString { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public DateTime? CheckIn { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public int? MaxPersons { get; set; }
+        public DateTime? CheckOut { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public int? Guests { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public string? AccommodationType { get; set; }
@@ -56,15 +61,23 @@ namespace UtazasSzervezo_UI.Pages.Accommodations
                     (a.city != null && a.city.Contains(SearchString, StringComparison.OrdinalIgnoreCase)) ||
                     (a.country != null && a.country.Contains(SearchString, StringComparison.OrdinalIgnoreCase)));
             }
-            if (MaxPersons.HasValue)
+            if (Guests.HasValue)
             {
-                filtered = filtered.Where(a => a.max_person >= MaxPersons.Value);
+                filtered = filtered.Where(a => a.guests >= Guests.Value);
             }
 
             if (!string.IsNullOrEmpty(AccommodationType))
             {
                 filtered = filtered.Where(a => a.type == AccommodationType);
             }
+
+            //akkor jelenítjük meg, ha legalább 1 elérhetõ szoba van
+            if (CheckIn.HasValue && CheckOut.HasValue && CheckIn.Value < CheckOut.Value)
+            {
+                
+                filtered = filtered.Where(a => a.available_rooms > 0);
+            }
+
 
             return filtered.ToList();
         }

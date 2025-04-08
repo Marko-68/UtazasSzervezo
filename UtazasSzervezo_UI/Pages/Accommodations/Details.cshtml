@@ -71,8 +71,8 @@
                                     <div class="d-flex align-items-center">
                                         <i class="bi bi-people fs-3 me-3 text-primary"></i>
                                         <div>
-                                            <h5 class="mb-0">@Model.Accommodation.max_person</h5>
-                                            <small class="text-muted">Person</small>
+                                            <h5 class="mb-0">@Model.Accommodation.guests</h5>
+                                            <small class="text-muted">Guest</small>
                                         </div>
                                     </div>
                                 </div>
@@ -102,12 +102,15 @@
                                 {
                                     @foreach (var amenity in Model.Accommodation.AccommodationAmenities)
                                     {
-                                        <div class="col-md-6 mb-2">
-                                            <div class="d-flex align-items-center">
-                                                <i class="bi bi-check-circle-fill text-success me-2"></i>
-                                                <span>@amenity.Amenity.name</span>
+                                        if (amenity.Amenity != null)
+                                        {
+                                            <div class="col-md-6 mb-2">
+                                                <div class="d-flex align-items-center">
+                                                    <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                                    <span>@amenity.Amenity.name</span>
+                                                </div>
                                             </div>
-                                        </div>
+                                        }
                                     }
                                 }
                                 else
@@ -125,7 +128,7 @@
                             </a>
                             @if (User.Identity.IsAuthenticated)
                             {
-                                <a href="/Booking/Create/@Model.Accommodation.id" class="btn btn-primary">
+                                <a href="/Bookings/BookAccommodation/@Model.Accommodation.id" class="btn btn-primary">
                                     <i class="bi bi-calendar-check"></i> Book Now
                                 </a>
                             }
@@ -188,14 +191,14 @@
                 <div class="card p-4 shadow-sm">
                     <form method="post">
                         <div class="mb-3">
-                            <label asp-for="NewReview.rating" class="form-label">Rating (1-10):</label>
-                            <input type="number" class="form-control" asp-for="NewReview.rating" min="1" max="10" required>
-                            <span asp-validation-for="NewReview.rating" class="text-danger"></span>
+                            <label asp-for="Rating" class="form-label">Rating (1-10):</label>
+                            <input type="number" class="form-control" asp-for="Rating" min="1" max="10" required>
+                            <span asp-validation-for="Rating" class="text-danger"></span>
                         </div>
                         <div class="mb-3">
-                            <label asp-for="NewReview.comment" class="form-label">Comment:</label>
-                            <textarea class="form-control" asp-for="NewReview.comment" rows="3" required></textarea>
-                            <span asp-validation-for="NewReview.comment" class="text-danger"></span>
+                            <label asp-for="Comment" class="form-label">Comment:</label>
+                            <textarea class="form-control" asp-for="Comment" rows="3" required></textarea>
+                            <span asp-validation-for="Comment" class="text-danger"></span>
                         </div>
                         <button type="submit" class="btn btn-success"><i class="bi bi-send"></i> Submit Review</button>
                     </form>

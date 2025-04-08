@@ -9,6 +9,7 @@ using UtazasSzervezo_Library.Models;
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Authorization;
 
 namespace UtazasSzervezo_UI.Pages.Accommodations
 {
@@ -16,12 +17,17 @@ namespace UtazasSzervezo_UI.Pages.Accommodations
     {
         private readonly HttpClient _httpClient;
         private readonly UserManager<User> _userManager;
-
         public Accommodation? Accommodation { get; set; }
         public List<Review> Reviews { get; set; } = new();
 
         [BindProperty]
-        public Review NewReview { get; set; } = new();
+        [Required]
+        [Range(1, 10)]
+        public int Rating { get; set; }
+
+        [BindProperty]
+        [Required(ErrorMessage = "Comment is required")]
+        public string Comment { get; set; } = string.Empty;
 
         public DetailsModel(HttpClient httpClient, UserManager<User> userManager)
         {
@@ -37,29 +43,24 @@ namespace UtazasSzervezo_UI.Pages.Accommodations
 
         public async Task<IActionResult> OnPostAsync(int id)
         {
-            if (NewReview.rating < 1 || NewReview.rating > 10)
-            {
-                ModelState.AddModelError("NewReview.rating", "Rating must be between 1 and 10");
-            }
-
-            if (string.IsNullOrWhiteSpace(NewReview.comment))
-            {
-                ModelState.AddModelError("NewReview.comment", "Comment is required");
-            }
-
             if (!ModelState.IsValid)
             {
                 await LoadData(id);
                 return Page();
             }
 
-            NewReview.accommodation_id = id;
-            NewReview.created_at = DateTime.Now;
-            NewReview.user_id = _userManager.GetUserId(User);
-            NewReview.flight_id = null; 
+            var userId = _userManager.GetUserId(User);
+            var reviewToSubmit = new Review
+            {
+                rating = Rating,
+                comment = Comment,
+                accommodation_id = id,
+                created_at = DateTime.Now,
+                user_id = userId
+            };
 
             var content = new StringContent(
-                JsonSerializer.Serialize(NewReview),
+                JsonSerializer.Serialize(reviewToSubmit),
                 Encoding.UTF8,
                 "application/json");
 
@@ -67,7 +68,7 @@ namespace UtazasSzervezo_UI.Pages.Accommodations
 
             if (!response.IsSuccessStatusCode)
             {
-                ModelState.AddModelError(string.Empty, "Error submitting review.");
+                ModelState.AddModelError(string.Empty, "Error submitting review. Please try again.");
                 await LoadData(id);
                 return Page();
             }
@@ -77,8 +78,8 @@ namespace UtazasSzervezo_UI.Pages.Accommodations
 
         private async Task LoadData(int id)
         {
-            var accommodationResponse = await _httpClient.GetAsync($"http://localhost:5133/api/accommodation/{id}");
-            var reviewsResponse = await _httpClient.GetAsync($"http://localhost:5133/api/review/byaccommodation/{id}");
+            var accommodationResponse = await _httpClient.GetAsync($"http://localhost:5133/api/Accommodation/{id}");
+            var reviewsResponse = await _httpClient.GetAsync($"http://localhost:5133/api/Review/ByAccommodation/{id}");
 
             if (accommodationResponse.IsSuccessStatusCode)
             {
@@ -87,7 +88,6 @@ namespace UtazasSzervezo_UI.Pages.Accommodations
                     PropertyNameCaseInsensitive = true,
                     ReferenceHandler = ReferenceHandler.Preserve
                 };
-
                 var json = await accommodationResponse.Content.ReadAsStringAsync();
                 Accommodation = JsonSerializer.Deserialize<Accommodation>(json, options);
             }
