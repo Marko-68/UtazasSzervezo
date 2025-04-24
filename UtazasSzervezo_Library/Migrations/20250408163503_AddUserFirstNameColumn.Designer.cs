@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UtazasSzervezo_Library;
 
@@ -11,13 +12,15 @@ using UtazasSzervezo_Library;
 namespace UtazasSzervezo_Library.Migrations
 {
     [DbContext(typeof(UtazasSzervezoDbContext))]
-    partial class UtazasSzervezoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250408163503_AddUserFirstNameColumn")]
+    partial class AddUserFirstNameColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.13")
+                .HasAnnotation("ProductVersion", "8.0.12")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
@@ -260,6 +263,9 @@ namespace UtazasSzervezo_Library.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("id"));
 
+                    b.Property<int?>("Accommodationid")
+                        .HasColumnType("int");
+
                     b.Property<int?>("Flightid")
                         .HasColumnType("int");
 
@@ -299,11 +305,11 @@ namespace UtazasSzervezo_Library.Migrations
 
                     b.HasKey("id");
 
+                    b.HasIndex("Accommodationid");
+
                     b.HasIndex("Flightid");
 
                     b.HasIndex("UserId");
-
-                    b.HasIndex("accommodation_id");
 
                     b.ToTable("Bookings");
                 });
@@ -467,8 +473,8 @@ namespace UtazasSzervezo_Library.Migrations
                     b.Property<string>("PasswordHash")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("longtext");
+                    b.Property<int?>("PhoneNumber")
+                        .HasColumnType("int");
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("tinyint(1)");
@@ -570,6 +576,10 @@ namespace UtazasSzervezo_Library.Migrations
 
             modelBuilder.Entity("UtazasSzervezo_Library.Models.Booking", b =>
                 {
+                    b.HasOne("UtazasSzervezo_Library.Models.Accommodation", "Accommodation")
+                        .WithMany()
+                        .HasForeignKey("Accommodationid");
+
                     b.HasOne("UtazasSzervezo_Library.Models.Flight", "Flight")
                         .WithMany()
                         .HasForeignKey("Flightid");
@@ -577,10 +587,6 @@ namespace UtazasSzervezo_Library.Migrations
                     b.HasOne("UtazasSzervezo_Library.Models.User", "User")
                         .WithMany("Bookings")
                         .HasForeignKey("UserId");
-
-                    b.HasOne("UtazasSzervezo_Library.Models.Accommodation", "Accommodation")
-                        .WithMany()
-                        .HasForeignKey("accommodation_id");
 
                     b.Navigation("Accommodation");
 
