@@ -3,7 +3,8 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - UtazasSzervezo_UI</title>
+    <title>@ViewData["Title"] - UtazasSzervezo</title>
+    <link rel="icon" type="image/png" href="~/images/logousz.png" sizes="32x32">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/UtazasSzervezo_UI.styles.css" asp-append-version="true" />
@@ -36,7 +37,7 @@
                     </ul>
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <a class="nav-link" asp-area="" asp-page="/Bookings/MyBookings">My Bookings</a>
+                        <a class="nav-link" asp-page="/Bookings/MyBookings">My Bookings</a>
                     }
                     else
                     {

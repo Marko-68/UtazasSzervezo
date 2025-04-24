@@ -1,37 +1,296 @@
 ﻿@page
 @model UtazasSzervezo_UI.Pages.Bookings.MyBookingsModel
 @{
+    ViewData["Title"] = "My Bookings";
 }
 
+<div class="container my-bookings-page mt-5">
+    <div class="text-center mb-5">
+        <h2 class="fw-bold text-primary mb-2">My Bookings</h2>
+        <p class="text-muted mb-4">Manage your travel reservations in one place</p>
 
-<div class="row">
-    @foreach (var item in Model.Bookings)
+        <div class="d-flex justify-content-center">
+            <div class="btn-group filter-buttons shadow-lg" role="group">
+                <a asp-page="/Bookings/MyBookings" asp-route-showFlights="false"
+                   class="btn @(!Model.ShowFlights ? "btn-primary" : "btn-outline-primary") px-4 py-2">
+                    <i class="bi bi-building me-2"></i> Accommodations
+                </a>
+                <a asp-page="/Bookings/MyBookings" asp-route-showFlights="true"
+                   class="btn @(Model.ShowFlights ? "btn-primary" : "btn-outline-primary") px-4 py-2">
+                    <i class="bi bi-airplane me-2"></i> Flights
+                </a>
+            </div>
+        </div>
+    </div>
+
+    @if (Model.Bookings == null || Model.Bookings.Count == 0)
     {
-        <div class="col-md-6 col-lg-4 mb-4">
-            <div class="card shadow-sm border-0">
-                <div class="card-body">
+        <div class="empty-state text-center p-5">
+            <div class="empty-state-icon mb-4">
+                @if (Model.ShowFlights)
+                {
+                    <i class="bi bi-airplane text-primary-light"></i>
+                }
+                else
+                {
+                    <i class="bi bi-building text-primary-light"></i>
+                }
+            </div>
+            <h4 class="mb-3">No @(Model.ShowFlights ? "flight" : "accommodation") bookings yet</h4>
+            <p class="text-muted mb-4">Start planning your next adventure!</p>
+            <a href="@(Model.ShowFlights ? "/Flights" : "/Accommodations")" class="btn btn-primary px-4 py-2">
+                <i class="bi bi-search me-2"></i> Find @(Model.ShowFlights ? "Flights" : "Accommodations")
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="row g-4">
+            @foreach (var item in Model.Bookings)
+            {
+                string statusClass = item.status == "Confirmed" ? "success" : item.status == "Pending" ? "warning" : "danger";
 
-                    <span class="badge bg-primary">@item.</span>
-
-                    @if(item.accommodation_id != null || item.Accommodation != null)
-                    {
-                        <h5 class="card-title mt-2 fw-bold">@item.Accommodation.name</h5>
-                    }
-                    else if (item.flight_id != null || item.flight_id != null)
-                    {
-                        <h5 class="card-title mt-2 fw-bold">@item.Flight.departure_airport</h5>
-                    }
-
-                    <p class="text-muted mb-1">
-                        <i class="bi bi-geo-alt-fill text-danger"></i> @item.start_date, @item.end_date
-                    </p>
-
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                        <span class="fw-bold text-dark">@item.total_price</span>
-                        <a asp-page="Details" asp-route-id="@item.id" class="btn btn-primary">See Availability</a>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card booking-card shadow-sm border-0 rounded-3 h-100 overflow-hidden"
+                         data-booking-id="@item.id"
+                         style="cursor: pointer;">
+                        @if (item.accommodation_id != null || item.Accommodation != null)
+                        {
+                            <div class="card-header bg-light py-3">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="badge rounded-pill bg-@(item.status == "Confirmed" ? "success" : item.status == "Pending" ? "warning" : "danger")">
+                                        @item.status
+                                    </span>
+                                    <span class="text-muted small">
+                                        <i class="bi bi-calendar-event me-1"></i>
+                                        @item.start_date.ToString("MMM dd") - @item.end_date.ToString("MMM dd")
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex align-items-start mb-3">
+                                    <div class="bg-info bg-opacity-10 p-2 rounded me-3">
+                                        <i class="bi bi-building text-info fs-4"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="card-title fw-semibold mb-1">@item.Accommodation?.name</h5>
+                                        <div class="text-muted small">
+                                            <i class="bi bi-geo-alt me-1"></i>
+                                            @(item.Accommodation?.city ?? "Location")
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="booking-details">
+                                    <div class="booking-detail">
+                                        <i class="bi bi-people"></i>
+                                        <span>@(item.Accommodation.guests) Guest@(item.Accommodation.guests > 1 ? "s" : "")</span>
+                                    </div>
+                                    <div class="booking-detail">
+                                        <i class="bi bi-calendar-range"></i>
+                                        <span>@((item.end_date - item.start_date).TotalDays) Nights</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mt-4">
+                                    <div>
+                                        <span class="text-muted small">Total price</span>
+                                        <div class="fw-bold text-success fs-5">@item.total_price.ToString("C")</div>
+                                    </div>
+                                    <a asp-page="Details" asp-route-id="@item.id" class="btn btn-sm btn-primary px-3 stretched-link">
+                                        View <i class="bi bi-chevron-right ms-1"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                        else if (item.flight_id != null || item.Flight != null)
+                        {
+                            <div class="card-header bg-light py-3">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="badge rounded-pill bg-@(item.status == "Confirmed" ? "success" : item.status == "Pending" ? "warning" : "danger")">
+                                        @item.status
+                                    </span>
+                                    <span class="text-muted small">
+                                        <i class="bi bi-calendar-event me-1"></i>
+                                        @item.start_date.ToString("MMM dd")
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex align-items-start mb-3">
+                                    <div class="bg-primary bg-opacity-10 p-2 rounded me-3">
+                                        <i class="bi bi-airplane text-primary fs-4"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="card-title fw-semibold mb-1">Flight Booking</h5>
+                                        <div class="text-muted small">
+                                            @item.Flight?.airline
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="booking-details">
+                                    <div class="booking-detail">
+                                        <i class="bi bi-clock"></i>
+                                        <span>@(item.Flight?.departure_time.ToString("HH:mm") ?? "N/A")</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mt-4">
+                                    <div>
+                                        <span class="text-muted small">Total price</span>
+                                        <div class="fw-bold text-success fs-5">@item.total_price.ToString("C")</div>
+                                    </div>
+                                    <a asp-page="Details" asp-route-id="@item.id" class="btn btn-sm btn-primary px-3 stretched-link">
+                                        View <i class="bi bi-chevron-right ms-1"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        }
                     </div>
                 </div>
-            </div>
+            }
         </div>
     }
 </div>
+
+<style>
+    .my-bookings-page {
+        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        max-width: 1200px;
+        border-radius: 12px;
+        padding: 2rem;
+    }
+
+    .filter-buttons .btn {
+        border-radius: 8px !important;
+        padding: 0.625rem 1.5rem;
+        font-weight: 500;
+        transition: all 0.25s ease;
+        min-width: 160px;
+        letter-spacing: 0.3px;
+    }
+
+        .filter-buttons .btn i {
+            font-size: 1.1rem;
+            vertical-align: middle;
+        }
+
+    .booking-card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+        .booking-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0.5rem 1.25rem rgba(0, 0, 0, 0.1) !important;
+        }
+
+    .card-header {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        background-color: #f8f9fa !important;
+    }
+
+    .badge {
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        padding: 0.35em 0.65em;
+    }
+
+    /* Booking Details */
+    .booking-details {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 1rem;
+    }
+
+    .booking-detail {
+        display: flex;
+        align-items: center;
+        background-color: #f8f9fa;
+        padding: 0.4rem 0.75rem;
+        border-radius: 6px;
+        font-size: 0.8rem;
+    }
+
+        .booking-detail i {
+            margin-right: 6px;
+            color: #6c757d;
+        }
+
+    /* Empty state styling */
+    .empty-state {
+        background-color: white;
+        border-radius: 12px;
+        box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
+    }
+
+    .empty-state-icon {
+        font-size: 4rem;
+        color: #e9ecef;
+    }
+
+        .empty-state-icon i {
+            font-size: 5rem;
+            opacity: 0.7;
+        }
+
+    /* Flight route display */
+    .flight-route-display {
+        height: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 2rem;
+        color: #495057;
+    }
+
+    .flight-path {
+        position: relative;
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 1rem;
+    }
+
+    .path-line {
+        height: 2px;
+        background-color: #dee2e6;
+        width: 100%;
+        position: absolute;
+    }
+
+    .plane-icon {
+        position: relative;
+        z-index: 1;
+        background-color: #e9ecef;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: rotate(90deg);
+        color: #007bff;
+    }
+
+    .departure, .arrival {
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+
+    /* Make the entire card clickable */
+    .booking-card {
+        position: relative; /* Needed for the stretched-link to work correctly */
+    }
+
+    .stretched-link::after {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+        pointer-events: auto;
+        content: "";
+        background-color: rgba(0, 0, 0, 0); /* Make it invisible */
+    }
+</style>

@@ -11,20 +11,20 @@ namespace UtazasSzervezo_UI.Pages.Accommodations
         public List<Accommodation> AllAccommodations { get; set; } = new();
         public List<Accommodation> FilteredAccommodations { get; set; } = new();
         public List<string> AccommodationTypes { get; set; } = new();
+        public List<Amenity> Amenities { get; set; } = new();
 
         [BindProperty(SupportsGet = true)]
         public string? SearchString { get; set; }
         [BindProperty(SupportsGet = true)]
         public DateTime? CheckIn { get; set; }
-
         [BindProperty(SupportsGet = true)]
         public DateTime? CheckOut { get; set; }
-
         [BindProperty(SupportsGet = true)]
         public int? Guests { get; set; }
-
         [BindProperty(SupportsGet = true)]
         public string? AccommodationType { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public List<int> SelectedAmenities { get; set; } = new();
 
         public IndexModel(HttpClient httpClient)
         {
@@ -45,9 +45,17 @@ namespace UtazasSzervezo_UI.Pages.Accommodations
                     .Distinct()
                     .OrderBy(t => t)
                     .ToList();
-
-                FilteredAccommodations = ApplyFilters(AllAccommodations);
             }
+
+            var amenitiesResponse = await _httpClient.GetAsync("http://localhost:5133/api/amenity");
+            if (amenitiesResponse.IsSuccessStatusCode)
+            {
+                var amenitiesJson = await amenitiesResponse.Content.ReadAsStringAsync();
+                Amenities = JsonSerializer.Deserialize<List<Amenity>>(amenitiesJson,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ?? new List<Amenity>();
+            }
+
+            FilteredAccommodations = ApplyFilters(AllAccommodations);
         }
 
         private List<Accommodation> ApplyFilters(List<Accommodation> accommodations)
@@ -71,13 +79,17 @@ namespace UtazasSzervezo_UI.Pages.Accommodations
                 filtered = filtered.Where(a => a.type == AccommodationType);
             }
 
-            //akkor jelenítjük meg, ha legalább 1 elérhetõ szoba van
-            if (CheckIn.HasValue && CheckOut.HasValue && CheckIn.Value < CheckOut.Value)
+            if (SelectedAmenities != null && SelectedAmenities.Any())
             {
-                
-                filtered = filtered.Where(a => a.available_rooms > 0);
+                filtered = filtered.Where(a =>
+                    a.AccommodationAmenities != null &&
+                    SelectedAmenities.All(sa => a.AccommodationAmenities.Select(am => am.amenity_id).Contains(sa)));
             }
 
+            if (CheckIn.HasValue && CheckOut.HasValue && CheckIn.Value < CheckOut.Value)
+            {
+                filtered = filtered.Where(a => a.available_rooms > 0);
+            }
 
             return filtered.ToList();
         }
