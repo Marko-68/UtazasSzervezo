@@ -38,8 +38,8 @@ namespace UtazasSzervezo_Library.Models
                             dinning = "Breakfast",
                             cover_img = "./images/Accommodation_img/budhotel1.jpg",
                             images_url = ["/images/Accommodation_img/acc1_1_images.jpg",
-                                          "/images/Accommodation_img/acc1_2_images.jpg",
-                                          "/images/Accommodation_img/acc1_3_images.jpg"]
+                        "/images/Accommodation_img/acc1_2_images.jpg",
+                        "/images/Accommodation_img/acc1_3_images.jpg"]
                         },
                         new Accommodation
                         {
@@ -57,8 +57,8 @@ namespace UtazasSzervezo_Library.Models
                             dinning = "Half-board",
                             cover_img = "./images/Accommodation_img/aparthotel-gievont-boutique.jpg",
                             images_url = ["/images/Accommodation_img/acc2_1_images.jpg",
-                                          "/images/Accommodation_img/acc2_2_images.jpg",
-                                          "/images/Accommodation_img/acc3_3_images.jpg"]
+                        "/images/Accommodation_img/acc2_2_images.jpg",
+                        "/images/Accommodation_img/acc3_3_images.jpg"]
                         },
                         new Accommodation
                         {
@@ -76,79 +76,154 @@ namespace UtazasSzervezo_Library.Models
                             dinning = "All-inclusive",
                             cover_img = "./images/Accommodation_img/acc3_cover.jpg",
                             images_url = ["/images/Accommodation_img/acc3_cover.jpg",
-                                          "/images/Accommodation_img/acc_3_1_images.jpg",
-                                          "/images/Accommodation_img/acc_3_2_images.jpg"]
+                        "/images/Accommodation_img/acc_3_1_images.jpg",
+                        "/images/Accommodation_img/acc_3_2_images.jpg"]
+                        },
+                        new Accommodation
+                        {
+                            name = "Costa del Sol Beach Hotel",
+                            description = "Elegant beachfront hotel with stunning Mediterranean views.",
+                            type = "Hotel",
+                            number_of_rooms = 80,
+                            guests = 2,
+                            address = "101 Beachfront Promenade",
+                            city = "Málaga",
+                            country = "Spain",
+                            price_per_night = 220,
+                            star_rating = 4,
+                            available_rooms = 35,
+                            dinning = "Half-board",
+                            cover_img = "./images/Accommodation_img/spain-hotel.jpg",
+                            images_url = ["/images/Accommodation_img/spain1.jpg",
+                                            "/images/Accommodation_img/spain2.jpg",
+                                            "/images/Accommodation_img/spain3.jpg"]
+                        },
+                        new Accommodation
+                        {
+                            name = "Amalfi Coast Luxury Resort",
+                            description = "Exclusive resort perched on the cliffs of Amalfi Coast.",
+                            type = "Resort",
+                            number_of_rooms = 60,
+                            guests = 2,
+                            address = "202 Cliffside Drive",
+                            city = "Positano",
+                            country = "Italy",
+                            price_per_night = 350,
+                            star_rating = 5,
+                            available_rooms = 18,
+                            dinning = "Breakfast",
+                            cover_img = "./images/Accommodation_img/italy-hotel.jpg",
+                            images_url = ["/images/Accommodation_img/italy1.jpg",
+                                            "/images/Accommodation_img/italy2.jpg",
+                                            "/images/Accommodation_img/italy3.jpg"]
+                        },
+                        new Accommodation
+                        {
+                            name = "French Riviera Boutique Hotel",
+                            description = "Charming boutique hotel with private beach access.",
+                            type = "Hotel",
+                            number_of_rooms = 25,
+                            guests = 2,
+                            address = "303 Riviera Boulevard",
+                            city = "Nice",
+                            country = "France",
+                            price_per_night = 280,
+                            star_rating = 4,
+                            available_rooms = 12,
+                            dinning = "Breakfast",
+                            cover_img = "./images/Accommodation_img/france-hotel.jpg",
+                            images_url = ["/images/Accommodation_img/france1.jpg",
+                                            "/images/Accommodation_img/france2.jpg",
+                                            "/images/Accommodation_img/france3.jpg"]
+                        },
+                        new Accommodation
+                        {
+                            name = "Alpine Chalet",
+                            description = "Traditional wooden chalet with mountain views.",
+                            type = "Chalet",
+                            number_of_rooms = 8,
+                            guests = 6,
+                            address = "202 Alpine Way",
+                            city = "Innsbruck",
+                            country = "Austria",
+                            price_per_night = 250,
+                            star_rating = 4,
+                            available_rooms = 3,
+                            dinning = "Self-catering",
+                            cover_img = "./images/Accommodation_img/alpine-chalet.jpg",
+                            images_url = ["/images/Accommodation_img/chalet1.jpg",
+                        "/images/Accommodation_img/chalet2.jpg",
+                        "/images/Accommodation_img/chalet3.jpg"]
+                        },
+                        new Accommodation
+                        {
+                            name = "Boutique Hotel",
+                            description = "Charming boutique hotel with unique design.",
+                            type = "Hotel",
+                            number_of_rooms = 15,
+                            guests = 2,
+                            address = "303 Artistic Lane",
+                            city = "Prague",
+                            country = "Czech Republic",
+                            price_per_night = 180,
+                            star_rating = 4,
+                            available_rooms = 7,
+                            dinning = "Breakfast",
+                            cover_img = "./images/Accommodation_img/boutique-hotel.jpg",
+                            images_url = ["/images/Accommodation_img/boutique1.jpg",
+                                        "/images/Accommodation_img/boutique2.jpg",
+                                        "/images/Accommodation_img/boutique3.jpg"]
                         }
                     );
                 }
                 context.SaveChanges();
+
                 if (!context.Amenities.Any())
                 {
                     context.Amenities.AddRange(
-                        new Amenity
-                        {
-                            name = "Free Wi-Fi"
-                        },
-                        new Amenity
-                        {
-                            name = "Swimming Pool"
-                        },
-                        new Amenity
-                        {
-                            name = "Air Conditioning"
-                        },
-                        new Amenity
-                        {
-                            name = "Fitness Center"
-                        },
-                        new Amenity
-                        {
-                            name = "Spa"
-                        },
-                        new Amenity
-                        {
-                            name = "Pet Friendly"
-                        }
+                        new Amenity { name = "Free Wi-Fi" },
+                        new Amenity { name = "Swimming Pool" },
+                        new Amenity { name = "Air Conditioning" },
+                        new Amenity { name = "Fitness Center" },
+                        new Amenity { name = "Spa" },
+                        new Amenity { name = "Pet Friendly" },
+                        new Amenity { name = "Private Beach" },
+                        new Amenity { name = "Sea View" }
                     );
                 }
                 context.SaveChanges();
+
                 if (!context.AccommodationsAmenities.Any())
                 {
                     context.AccommodationsAmenities.AddRange(
-                        new AccommodationAmenities
-                        {
-                            accommodation_id = 1,
-                            amenity_id = 1
-                        },
-                        new AccommodationAmenities
-                        {
-                            accommodation_id = 1,
-                            amenity_id = 2
-                        },
-                        new AccommodationAmenities
-                        {
-                            accommodation_id = 2,
-                            amenity_id = 5
-                        },
-                        new AccommodationAmenities
-                        {
-                            accommodation_id = 2,
-                            amenity_id = 2
-                        },
-                        new AccommodationAmenities
-                        {
-                            accommodation_id = 3,
-                            amenity_id = 6
-                        },
-                        new AccommodationAmenities
-                        {
-                            accommodation_id = 3,
-                            amenity_id = 1
-                        }
+                        new AccommodationAmenities { accommodation_id = 1, amenity_id = 1 },
+                        new AccommodationAmenities { accommodation_id = 1, amenity_id = 2 },
+                        new AccommodationAmenities { accommodation_id = 1, amenity_id = 3 },
+                        new AccommodationAmenities { accommodation_id = 2, amenity_id = 5 },
+                        new AccommodationAmenities { accommodation_id = 2, amenity_id = 2 },
+                        new AccommodationAmenities { accommodation_id = 2, amenity_id = 6 },
+                        new AccommodationAmenities { accommodation_id = 3, amenity_id = 6 },
+                        new AccommodationAmenities { accommodation_id = 3, amenity_id = 1 },
+                        new AccommodationAmenities { accommodation_id = 3, amenity_id = 4 },
+                        new AccommodationAmenities { accommodation_id = 4, amenity_id = 1 },
+                        new AccommodationAmenities { accommodation_id = 4, amenity_id = 2 },
+                        new AccommodationAmenities { accommodation_id = 4, amenity_id = 7 },
+                        new AccommodationAmenities { accommodation_id = 4, amenity_id = 8 },
+                        new AccommodationAmenities { accommodation_id = 5, amenity_id = 1 },
+                        new AccommodationAmenities { accommodation_id = 5, amenity_id = 5 },
+                        new AccommodationAmenities { accommodation_id = 5, amenity_id = 8 },
+                        new AccommodationAmenities { accommodation_id = 6, amenity_id = 1 },
+                        new AccommodationAmenities { accommodation_id = 6, amenity_id = 7 },
+                        new AccommodationAmenities { accommodation_id = 6, amenity_id = 8 },
+                        new AccommodationAmenities { accommodation_id = 7, amenity_id = 6 }, 
+                        new AccommodationAmenities { accommodation_id = 7, amenity_id = 5 }, 
+                        new AccommodationAmenities { accommodation_id = 8, amenity_id = 1 }, 
+                        new AccommodationAmenities { accommodation_id = 8, amenity_id = 3 }, 
+                        new AccommodationAmenities { accommodation_id = 8, amenity_id = 5 }  
                     );
                 }
                 context.SaveChanges();
-                
+
                 if (!context.Flights.Any())
                 {
                     context.Flights.AddRange(

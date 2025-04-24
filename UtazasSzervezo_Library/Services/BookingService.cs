@@ -18,29 +18,56 @@ namespace UtazasSzervezo_Library.Services
 
         public async Task<IEnumerable<Booking>> GetAllBookings()
         {
-            return await _context.Bookings.ToListAsync();
+            return await _context.Bookings
+                .Include(b => b.Accommodation)
+                .Include(b => b.Flight)
+                .ToListAsync();
         }
 
         public async Task<Booking> GetBookingById(int id)
         {
-            return await _context.Bookings.FindAsync(id);
+            return await _context.Bookings
+                .Include(b => b.Accommodation)
+                .Include(b => b.Flight)
+                .FirstOrDefaultAsync(b => b.id == id);
         }
 
         public async Task<Booking> CreateBooking(Booking booking)
         {
-            if (booking.Accommodation != null)
+            if (booking.flight_id != null)
             {
-                _context.Accommodations.Add(booking.Accommodation);
+                var flight = await _context.Flights.FindAsync(booking.flight_id);
+                if (flight != null && flight.available_seats > 0)
+                {
+                    flight.available_seats -= 1;
+                    booking.Flight = flight;
+                }
+                else
+                {
+                    throw new InvalidOperationException("No available seats left.");
+                }
             }
-            if (booking.Flight != null)
+
+            if (booking.accommodation_id != null)
             {
-                _context.Flights.Add(booking.Flight);
+                var accommodation = await _context.Accommodations.FindAsync(booking.accommodation_id);
+                if (accommodation != null && accommodation.available_rooms > 0)
+                {
+                    accommodation.available_rooms -= 1;
+                    booking.Accommodation = accommodation;
+                }
+                else
+                {
+                    throw new InvalidOperationException("No available rooms left.");
+                }
             }
 
             _context.Bookings.Add(booking);
             await _context.SaveChangesAsync();
             return booking;
         }
+
+
 
         public async Task<bool> UpdateBooking(int id, Booking booking)
         {

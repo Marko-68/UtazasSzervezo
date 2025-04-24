@@ -1,0 +1,102 @@
+﻿.flight-list {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.flight-card {
+    transition: transform .2s;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.flight-card:hover {
+    transform: scale(1.02);
+}
+
+.flight-card .card-body {
+    padding: 1.5rem;
+}
+
+.airline-badge {
+    background: linear-gradient(135deg, #3a7bd5, #00d2ff);
+    color: white;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+.price-badge {
+    background: #28a745;
+    color: white;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 1rem;
+}
+
+.flight-time {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.flight-airport {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #555;
+}
+
+.flight-date {
+    font-size: 0.85rem;
+    color: #777;
+}
+
+.flight-duration {
+    position: relative;
+    padding: 0 1.5rem;
+}
+
+.flight-duration:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #ddd;
+    z-index: 1;
+}
+
+.flight-duration i {
+    position: relative;
+    z-index: 2;
+    background: white;
+    padding: 0 0.5rem;
+    color: #3a7bd5;
+}
+
+.flight-duration-text {
+    font-size: 0.85rem;
+    color: #777;
+    margin-top: 0.5rem;
+}
+
+.flight-route {
+    font-size: 0.9rem;
+    color: #666;
+    padding-top: 0.5rem;
+    border-top: 1px dashed #eee;
+    margin-top: 1rem;
+}
+
+.plane-icon {
+    transform: rotate(90deg);
+}

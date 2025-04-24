@@ -21,6 +21,15 @@ namespace UtazasSzervezo_UI.Pages.Flights
         [BindProperty(SupportsGet = true)]
         public int? MaxPrice { get; set; } = 500;
 
+        [BindProperty(SupportsGet = true)]
+        public string? DepartureCity { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string? DestinationCity { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public DateTime? DepartureDate { get; set; }
+
         public IndexModel(HttpClient httpClient)
         {
             _httpClient = httpClient;
@@ -43,6 +52,21 @@ namespace UtazasSzervezo_UI.Pages.Flights
         private List<Flight> ApplyFilters(List<Flight> flights)
         {
             var filtered = flights.AsEnumerable();
+
+            if (!string.IsNullOrEmpty(DepartureCity))
+            {
+                filtered = filtered.Where(f => f.departure_city.Contains(DepartureCity, StringComparison.OrdinalIgnoreCase));
+            }
+
+            if (!string.IsNullOrEmpty(DestinationCity))
+            {
+                filtered = filtered.Where(f => f.detination_city.Contains(DestinationCity, StringComparison.OrdinalIgnoreCase));
+            }
+
+            if (DepartureDate.HasValue)
+            {
+                filtered = filtered.Where(f => f.departure_time.Date == DepartureDate.Value.Date);
+            }
 
             if (MinPrice.HasValue)
             {

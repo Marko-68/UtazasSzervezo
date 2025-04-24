@@ -56,39 +56,56 @@ namespace UtazasSzervezo_UI.Areas.Identity.Pages.Account.Manage
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Phone]
-            [Display(Name = "Phone number")]
-            public string PhoneNumber { get; set; }
+
+            [Display(Name = "Postal Code")]
+            public int? PostalCode { get; set; }
+
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
+
+            [Display(Name = "Country")]
+            public string Country { get; set; }
+        }
+
+        private async Task<User> LoadUser(UserManager<User> userManager)
+        {
+            var user = await userManager.GetUserAsync(User);
+            return user;
         }
 
         private async Task LoadAsync(User user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-
             Username = userName;
-
-            Input = new InputModel
-            {
-                PhoneNumber = phoneNumber
-            };
         }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var user = await _userManager.GetUserAsync(User);
+            var user = await LoadUser(_userManager);
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            await LoadAsync(user);
+            Username = await _userManager.GetUserNameAsync(user);
+
+            Input = new InputModel
+            {
+                PostalCode = user.PostalCode,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Country = user.Country
+            };
+
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var user = await _userManager.GetUserAsync(User);
+            var user = await LoadUser(_userManager);
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -96,19 +113,20 @@ namespace UtazasSzervezo_UI.Areas.Identity.Pages.Account.Manage
 
             if (!ModelState.IsValid)
             {
-                await LoadAsync(user);
+                await LoadUser(_userManager);
                 return Page();
             }
 
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            if (Input.PhoneNumber != phoneNumber)
+            user.PostalCode = Input.PostalCode;
+            user.FirstName = Input.FirstName;
+            user.LastName = Input.LastName;
+            user.Country = Input.Country;
+
+            var updateResult = await _userManager.UpdateAsync(user);
+            if (!updateResult.Succeeded)
             {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
-                if (!setPhoneResult.Succeeded)
-                {
-                    StatusMessage = "Unexpected error when trying to set phone number.";
-                    return RedirectToPage();
-                }
+                StatusMessage = "Error updating profile.";
+                return RedirectToPage();
             }
 
             await _signInManager.RefreshSignInAsync(user);

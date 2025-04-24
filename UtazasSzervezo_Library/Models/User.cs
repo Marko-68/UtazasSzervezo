@@ -13,11 +13,11 @@ namespace UtazasSzervezo_Library.Models
         public ICollection<Booking>? Bookings { get; set; }
         public ICollection<Review>? Reviews { get; set; }
 
-        public string? first_name { get; set; }
-        public string? last_name { get; set; }
-        public int? postalcode { get; set; }
-        public int? phone_number { get; set; }
-        public string? country { get; set; }
+        public string? Name { get; set; }
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
+        public int? PostalCode { get; set; }
+        public string? Country { get; set; }
 
     }
 }

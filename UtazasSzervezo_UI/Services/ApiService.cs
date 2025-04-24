@@ -13,9 +13,5 @@ namespace UtazasSzervezo_UI.Services
             _apiUrl = configuration["ApiUrl"];
         }
 
-        public async Task<List<Accommodation>> GetAccommodationsAsync()
-        {
-            return await _httpClient.GetFromJsonAsync<List<Accommodation>>($"{_apiUrl}accommodations");
-        }
     }
 }

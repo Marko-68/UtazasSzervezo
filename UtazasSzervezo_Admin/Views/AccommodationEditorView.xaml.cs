@@ -33,7 +33,6 @@ namespace UtazasSzervezo_Admin.Views
                 description = acc.description,
                 type = acc.type,
                 number_of_rooms = acc.number_of_rooms,
-                max_person = acc.max_person,
                 address = acc.address,
                 city = acc.city,
                 country = acc.country

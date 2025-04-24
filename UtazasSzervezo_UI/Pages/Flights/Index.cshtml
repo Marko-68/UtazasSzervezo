@@ -5,18 +5,39 @@
 }
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+<link rel="stylesheet" href="~/css/FlightsIndex.css" />
 
-<div class="container py-4">
-    <h1 class="mb-4 fw-bold text-dark">Available Flights</h1>
-
-    <div class="row">
+<div class="bg-dark text-white p-4 rounded mb-4">
+    <h2 class="mb-3 fw-bold">Find Your Flight</h2>
+    <form method="get" class="row g-3 align-items-end">
         <div class="col-md-3">
+            <label for="DepartureCity" class="form-label">Departure City</label>
+            <input type="text" class="form-control" id="DepartureCity" name="DepartureCity" value="@Model.DepartureCity">
+        </div>
+        <div class="col-md-3">
+            <label for="DestinationCity" class="form-label">Destination City</label>
+            <input type="text" class="form-control" id="DestinationCity" name="DestinationCity" value="@Model.DestinationCity">
+        </div>
+        <div class="col-md-3">
+            <label for="DepartureDate" class="form-label">Departure Date</label>
+            <input type="date" class="form-control" id="DepartureDate" name="DepartureDate" value="@(Model.DepartureDate?.ToString("yyyy-MM-dd"))">
+        </div>
+        <div class="col-md-3">
+            <button type="submit" class="btn btn-primary w-100">Search Flights</button>
+        </div>
+    </form>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="p-3 rounded mb-4">
+            <h5 class="mb-3 fw-bold text-dark">Filter By</h5>
             <form method="get">
                 <div class="mb-3">
                     <label class="form-label fw-bold">Price Range</label>
                     <input type="range" class="form-range" name="MaxPrice" min="0" max="500"
-                           value="@Model.MaxPrice" oninput="this.form.submit()">
-                    <p>Max Price: <strong>@Model.MaxPrice</strong> </p>
+                            value="@Model.MaxPrice" oninput="this.form.submit()">
+                    <p>Max Price: <strong>$@Model.MaxPrice</strong> </p>
                 </div>
 
                 <div class="mb-3">
@@ -25,147 +46,77 @@
                     {
                         <div class="form-check">
                             <input type="radio" name="Airline" class="form-check-input"
-                                   value="@airline" checked="@(airline == Model.Airline)"
-                                   onchange="this.form.submit()">
+                                    value="@airline" checked="@(airline == Model.Airline)"
+                                    onchange="this.form.submit()">
                             <label class="form-check-label">@airline</label>
                         </div>
                     }
                     <div class="form-check">
                         <input type="radio" name="Airline" class="form-check-input"
-                               value="" onchange="this.form.submit()">
+                                value="" checked="@(string.IsNullOrEmpty(Model.Airline))"
+                                onchange="this.form.submit()">
                         <label class="form-check-label">All Airlines</label>
                     </div>
                 </div>
+                @if (!string.IsNullOrEmpty(Model.DepartureCity))
+                {
+                    <input type="hidden" name="DepartureCity" value="@Model.DepartureCity" />
+                }
+                @if (!string.IsNullOrEmpty(Model.DestinationCity))
+                {
+                    <input type="hidden" name="DestinationCity" value="@Model.DestinationCity" />
+                }
+                @if (Model.DepartureDate.HasValue)
+                {
+                    <input type="hidden" name="DepartureDate" value="@Model.DepartureDate?.ToString("yyyy-MM-dd")" />
+                }
             </form>
         </div>
+    </div>
 
-        <div class="col-md-9">
-            <div class="flight-list">
-                @foreach (var flight in Model.FilteredFlights)
-                {
-                    <div class="flight-card mb-4">
-                        <div class="flight-header">
-                            <div class="flight-time">
-                                <div class="departure">
-                                    <span class="time">@flight.departure_time.ToString("HH:mm")</span>
-                                    <span class="airport">@flight.departure_airport</span>
-                                </div>
-                                <div class="duration">
-                                    <div class="line"></div>
-                                    <i class="bi bi-airplane-fill plane-icon"></i>
-                                    <span>@flight.duration</span>
-                                    <div class="line"></div>
-                                </div>
-                                <div class="arrival">
-                                    <span class="time">@flight.arrival_time.ToString("HH:mm")</span>
-                                    <span class="airport">@flight.destination_airport</span>
-                                </div>
+    <div class="col-md-9">
+        <div class="flight-list">
+            @foreach (var flight in Model.FilteredFlights)
+            {
+                <a asp-page="Details" asp-route-id="@flight.id" class="flight-card card mb-4">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="airline-badge">@flight.airline</span>
+                            <span class="price-badge">$@flight.price</span>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div class="text-center">
+                                <div class="flight-time">@flight.departure_time.ToString("HH:mm")</div>
+                                <div class="flight-airport">@flight.departure_airport</div>
+                                <div class="flight-date">@flight.departure_time.ToString("MMM dd, yyyy")</div>
                             </div>
-                            <div class="flight-price">
-                                <span class="price">@(flight.price)</span>
+
+                            <div class="flight-duration text-center">
+                                <i class="bi bi-airplane plane-icon"></i>
+                                <div class="flight-duration-text">@(flight.duration / 60)h @(flight.duration % 60)m</div>
+                            </div>
+
+                            <div class="text-center">
+                                <div class="flight-time">@flight.arrival_time.ToString("HH:mm")</div>
+                                <div class="flight-airport">@flight.destination_airport</div>
+                                <div class="flight-date">@flight.arrival_time.ToString("MMM dd, yyyy")</div>
                             </div>
                         </div>
-                        <div class="flight-footer">
-                            <div class="flight-actions">
-                                <a asp-page="Details" asp-route-id="@flight.id" class="btn btn-outline-secondary">Details</a>
-                            </div>
+
+                        <div class="flight-route text-center">
+                            @flight.departure_city <i class="bi bi-arrow-right mx-2"></i> @flight.detination_city
                         </div>
                     </div>
-                }
-            </div>
-
-            @if (!Model.FilteredFlights.Any())
-            {
-                <div class="alert alert-info">
-                    No flights found matching your criteria.
-                </div>
+                </a>
             }
         </div>
+
+        @if (!Model.FilteredFlights.Any())
+        {
+            <div class="alert alert-info">
+                No flights found matching your criteria.
+            </div>
+        }
     </div>
 </div>
-
-<style>
-    .flight-list {
-        max-width: 800px;
-        margin: 0 auto;
-    }
-
-    .flight-card {
-        background: white;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        overflow: hidden;
-    }
-
-    .flight-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px;
-        border-bottom: 1px solid #eee;
-    }
-
-    .flight-time {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-    }
-
-    .departure, .arrival {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .time {
-        font-size: 1.5rem;
-        font-weight: bold;
-    }
-
-    .airport {
-        color: #666;
-        font-size: 0.9rem;
-    }
-
-    .duration {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        color: #666;
-    }
-
-    .line {
-        width: 30px;
-        height: 1px;
-        background-color: #ccc;
-    }
-
-    .plane-icon {
-        color: #666;
-        transform: rotate(90deg);
-    }
-
-    .flight-price {
-        text-align: right;
-    }
-
-    .price {
-        font-size: 1.5rem;
-        font-weight: bold;
-        color: #333;
-    }
-
-    .flight-footer {
-        padding: 15px 20px;
-        background: #f9f9f9;
-    }
-
-    .flight-actions {
-        display: flex;
-        justify-content: flex-end;
-        gap: 10px;
-    }
-
-    .btn-outline-secondary {
-        border-color: #ddd;
-    }
-</style>
