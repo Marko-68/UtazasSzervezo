@@ -29,17 +29,28 @@ namespace UtazasSzervezo_UI.Pages.Accommodations
         [Required(ErrorMessage = "Comment is required")]
         public string Comment { get; set; } = string.Empty;
 
+        [BindProperty(SupportsGet = true)]
+        public DateTime? CheckIn { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public DateTime? CheckOut { get; set; }
+
+
         public DetailsModel(HttpClient httpClient, UserManager<User> userManager)
         {
             _httpClient = httpClient;
             _userManager = userManager;
         }
 
-        public async Task<IActionResult> OnGetAsync(int id)
+        public async Task<IActionResult> OnGetAsync(int id, DateTime? checkIn, DateTime? checkOut)
         {
+            //Ha null-ok akkor beállítjuk a mai napra
+            CheckIn = checkIn ?? DateTime.Today;
+            CheckOut = checkOut ?? DateTime.Today.AddDays(1);
             await LoadData(id);
             return Page();
         }
+
 
         public async Task<IActionResult> OnPostAsync(int id)
         {

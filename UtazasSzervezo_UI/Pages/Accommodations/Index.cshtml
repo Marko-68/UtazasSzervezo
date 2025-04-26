@@ -10,7 +10,7 @@
             <div class="col-md-4">
                 <label class="form-label">Where do you want to stay?</label>
                 <input type="text" name="SearchString" class="form-control"
-                       placeholder="Enter destination or hotel" value="@Model.SearchString" onchange="this.form.submit()" />
+                placeholder="Enter destination or hotel" value="@Model.SearchString" onchange="this.form.submit()" />
             </div>
             <div class="col-md-2">
                 <label class="form-label">Check-in</label>
@@ -29,7 +29,14 @@
             </div>
         </div>
     </div>
-
+    @if (Model.CheckOut < Model.CheckIn)
+    {
+        <div class="align-content-center alert alert-danger mt-3">Check-out date cannot be before check-in date!</div>
+    }
+    @if(Model.CheckIn < DateTime.Today)
+    {
+        <div class="align-content-center alert alert-danger mt-3">We already Past this Date!</div>
+    }
     <div class="row">
         <div class="col-md-3">
             <h5 class="mb-3">Filters</h5>
@@ -60,13 +67,19 @@
             </div>
 
         </div>
-
+        
         <div class="col-md-9">
             <div class="row">
                 @foreach (var item in Model.FilteredAccommodations)
                 {
                     <div class="col-md-6 col-lg-4 mb-4 accommodation-card">
-                        <a asp-page="Details" asp-route-id="@item.id" class="card shadow-sm border-0 h-100 text-decoration-none text-dark">
+                        @* átadom a kiválasztott időpontot *@
+                        <a asp-page="Details"
+                           asp-route-id="@item.id"
+                           asp-route-checkIn="@Model.CheckIn?.ToString("yyyy-MM-dd")"
+                           asp-route-checkOut="@Model.CheckOut?.ToString("yyyy-MM-dd")"
+                           class="card shadow-sm border-0 h-100 text-decoration-none text-dark">
+
                             <div class="image-container" style="height: 200px; overflow: hidden;">
                                 <img src="@item.cover_img" class="card-img-top h-100 w-100 object-fit-cover" alt="@item.name">
                             </div>
@@ -113,16 +126,16 @@
     }
 
     .accommodation-card {
-        transition: transform .2s; 
+        transition: transform .2s;
     }
 
-    .accommodation-card:hover {
-        transform: scale(1.02); 
-    }
+        .accommodation-card:hover {
+            transform: scale(1.02);
+        }
 
-    .accommodation-card > a {
-        display: block; 
-        height: 100%;
-        width: 100%;
-    }
+        .accommodation-card > a {
+            display: block;
+            height: 100%;
+            width: 100%;
+        }
 </style>

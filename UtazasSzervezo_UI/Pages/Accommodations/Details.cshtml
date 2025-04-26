@@ -128,7 +128,8 @@
                             </a>
                             @if (User.Identity.IsAuthenticated)
                             {
-                                <a href="/Bookings/BookAccommodation/@Model.Accommodation.id" class="btn btn-primary">
+                                <a href="/Bookings/Book/BookAccommodation/@Model.Accommodation.id?startDate=@Model.CheckIn?.ToString("yyyy-MM-dd")&endDate=@Model.CheckOut?.ToString("yyyy-MM-dd")"
+                                   class="btn btn-primary">
                                     <i class="bi bi-calendar-check"></i> Book Now
                                 </a>
                             }
