@@ -9,9 +9,11 @@ namespace UtazasSzervezo_API.Controllers
     public class BookingAPIController : ControllerBase
     {
         private readonly BookingService _bookingService;
-        public BookingAPIController(BookingService bookingService)
+        private readonly FlightService _flightService;
+        public BookingAPIController(BookingService bookingService, FlightService flightService)
         {
             _bookingService = bookingService;
+            _flightService = flightService;
         }
 
         [HttpGet]
@@ -52,11 +54,47 @@ namespace UtazasSzervezo_API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
+            var bookingToDelete = await _bookingService.GetBookingById(id);
+            if (bookingToDelete == null)
+            {
+                return NotFound();
+            }
+
+            //Növeljük a szabad helyeket
+            if (bookingToDelete.flight_id.HasValue)
+            {
+                var flight = await _flightService.GetFlightById(bookingToDelete.flight_id.Value);
+                if (flight != null)
+                {
+                    await _flightService.FlightSeatIncrement(flight.id);
+                }
+            }
+
             var success = await _bookingService.DeleteBooking(id);
             if (!success)
-                return NotFound();
+            {
+                return StatusCode(500, "Failed to delete booking.");
+            }
 
             return NoContent();
         }
+
+        [HttpGet("CheckAvailability")]
+        public async Task<IActionResult> CheckAccommodationAvailability([FromQuery] int accommodationId, [FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
+        {
+            try
+            {
+                bool available = await _bookingService.CheckAccommodationAvailability(accommodationId, startDate, endDate);
+                if (available)
+                    return Ok(new { available = true});
+                else
+                    return Ok(new { available = false, message = "No rooms available at this time" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
     }
 }

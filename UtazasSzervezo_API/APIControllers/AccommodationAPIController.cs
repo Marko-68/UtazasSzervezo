@@ -37,6 +37,12 @@ namespace UtazasSzervezo_API.Controllers
             if (accommodation == null)
                 return BadRequest(new { message = "Invalid accommodation data" });
 
+            bool exists = await _accommodationService.ExistAtAddress(accommodation.address);
+            if (exists)
+            {
+                return BadRequest(new { message = $"Accommodation already exists at {accommodation.address}" });
+            }
+
             var createdAccommodation = await _accommodationService.CreateAccommodation(accommodation);
             return CreatedAtAction(nameof(GetById), new { id = createdAccommodation.id }, createdAccommodation);
         }
