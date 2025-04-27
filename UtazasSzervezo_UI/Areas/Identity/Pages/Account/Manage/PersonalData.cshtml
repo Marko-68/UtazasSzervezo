@@ -16,8 +16,12 @@
         <form id="download-data" asp-page="DownloadPersonalData" method="post">
             <button class="btn btn-primary" type="submit">Download</button>
         </form>
+        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
         <p>
-            <a id="delete" asp-page="DeletePersonalData" class="btn btn-danger">Delete</a>
+            @if (!Model.IsAdmin)
+            {
+                <a id="delete" asp-page="DeletePersonalData" class="btn btn-danger">Delete</a>
+            }
         </p>
     </div>
 </div>

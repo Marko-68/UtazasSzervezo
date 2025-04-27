@@ -14,14 +14,19 @@ namespace UtazasSzervezo_UI.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<User> _userManager;
         private readonly ILogger<PersonalDataModel> _logger;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public PersonalDataModel(
             UserManager<User> userManager,
-            ILogger<PersonalDataModel> logger)
+            ILogger<PersonalDataModel> logger,
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _logger = logger;
+            _roleManager = roleManager;
         }
+
+        public bool IsAdmin { get; set; }
 
         public async Task<IActionResult> OnGet()
         {
@@ -29,6 +34,14 @@ namespace UtazasSzervezo_UI.Areas.Identity.Pages.Account.Manage
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+            //Ha admin vagy akkor nem tudod kitörölni az accountodat
+            IsAdmin = await _userManager.IsInRoleAsync(user, "Admin");
+
+            if (IsAdmin)
+            {
+                ModelState.AddModelError(string.Empty, "You cannot delete your account as an admin.");
+                return Page();
             }
 
             return Page();

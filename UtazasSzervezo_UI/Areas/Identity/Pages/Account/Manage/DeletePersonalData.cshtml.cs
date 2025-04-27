@@ -87,6 +87,13 @@ namespace UtazasSzervezo_UI.Areas.Identity.Pages.Account.Manage
                 }
             }
 
+            //Az admin nem tudja törölni magát
+            if (await _userManager.IsInRoleAsync(user, "Admin"))
+            {
+                ModelState.AddModelError(string.Empty, "Admin users cannot delete their own account.");
+                return Page();
+            }
+
             var result = await _userManager.DeleteAsync(user);
             var userId = await _userManager.GetUserIdAsync(user);
             if (!result.Succeeded)
