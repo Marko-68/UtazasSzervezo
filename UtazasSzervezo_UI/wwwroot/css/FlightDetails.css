@@ -1,0 +1,74 @@
+﻿body {
+    max-width: 1200px;
+}
+
+.price-badge {
+    display: inline-block;
+    border: 1px solid rgba(13, 110, 253, 0.3);
+}
+
+.flight-visualization {
+    background-color: #f8fafc;
+}
+
+.flight-path-container {
+    position: relative;
+    padding: 0 2rem;
+}
+
+.flight-path {
+    position: relative;
+    margin: 1rem 0;
+}
+
+.path-line {
+    height: 2px;
+    background-color: #dee2e6;
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.plane-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(90deg);
+    background-color: white;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: #3a7bd5;
+    border: 1px solid #dee2e6;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.time-display {
+    color: #212529;
+}
+
+.airport-code {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.booking-sidebar {
+    top: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px dashed #eee;
+}
+
+.sticky-top {
+    position: -webkit-sticky;
+    position: sticky;
+}

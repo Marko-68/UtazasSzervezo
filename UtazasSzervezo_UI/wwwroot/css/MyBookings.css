@@ -1,0 +1,152 @@
+﻿body {
+    max-width: 1200px;
+    border-radius: 12px;
+    padding: 2rem;
+}
+
+.filter-buttons .btn {
+    border-radius: 8px !important;
+    padding: 0.625rem 1.5rem;
+    font-weight: 500;
+    transition: all 0.25s ease;
+    min-width: 160px;
+    letter-spacing: 0.3px;
+}
+
+.filter-buttons .btn i {
+    font-size: 1.1rem;
+    vertical-align: middle;
+}
+
+
+.card-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    background-color: #f8f9fa !important;
+}
+
+.badge {
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    padding: 0.35em 0.65em;
+}
+
+.booking-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 1rem;
+}
+
+.booking-detail {
+    display: flex;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 0.4rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+}
+
+.booking-detail i {
+    margin-right: 6px;
+    color: #6c757d;
+}
+
+.empty-state {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
+}
+
+.empty-state-icon {
+    font-size: 4rem;
+    color: #e9ecef;
+}
+
+.empty-state-icon i {
+    font-size: 5rem;
+    opacity: 0.7;
+}
+
+.flight-route-display {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    color: #495057;
+}
+
+.flight-path {
+    position: relative;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 1rem;
+}
+
+.path-line {
+    height: 2px;
+    background-color: #dee2e6;
+    width: 100%;
+    position: absolute;
+}
+
+.plane-icon {
+    position: relative;
+    z-index: 1;
+    background-color: #e9ecef;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(90deg);
+    color: #007bff;
+}
+
+.departure, .arrival {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.booking-card {
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.booking-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0.5rem 1.25rem rgba(0, 0, 0, 0.1) !important;
+    border-color: rgba(0, 114, 229, 0.2);
+}
+
+.flight-path {
+    position: relative;
+    border: none;
+    height: 2px;
+    background-color: #e9ecef;
+    margin: 10px 0;
+}
+
+.flight-timeline {
+    background-color: #f8fafc;
+    border-radius: 10px;
+}
+
+.card-footer {
+    background-color: #f8fafc !important;
+}
+
+.stretched-link::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    pointer-events: auto;
+    content: "";
+    background-color: rgba(0, 0, 0, 0);
+}
