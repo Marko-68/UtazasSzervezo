@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "My Bookings";
 }
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 
 <div class="container my-bookings-page mt-5">
     <div class="text-center mb-5">
@@ -11,17 +12,20 @@
 
         <div class="d-flex justify-content-center">
             <div class="btn-group filter-buttons shadow-lg" role="group">
-                <a asp-page="/Bookings/MyBookings" asp-route-showFlights="false"
-                   class="btn @(!Model.ShowFlights ? "btn-primary" : "btn-outline-primary") px-4 py-2">
-                    <i class="bi bi-building me-2"></i> Accommodations
-                </a>
-                <a asp-page="/Bookings/MyBookings" asp-route-showFlights="true"
-                   class="btn @(Model.ShowFlights ? "btn-primary" : "btn-outline-primary") px-4 py-2">
-                    <i class="bi bi-airplane me-2"></i> Flights
-                </a>
+                <a asp-page="/Bookings/MyBookings" asp-route-showFlights="false" class="btn @(!Model.ShowFlights ? "btn-primary" : "btn-outline-primary") px-4 py-2"> Accommodations</a>
+                <a asp-page="/Bookings/MyBookings" asp-route-showFlights="true" class="btn @(Model.ShowFlights ? "btn-primary" : "btn-outline-primary") px-4 py-2">Flights</a>
             </div>
         </div>
     </div>
+
+    @* Egy foglalás sikeres törlésénél lép életbe *@
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
 
     @if (Model.Bookings == null || Model.Bookings.Count == 0)
     {
@@ -48,100 +52,126 @@
         <div class="row g-4">
             @foreach (var item in Model.Bookings)
             {
-                string statusClass = item.status == "Confirmed" ? "success" : item.status == "Pending" ? "warning" : "danger";
-
                 <div class="col-md-6 col-lg-4">
                     <div class="card booking-card shadow-sm border-0 rounded-3 h-100 overflow-hidden"
                          data-booking-id="@item.id"
                          style="cursor: pointer;">
                         @if (item.accommodation_id != null || item.Accommodation != null)
                         {
-                            <div class="card-header bg-light py-3">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="badge rounded-pill bg-@(item.status == "Confirmed" ? "success" : item.status == "Pending" ? "warning" : "danger")">
-                                        @item.status
-                                    </span>
-                                    <span class="text-muted small">
-                                        <i class="bi bi-calendar-event me-1"></i>
-                                        @item.start_date.ToString("MMM dd") - @item.end_date.ToString("MMM dd")
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="d-flex align-items-start mb-3">
-                                    <div class="bg-info bg-opacity-10 p-2 rounded me-3">
-                                        <i class="bi bi-building text-info fs-4"></i>
+                        <a asp-page="BookingDetails/AccommodationBookingDetails" asp-route-id="@item.id" class="text-decoration-none text-dark">
+                            <div class="card booking-card shadow-sm border-0 rounded-3 h-100 overflow-hidden" data-booking-id="@item.id" style="cursor: pointer;">
+                                <div class="card-header bg-light py-3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="badge rounded-pill bg-info">
+                                            @item.Accommodation.type
+                                        </span>
+                                        <span class="text-muted small">
+                                            @item.start_date.ToString("MMM dd") - @item.end_date.ToString("MMM dd")
+                                        </span>
                                     </div>
-                                    <div>
-                                        <h5 class="card-title fw-semibold mb-1">@item.Accommodation?.name</h5>
-                                        <div class="text-muted small">
-                                            <i class="bi bi-geo-alt me-1"></i>
-                                            @(item.Accommodation?.city ?? "Location")
+                                </div>
+                                <div class="card-body">
+                                    <div class="d-flex align-items-start mb-3">
+                                        <div>
+                                            <h5 class="card-title fw-semibold mb-1">@item.Accommodation?.name</h5>
+                                            <div class="text-muted small">
+                                                <i class="bi bi-geo-alt me-1"></i>
+                                                @(item.Accommodation?.city ?? "Location")
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="booking-details">
+                                        <div class="booking-detail">
+                                            <i class="bi bi-people"></i>
+                                            <span>@(item.Accommodation.guests) Guest</span>
+                                        </div>
+                                        <div class="booking-detail">
+                                            <span>@((item.end_date - item.start_date).TotalDays) Nights</span>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center mt-4">
+                                        <div>
+                                            <span class="text-muted small">Total price</span>
+                                            <div class="fw-bold text-success fs-5">$@item.total_price</div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="booking-details">
-                                    <div class="booking-detail">
-                                        <i class="bi bi-people"></i>
-                                        <span>@(item.Accommodation.guests) Guest@(item.Accommodation.guests > 1 ? "s" : "")</span>
-                                    </div>
-                                    <div class="booking-detail">
-                                        <i class="bi bi-calendar-range"></i>
-                                        <span>@((item.end_date - item.start_date).TotalDays) Nights</span>
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center mt-4">
-                                    <div>
-                                        <span class="text-muted small">Total price</span>
-                                        <div class="fw-bold text-success fs-5">@item.total_price.ToString("C")</div>
-                                    </div>
-                                    <a asp-page="Details" asp-route-id="@item.id" class="btn btn-sm btn-primary px-3 stretched-link">
-                                        View <i class="bi bi-chevron-right ms-1"></i>
-                                    </a>
-                                </div>
                             </div>
+                        </a>
                         }
-                        else if (item.flight_id != null || item.Flight != null)
+                        @if(item.flight_id != null || item.Flight != null)
                         {
-                            <div class="card-header bg-light py-3">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="badge rounded-pill bg-@(item.status == "Confirmed" ? "success" : item.status == "Pending" ? "warning" : "danger")">
-                                        @item.status
-                                    </span>
-                                    <span class="text-muted small">
-                                        <i class="bi bi-calendar-event me-1"></i>
-                                        @item.start_date.ToString("MMM dd")
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="d-flex align-items-start mb-3">
-                                    <div class="bg-primary bg-opacity-10 p-2 rounded me-3">
-                                        <i class="bi bi-airplane text-primary fs-4"></i>
+                            <a asp-page="BookingDetails/FlightBookingDetails" asp-route-id="@item.id" class="text-decoration-none text-dark">
+                                <div class="card booking-card shadow-sm border-0 rounded-3 h-100 overflow-hidden">
+                                    <div class="card-header bg-light bg-opacity-25 py-3 border-0">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill">
+                                                <i class="bi bi-airplane me-1"></i> Flight
+                                            </span>
+                                            <span class="text-muted small">
+                                                @item.Flight.departure_time.ToString("MMM dd, yyyy")
+                                            </span>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <h5 class="card-title fw-semibold mb-1">Flight Booking</h5>
-                                        <div class="text-muted small">
-                                            @item.Flight?.airline
+
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <div>
+                                                <h5 class="card-title fw-semibold mb-1">@item.Flight?.airline</h5>
+                                                <p class="text-muted small mb-0">
+                                                    @item.Flight?.planetype
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="flight-timeline mb-3 p-3 bg-light rounded-2">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div class="text-center">
+                                                    <div class="fw-bold">@item.Flight?.departure_time.ToString("HH:mm")</div>
+                                                    <div class="text-muted small">@item.Flight?.departure_airport</div>
+                                                </div>
+
+                                                <div class="text-center px-2">
+                                                    <div class="position-relative">
+                                                        <hr class="flight-path">
+                                                    </div>
+                                                    <div class="text-muted small mt-1">
+                                                        @(item.Flight?.duration / 60)h @(item.Flight?.duration % 60)m
+                                                    </div>
+                                                </div>
+
+                                                <div class="text-center">
+                                                    <div class="fw-bold">@item.Flight?.arrival_time.ToString("HH:mm")</div>
+                                                    <div class="text-muted small">@item.Flight?.destination_airport</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+                                            <div>
+                                                <span class="text-muted small">From</span>
+                                                <div class="fw-bold">@item.Flight?.departure_city</div>
+                                            </div>
+                                            <div class="text-center">
+                                                <i class="bi bi-arrow-left-right text-muted"></i>
+                                            </div>
+                                            <div class="text-end">
+                                                <span class="text-muted small">To</span>
+                                                <div class="fw-bold">@item.Flight?.detination_city</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-footer bg-transparent border-0 py-3">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <span class="text-muted small">Total price</span>
+                                                <div class="fw-bold text-success fs-5">$@item.total_price</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="booking-details">
-                                    <div class="booking-detail">
-                                        <i class="bi bi-clock"></i>
-                                        <span>@(item.Flight?.departure_time.ToString("HH:mm") ?? "N/A")</span>
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center mt-4">
-                                    <div>
-                                        <span class="text-muted small">Total price</span>
-                                        <div class="fw-bold text-success fs-5">@item.total_price.ToString("C")</div>
-                                    </div>
-                                    <a asp-page="Details" asp-route-id="@item.id" class="btn btn-sm btn-primary px-3 stretched-link">
-                                        View <i class="bi bi-chevron-right ms-1"></i>
-                                    </a>
-                                </div>
-                            </div>
+                            </a>
                         }
                     </div>
                 </div>
@@ -172,15 +202,6 @@
             vertical-align: middle;
         }
 
-    .booking-card {
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-        border: 1px solid rgba(0, 0, 0, 0.05);
-    }
-
-        .booking-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 0.5rem 1.25rem rgba(0, 0, 0, 0.1) !important;
-        }
 
     .card-header {
         border-bottom: 1px solid rgba(0, 0, 0, 0.05);
@@ -193,7 +214,6 @@
         padding: 0.35em 0.65em;
     }
 
-    /* Booking Details */
     .booking-details {
         display: flex;
         flex-wrap: wrap;
@@ -215,7 +235,6 @@
             color: #6c757d;
         }
 
-    /* Empty state styling */
     .empty-state {
         background-color: white;
         border-radius: 12px;
@@ -232,7 +251,6 @@
             opacity: 0.7;
         }
 
-    /* Flight route display */
     .flight-route-display {
         height: 100%;
         display: flex;
@@ -277,9 +295,32 @@
         font-size: 1.1rem;
     }
 
-    /* Make the entire card clickable */
     .booking-card {
-        position: relative; /* Needed for the stretched-link to work correctly */
+        transition: all 0.3s ease;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+        .booking-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0.5rem 1.25rem rgba(0, 0, 0, 0.1) !important;
+            border-color: rgba(0, 114, 229, 0.2);
+        }
+
+    .flight-path {
+        position: relative;
+        border: none;
+        height: 2px;
+        background-color: #e9ecef;
+        margin: 10px 0;
+    }
+
+    .flight-timeline {
+        background-color: #f8fafc;
+        border-radius: 10px;
+    }
+
+    .card-footer {
+        background-color: #f8fafc !important;
     }
 
     .stretched-link::after {

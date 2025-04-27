@@ -7,7 +7,7 @@ using UtazasSzervezo_Library.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.ComponentModel.DataAnnotations;
 
-namespace UtazasSzervezo_UI.Pages.Bookings
+namespace UtazasSzervezo_UI.Pages.Bookings.Book
 {
     [Authorize]
     public class BookFlightModel : PageModel
@@ -52,24 +52,35 @@ namespace UtazasSzervezo_UI.Pages.Bookings
 
         public bool BookingSuccessful { get; set; } = false;
 
-
-        public async Task<IActionResult> OnGetAsync(int flightId)
+        private async Task<Flight?> GetFlightAsync(int flightId, bool addModelError = true)
         {
-            Booking = new Booking();
             var response = await _httpClient.GetAsync($"http://localhost:5133/api/Flight/{flightId}");
+
             if (!response.IsSuccessStatusCode)
-                return NotFound();
+            {
+                if (addModelError)
+                {
+                    ModelState.AddModelError("", "Could not fetch flight details.");
+                }
+                return null;
+            }
 
             var json = await response.Content.ReadAsStringAsync();
             var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            Flight = JsonSerializer.Deserialize<Flight>(json, options);
+            return JsonSerializer.Deserialize<Flight>(json, options);
+        }
 
-            Booking.flight_id = flightId;
-            Booking.start_date = DateTime.Today.AddDays(30);
-            Booking.end_date = DateTime.Today.AddDays(33);
-            Booking.total_price = Flight.price * 3;
-            Booking.status = "Pending";
-            Booking.description = "Standard Book";
+        public async Task<IActionResult> OnGetAsync(int flightId)
+        {
+            Flight = await GetFlightAsync(flightId, false);
+            if (Flight == null)
+                return NotFound();
+
+            Booking = new Booking
+            {
+                Flight = Flight,
+                flight_id = flightId
+            };
 
             var user = await _userManager.GetUserAsync(User);
             if (user != null)
@@ -82,55 +93,53 @@ namespace UtazasSzervezo_UI.Pages.Bookings
                 Country = user.Country ?? string.Empty;
                 PostalCode = user.PostalCode.ToString() ?? string.Empty;
             }
+
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int flightId)
         {
-            Console.WriteLine("Booking info:");
-            Console.WriteLine(JsonSerializer.Serialize(Booking, new JsonSerializerOptions { WriteIndented = true }));
-
             if (!ModelState.IsValid)
             {
-                await OnGetAsync(flightId);
+                Flight = await GetFlightAsync(flightId);
                 return Page();
             }
 
-            var userId = _userManager.GetUserId(User);
-            Booking.user_id = userId;
-            Booking.flight_id = flightId;
-
-            //Flight objektum újratöltése
-            var responseFlight = await _httpClient.GetAsync($"http://localhost:5133/api/Flight/{flightId}");
-            if (responseFlight.IsSuccessStatusCode)
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
             {
-                var json = await responseFlight.Content.ReadAsStringAsync();
-                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-                Booking.Flight = JsonSerializer.Deserialize<Flight>(json, options);
+                return Unauthorized();
             }
 
+            var flight = await GetFlightAsync(flightId);
+            if (flight == null)
+            {
+                return Page();
+            }
+
+            Booking.total_price = flight.price;
+            Booking.status = "Pending";
+            Booking.start_date = flight.departure_time; 
+            Booking.end_date = flight.arrival_time;
+
             var content = new StringContent(
-                JsonSerializer.Serialize(Booking),
+                JsonSerializer.Serialize(Booking, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }),
                 Encoding.UTF8,
                 "application/json");
 
             var response = await _httpClient.PostAsync("http://localhost:5133/api/Booking", content);
-
-            if (!response.IsSuccessStatusCode)
-            {
-                ModelState.AddModelError("", "Failed to submit booking.");
-                await OnGetAsync(flightId);
-                return Page();
-            }
 
             if (response.IsSuccessStatusCode)
             {
                 BookingSuccessful = true;
                 return Page();
             }
+
             var error = await response.Content.ReadAsStringAsync();
             ModelState.AddModelError("", $"Failed to submit booking. Server response: {error}");
-            await OnGetAsync(flightId);
+
+            Flight = flight;
+
             return Page();
         }
     }
