@@ -20,14 +20,14 @@ namespace UtazasSzervezo_Admin.ViewModels
 
         public ICommand ShowAccommodationCommand { get; }
         public ICommand ShowFlightCommand { get; }
-        public ICommand ShowUserCommand { get; }
+        public ICommand ShowReviewCommand { get; }
         public ICommand ShowStatisticsCommand { get; }
 
         public MainViewModel ()
         {
             ShowAccommodationCommand = new RelayCommand(_ => CurrentView  = new AccommodationView());
             ShowFlightCommand = new RelayCommand(_ => CurrentView  = new FlightView());
-            ShowUserCommand = new RelayCommand(_ => CurrentView  = new UserView());
+            ShowReviewCommand = new RelayCommand(_ => CurrentView  = new ReviewListView());
             ShowStatisticsCommand = new RelayCommand(_ => CurrentView  = new StatisticsView());
 
             // Kezdőnézet

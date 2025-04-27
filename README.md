@@ -5,4 +5,5 @@ Adatbázis létrehozása:<br/>
 ToDo: <br/>
     User Api + Service <br/>
     Statistic Api + Service <br/>
-    Delete Reviews
+    Delete Reviews<br/>
+    egy accommodation address alatt csak egy szallas lehet(apit megírtam csak a wpf-részen kell a felhasználót tájékoztatni)

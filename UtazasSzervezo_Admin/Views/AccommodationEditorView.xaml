@@ -27,7 +27,7 @@
             <TextBox Text="{Binding number_of_rooms}" Margin="0 0 0 10"/>
 
             <TextBlock Text="Max. személy:"/>
-            <TextBox Text="{Binding max_person}" Margin="0 0 0 10"/>
+            <TextBox Text="{Binding guests}" Margin="0 0 0 10"/>
 
             <TextBlock Text="Cím:"/>
             <TextBox Text="{Binding address}" Margin="0 0 0 10"/>

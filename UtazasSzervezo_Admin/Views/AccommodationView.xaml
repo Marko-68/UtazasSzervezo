@@ -35,7 +35,7 @@
                 <DataGridTextColumn Header="Név" Binding="{Binding name}" Width="*"/>
                 <DataGridTextColumn Header="Típus" Binding="{Binding type}" Width="120"/>
                 <DataGridTextColumn Header="Szobák" Binding="{Binding number_of_rooms}" Width="80"/>
-                <DataGridTextColumn Header="Férőhely" Binding="{Binding max_person}" Width="80"/>
+                <DataGridTextColumn Header="Férőhely" Binding="{Binding guests}" Width="80"/>
                 <DataGridTextColumn Header="Város" Binding="{Binding city}" Width="120"/>
                 <DataGridTextColumn Header="Ország" Binding="{Binding country}" Width="120"/>
             </DataGrid.Columns>

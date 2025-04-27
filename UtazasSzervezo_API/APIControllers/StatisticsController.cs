@@ -21,6 +21,7 @@ namespace UtazasSzervezo_API.APIControllers
         public IActionResult GetBookingsPerMonth()
         {
             var data = _context.Bookings
+                .Where(b => b.start_date != null)
                 .GroupBy(b => b.start_date.Month)
                 .Select(g => new
                 {
@@ -37,6 +38,7 @@ namespace UtazasSzervezo_API.APIControllers
         public IActionResult GetRevenuePerMonth()
         {
             var data = _context.Bookings
+                .Where(b => b.start_date != null)
                 .GroupBy(b => b.start_date.Month)
                 .Select(g => new
                 {
@@ -54,7 +56,7 @@ namespace UtazasSzervezo_API.APIControllers
         {
             var data = _context.Bookings
                 .Include(b => b.Accommodation)
-                .Where(b => b.Accommodation != null)
+                .Where(b => b.Accommodation != null && b.Accommodation.city != null)
                 .GroupBy(b => b.Accommodation.city)
                 .Select(g => new
                 {
@@ -67,40 +69,6 @@ namespace UtazasSzervezo_API.APIControllers
 
             return Ok(data);
         }
-        //[HttpGet("bookings-per-month")]
-        //public IActionResult GetBookingsPerMonth()
-        //{
-        //    var result = new[]
-        //    {
-        //        new { Month = 1, Count = 10 },
-        //        new { Month = 2, Count = 8 },
-        //        new { Month = 3, Count = 14 }
-        //    };
-        //    return Ok(result);
-        //}
-
-        //[HttpGet("revenue-per-month")]
-        //public IActionResult GetRevenuePerMonth()
-        //{
-        //    var result = new[]
-        //    {
-        //        new { Month = 1, Revenue = 200000 },
-        //        new { Month = 2, Revenue = 180000 },
-        //        new { Month = 3, Revenue = 250000 }
-        //    };
-        //    return Ok(result);
-        //}
-
-        //[HttpGet("popular-cities")]
-        //public IActionResult GetPopularCities()
-        //{
-        //    var result = new[]
-        //    {
-        //        new { City = "Budapest", Count = 15 },
-        //        new { City = "London", Count = 12 },
-        //        new { City = "Párizs", Count = 10 }
-        //    };
-        //    return Ok(result);
-        //}
+        
     }
 }
