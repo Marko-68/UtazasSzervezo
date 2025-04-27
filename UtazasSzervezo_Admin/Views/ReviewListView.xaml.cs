@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace UtazasSzervezo_Admin.Views
 {
     /// <summary>
-    /// Interaction logic for UserView.xaml
+    /// Interaction logic for ReviewListView.xaml
     /// </summary>
-    public partial class UserView : UserControl
+    public partial class ReviewListView : UserControl
     {
-        public UserView()
+        public ReviewListView()
         {
             InitializeComponent();
         }

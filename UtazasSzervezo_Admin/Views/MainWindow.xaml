@@ -38,8 +38,8 @@
                 Command="{Binding ShowFlightCommand}"
                 Style="{StaticResource ModernNavButtonStyle}" />
 
-                <Button Content="👥 Felhasználók"
-                Command="{Binding ShowUserCommand}"
+                <Button Content="💬 Értékelések kezelése"
+                Command="{Binding ShowReviewCommand}"
                 Style="{StaticResource ModernNavButtonStyle}" />
 
                 <Button Content="📊 Statisztikák"

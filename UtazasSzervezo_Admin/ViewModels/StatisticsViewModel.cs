@@ -18,7 +18,7 @@ namespace UtazasSzervezo_Admin.ViewModels
     {
         private readonly HttpClient _http = new HttpClient
         {
-            BaseAddress = new Uri("http://localhost:5133/") 
+            BaseAddress = new Uri("http://localhost:5133/")
         };
 
         public SeriesCollection BookingsPerMonthSeries { get; set; } = new();
@@ -56,14 +56,19 @@ namespace UtazasSzervezo_Admin.ViewModels
                 var data = JsonSerializer.Deserialize<List<MonthStat>>(json)!;
 
                 BookingsPerMonthSeries.Clear();
-                Months = new string[data.Count];
+                var monthsList = new List<string>();
                 var values = new ChartValues<int>();
 
-                for (int i = 0; i < data.Count; i++)
+                foreach (var item in data)
                 {
-                    Months[i] = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(data[i].Month);
-                    values.Add(data[i].Count);
+                    if (item.Month >= 1 && item.Month <= 12)
+                    {
+                        monthsList.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(item.Month));
+                        values.Add(item.Count);
+                    }
                 }
+
+                Months = monthsList.ToArray();
 
                 BookingsPerMonthSeries.Add(new ColumnSeries
                 {
@@ -94,7 +99,9 @@ namespace UtazasSzervezo_Admin.ViewModels
                 var values = new ChartValues<decimal>();
 
                 foreach (var item in data)
+                {
                     values.Add(item.Total);
+                }
 
                 RevenuePerMonthSeries.Add(new ColumnSeries
                 {
@@ -149,4 +156,3 @@ namespace UtazasSzervezo_Admin.ViewModels
         private record CityStat(string City, int Count);
     }
 }
-
