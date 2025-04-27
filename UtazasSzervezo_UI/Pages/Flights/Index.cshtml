@@ -34,9 +34,15 @@
             <h5 class="mb-3 fw-bold text-dark">Filter By</h5>
             <form method="get">
                 <div class="mb-3">
-                    <label class="form-label fw-bold">Price Range</label>
-                    <input type="range" class="form-range" name="MaxPrice" min="0" max="500"
-                            value="@Model.MaxPrice" oninput="this.form.submit()">
+                    <label class="form-label fw-bold">Price Range</label><br />
+                    <label for="MinPrice" class="form-label">Min Price</label>
+                    <input type="range" class="form-range" name="MinPrice" min="0" max="@Model.MaxPrice"
+                           value="@Model.MinPrice" oninput="this.form.submit()">
+                    <p>Min Price: <strong>$@Model.MinPrice</strong> </p>
+
+                    <label for="MaxPrice" class="form-label">Max Price</label>
+                    <input type="range" class="form-range" name="MaxPrice" min="0" max="@Model.MaxPrice"
+                           value="@Model.MaxPrice" oninput="this.form.submit()">
                     <p>Max Price: <strong>$@Model.MaxPrice</strong> </p>
                 </div>
 
@@ -46,15 +52,15 @@
                     {
                         <div class="form-check">
                             <input type="radio" name="Airline" class="form-check-input"
-                                    value="@airline" checked="@(airline == Model.Airline)"
-                                    onchange="this.form.submit()">
+                                   value="@airline" checked="@(airline == Model.Airline)"
+                                   onchange="this.form.submit()">
                             <label class="form-check-label">@airline</label>
                         </div>
                     }
                     <div class="form-check">
                         <input type="radio" name="Airline" class="form-check-input"
-                                value="" checked="@(string.IsNullOrEmpty(Model.Airline))"
-                                onchange="this.form.submit()">
+                               value="" checked="@(string.IsNullOrEmpty(Model.Airline))"
+                               onchange="this.form.submit()">
                         <label class="form-check-label">All Airlines</label>
                     </div>
                 </div>
@@ -69,6 +75,10 @@
                 @if (Model.DepartureDate.HasValue)
                 {
                     <input type="hidden" name="DepartureDate" value="@Model.DepartureDate?.ToString("yyyy-MM-dd")" />
+                }
+                @if (Model.MaxPrice.HasValue)
+                {
+                    <input type="hidden" name="MaxPrice" value="@Model.MaxPrice" />
                 }
             </form>
         </div>

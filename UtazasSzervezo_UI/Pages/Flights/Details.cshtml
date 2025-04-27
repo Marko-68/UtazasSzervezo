@@ -4,168 +4,234 @@
     ViewData["Title"] = "Flight Details";
 }
 
-<div class="container mt-5">
+<div class="container py-4 flight-details-page">
     @if (Model.Flight != null)
     {
         <div class="row">
-            <div class="col-md-8">
-                <div class="card shadow-sm mb-4">
-                    <div class="card-header bg-white">
-                        <h2 class="fw-bold mb-0">@Model.Flight.planetype</h2>
-                        <p class="text-muted mb-0">Return @DateTime.Now.AddDays(7).ToString("ddd, MMM d")</p>
+            <div class="col-lg-8">
+                <div class="card shadow-sm border-0 rounded-3 mb-4">
+                    <div class="card-header bg-white border-0 pt-4">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h1 class="fw-bold mb-1">@Model.Flight.airline</h1>
+                                <p class="text-muted mb-0">@Model.Flight.planetype</p>
+                            </div>
+                            <div class="text-end">
+                                <div class="price-badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill">
+                                    <span class="fw-bold fs-4">$@Model.Flight.price.ToString("N0")</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
                     <div class="card-body">
-                        <div class="row align-items-center mb-4">
-                            <div class="col-md-6">
-                                
-                                <div>
-                                    <h5 class="mb-1">@Model.Flight.airline</h5>
-                                    <p class="text-muted mb-0">@Model.Flight.planetype</p>
+                        <div class="flight-visualization mb-4 p-4 bg-light rounded-3">
+                            <div class="d-flex justify-content-between align-items-center position-relative">
+                                <div class="departure-info text-center">
+                                    <div class="time-display fw-bold fs-3">@Model.Flight.departure_time.ToString("HH:mm")</div>
+                                    <div class="airport-code text-muted">@Model.Flight.departure_airport</div>
+                                    <div class="city-name small text-muted">@Model.Flight.departure_city</div>
                                 </div>
-                            
-                            </div>
-                            <div class="col-md-6 text-md-end">
-                                <h3 class="text-primary fw-bold">$@Model.Flight.price.ToString("N0")</h3>
-                                <p class="text-muted">@Model.Flight.duration m</p>
-                            </div>
-                        </div>
 
-                        <div class="flight-timeline mb-4">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <h5 class="fw-bold mb-1">@Model.Flight.departure_time.ToString("h:mm tt")</h5>
-                                    <p class="text-muted mb-0">@Model.Flight.departure_airport</p>
+                                <div class="flight-path-container flex-grow-1 px-3">
+                                    <div class="flight-path">
+                                        <div class="path-line"></div>
+                                    </div>
+                                    <div class="text-center mt-2 text-muted small">
+                                        @(Model.Flight.duration / 60)h @(Model.Flight.duration % 60)m
+                                    </div>
                                 </div>
-                                <div class="text-center mx-3">
-                                    <div class="duration-line"></div>
-                                    <i class="bi bi-airplane-fill plane-icon"></i>
-                                    <p class="text-muted mt-1">@Model.Flight.duration</p>
-                                </div>
-                                <div class="text-end">
-                                    <h5 class="fw-bold mb-1">@Model.Flight.arrival_time.ToString("h:mm tt")</h5>
-                                    <p class="text-muted mb-0">@Model.Flight.destination_airport</p>
+
+                                <div class="arrival-info text-center">
+                                    <div class="time-display fw-bold fs-3">@Model.Flight.arrival_time.ToString("HH:mm")</div>
+                                    <div class="airport-code text-muted">@Model.Flight.destination_airport</div>
+                                    <div class="city-name small text-muted">@Model.Flight.detination_city</div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="card">
-                            <div class="card-header bg-light">
-                                <h5 class="mb-0">Price Details</h5>
-                            </div>
-                            <div class="card-body">
-                                <table class="table">
-                                    <tbody>
-                                        <tr>
-                                            <td>Taxes</td>
-                                            <td class="text-end">20</td>
-                                        </tr>
-                                        <tr class="fw-bold">
-                                            <td>Total</td>
-                                            <td class="text-end">$@Model.Flight.price.ToString("N2")</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                        <div class="flight-details-grid mb-4">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="detail-item mb-3">
+                                        <span class="text-muted">Departure Date:</span>
+                                        <span class="fw-bold">@Model.Flight.departure_time.ToString("MMMM dd, yyyy")</span>
+                                    </div>
+                                    <div class="detail-item mb-3">
+                                        <span class="text-muted">Aircraft:</span>
+                                        <span class="fw-bold">@Model.Flight.planetype</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="detail-item mb-3">
+                                        <span class="text-muted">Flight Duration:</span>
+                                        <span class="fw-bold">@(Model.Flight.duration / 60)h @(Model.Flight.duration % 60)m</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-4">
-                <div class="card shadow-sm sticky-top" style="top: 20px;">
-                    <div class="card-body">
-                        <h4 class="fw-bold mb-4">Complete Your Booking</h4>
+            <div class="col-lg-4">
+                <div class="card shadow-sm border-0 rounded-3 sticky-top booking-sidebar">
+                    <div class="card-body p-4">
+                        <h3 class="fw-bold mb-4">Book This Flight</h3>
 
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
-                            <a href="/Flights" class="btn btn-outline-secondary me-md-2">
-                                <i class="bi bi-arrow-left"></i> Back to List
+                        <div class="flight-summary mb-4 p-3 bg-light rounded-2">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted">Airline:</span>
+                                <span class="fw-bold">@Model.Flight.airline</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted">Departure:</span>
+                                <span>@Model.Flight.departure_time.ToString("MMM dd, HH:mm")</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted">Arrival:</span>
+                                <span>@Model.Flight.arrival_time.ToString("MMM dd, HH:mm")</span>
+                            </div>
+                            <hr class="my-2">
+                            <div class="d-flex justify-content-between fw-bold mt-2">
+                                <span>Total Price:</span>
+                                <span class="text-primary">$@Model.Flight.price.ToString("N2")</span>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <a href="/Flights" class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-left me-2"></i>Back to Flights
                             </a>
                             @if (User.Identity.IsAuthenticated)
                             {
-                                <a href="/Bookings/BookFlight/@Model.Flight.id" class="btn btn-primary">
-                                    <i class="bi bi-calendar-check"></i> Book Now
+                                <a href="/Bookings/Book/BookFlight/@Model.Flight.id" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-check-circle me-2"></i>Confirm Booking
                                 </a>
                             }
                             else
                             {
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
-                                    <i class="bi bi-lock"></i> Book Now
+                                <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#loginModal">
+                                    <i class="bi bi-lock me-2"></i>Login to Book
                                 </button>
                             }
                         </div>
-                        <hr>
-                        <h5 class="fw-bold mb-3">Flight Summary</h5>
-                        <div class="mb-3">
-                            <p class="mb-1"><strong>@Model.Flight.airline</strong></p>
-                            <p class="text-muted mb-1">@Model.Flight.planetype</p>
-                            <p class="text-muted mb-0">@Model.Flight.duration</p>
-                        </div>
-                        <div class="d-flex justify-content-between mb-2">
-                            <span>@Model.Flight.departure_airport</span>
-                            <span>@Model.Flight.departure_time.ToString("h:mm tt")</span>
-                        </div>
-                        <div class="d-flex justify-content-between mb-2">
-                            <span>@Model.Flight.destination_airport</span>
-                            <span>@Model.Flight.arrival_time.ToString("h:mm tt")</span>
-                        </div>
-                        <hr>
-                        <div class="d-flex justify-content-between fw-bold">
-                            <span>Total:</span>
-                            <span>$@Model.Flight.price.ToString("N2")</span>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!--Login Modal-->
         <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="loginModalLabel">Login Required</h5>
+                    <div class="modal-header border-0">
+                        <h5 class="modal-title fw-bold" id="loginModalLabel">Login Required</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
-                        <p>You need to be logged in to make a booking. Please log in or register.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <a href="/Identity/Account/Login?returnUrl=@Uri.EscapeDataString(Request.Path)" class="btn btn-primary">Login</a>
-                        <a href="/Identity/Account/Register?returnUrl=@Uri.EscapeDataString(Request.Path)" class="btn btn-secondary">Register</a>
-                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                    <div class="modal-body py-4">
+                        <div class="text-center mb-4">
+                            <i class="bi bi-person-circle text-primary" style="font-size: 3rem;"></i>
+                            <h4 class="mt-3">Please login to book this flight</h4>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <a href="/Identity/Account/Login?returnUrl=@Uri.EscapeDataString(Request.Path)" class="btn btn-primary btn-lg">
+                                <i class="bi bi-box-arrow-in-right me-2"></i>Login
+                            </a>
+                            <a href="/Identity/Account/Register?returnUrl=@Uri.EscapeDataString(Request.Path)" class="btn btn-outline-primary btn-lg">
+                                <i class="bi bi-person-plus me-2"></i>Register
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
     }
     else
     {
-        <div class="alert alert-danger">
-            <h4 class="alert-heading">Flight not found</h4>
-            <a href="/Flights" class="btn btn-outline-danger">Back to Flights</a>
+        <div class="alert alert-danger rounded-3">
+            <div class="d-flex align-items-center">
+                <i class="bi bi-exclamation-triangle-fill me-3" style="font-size: 1.5rem;"></i>
+                <div>
+                    <h4 class="alert-heading mb-2">Flight Not Found</h4>
+                    <a href="/Flights" class="btn btn-outline-danger mt-2">
+                        <i class="bi bi-arrow-left me-1"></i> Browse Available Flights
+                    </a>
+                </div>
+            </div>
         </div>
     }
 </div>
 
 <style>
-    .flight-timeline {
-        position: relative;
-        padding: 20px 0;
+    .flight-details-page {
+        max-width: 1200px;
     }
 
-    .duration-line {
-        height: 1px;
-        background-color: #ddd;
-        margin: 10px 0;
+    .price-badge {
+        display: inline-block;
+        border: 1px solid rgba(13, 110, 253, 0.3);
+    }
+
+    .flight-visualization {
+        background-color: #f8fafc;
+    }
+
+    .flight-path-container {
+        position: relative;
+        padding: 0 2rem;
+    }
+
+    .flight-path {
+        position: relative;
+        margin: 1rem 0;
+    }
+
+    .path-line {
+        height: 2px;
+        background-color: #dee2e6;
+        width: 100%;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
     }
 
     .plane-icon {
-        color: #0d6efd;
-        transform: rotate(90deg);
         position: absolute;
-        left: 50%;
         top: 50%;
+        left: 50%;
         transform: translate(-50%, -50%) rotate(90deg);
+        background-color: white;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        color: #3a7bd5;
+        border: 1px solid #dee2e6;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .time-display {
+        color: #212529;
+    }
+
+    .airport-code {
+        font-size: 1.1rem;
+        font-weight: 500;
+    }
+
+    .booking-sidebar {
+        top: 20px;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .detail-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.5rem 0;
+        border-bottom: 1px dashed #eee;
     }
 
     .sticky-top {

@@ -16,10 +16,10 @@ namespace UtazasSzervezo_UI.Pages.Flights
         public string? Airline { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public int? MinPrice { get; set; }
+        public int? MinPrice { get; set; } = 0;
 
         [BindProperty(SupportsGet = true)]
-        public int? MaxPrice { get; set; } = 500;
+        public int? MaxPrice { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public string? DepartureCity { get; set; }
@@ -45,6 +45,13 @@ namespace UtazasSzervezo_UI.Pages.Flights
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ?? new List<Flight>();
 
                 Airlines = AllFlights.Select(f => f.airline).Distinct().OrderBy(a => a).ToList();
+
+                //MaxPrice dinamikus beállítása
+                if (AllFlights.Any())
+                {
+                    MaxPrice = (int)AllFlights.Max(f => f.price);
+                }
+
                 FilteredFlights = ApplyFilters(AllFlights);
             }
         }
