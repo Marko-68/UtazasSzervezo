@@ -93,10 +93,10 @@ namespace UtazasSzervezo_Library.Models
                             star_rating = 4,
                             available_rooms = 35,
                             dinning = "Half-board",
-                            cover_img = "./images/Accommodation_img/spain-hotel.jpg",
-                            images_url = ["/images/Accommodation_img/spain1.jpg",
-                                            "/images/Accommodation_img/spain2.jpg",
-                                            "/images/Accommodation_img/spain3.jpg"]
+                            cover_img = "./images/Accommodation_img/acc_4_cover.jpg",
+                            images_url = ["/images/Accommodation_img/acc_4_1.jpg",
+                                            "/images/Accommodation_img/acc_4_2.jpg",
+                                            "/images/Accommodation_img/acc_4_3.jpg"]
                         },
                         new Accommodation
                         {
@@ -112,10 +112,10 @@ namespace UtazasSzervezo_Library.Models
                             star_rating = 5,
                             available_rooms = 18,
                             dinning = "Breakfast",
-                            cover_img = "./images/Accommodation_img/italy-hotel.jpg",
-                            images_url = ["/images/Accommodation_img/italy1.jpg",
-                                            "/images/Accommodation_img/italy2.jpg",
-                                            "/images/Accommodation_img/italy3.jpg"]
+                            cover_img = "./images/Accommodation_img/acc_5_cover.jpg",
+                            images_url = ["/images/Accommodation_img/acc_5_1jpg",
+                                            "/images/Accommodation_img/acc_5_2.jpg",
+                                            "/images/Accommodation_img/acc_5_3.jpg"]
                         },
                         new Accommodation
                         {
@@ -131,10 +131,10 @@ namespace UtazasSzervezo_Library.Models
                             star_rating = 4,
                             available_rooms = 12,
                             dinning = "Breakfast",
-                            cover_img = "./images/Accommodation_img/france-hotel.jpg",
-                            images_url = ["/images/Accommodation_img/france1.jpg",
-                                            "/images/Accommodation_img/france2.jpg",
-                                            "/images/Accommodation_img/france3.jpg"]
+                            cover_img = "./images/Accommodation_img/acc_6_cover.jpg",
+                            images_url = ["/images/Accommodation_img/acc_6_3.jpg",
+                                            "/images/Accommodation_img/acc_6_3.jpg",
+                                            "/images/Accommodation_img/acc_6_3.jpg"]
                         },
                         new Accommodation
                         {
@@ -150,10 +150,10 @@ namespace UtazasSzervezo_Library.Models
                             star_rating = 4,
                             available_rooms = 3,
                             dinning = "Self-catering",
-                            cover_img = "./images/Accommodation_img/alpine-chalet.jpg",
-                            images_url = ["/images/Accommodation_img/chalet1.jpg",
-                        "/images/Accommodation_img/chalet2.jpg",
-                        "/images/Accommodation_img/chalet3.jpg"]
+                            cover_img = "./images/Accommodation_img/acc_7_cover.jpg",
+                            images_url = ["/images/Accommodation_img/acc_7_1.jpg",
+                        "/images/Accommodation_img/acc_7_2.jpg",
+                        "/images/Accommodation_img/acc_7_3.jpg"]
                         },
                         new Accommodation
                         {
@@ -169,10 +169,10 @@ namespace UtazasSzervezo_Library.Models
                             star_rating = 4,
                             available_rooms = 7,
                             dinning = "Breakfast",
-                            cover_img = "./images/Accommodation_img/boutique-hotel.jpg",
-                            images_url = ["/images/Accommodation_img/boutique1.jpg",
-                                        "/images/Accommodation_img/boutique2.jpg",
-                                        "/images/Accommodation_img/boutique3.jpg"]
+                            cover_img = "./images/Accommodation_img/acc_8_cover.jpg",
+                            images_url = ["/images/Accommodation_img/acc_8_1.jpg",
+                                        "/images/Accommodation_img/acc_8_2.jpg",
+                                        "/images/Accommodation_img/acc_8_3.jpg"]
                         }
                     );
                 }
@@ -290,6 +290,166 @@ namespace UtazasSzervezo_Library.Models
                             duration = 150,
                             available_seats = 220,
                             price = 159
+                        },
+                        new Flight
+                        {
+                            airline = "EasyJet",
+                            planetype = "Airbus A319",
+                            departure_time = DateTime.Now.AddDays(7),
+                            arrival_time = DateTime.Now.AddDays(7).AddHours(2),
+                            departure_city = "Budapest",
+                            departure_country = "Hungary",
+                            detination_city = "Paris",
+                            destination_country = "France",
+                            departure_airport = "BUD",
+                            destination_airport = "CDG",
+                            duration = 120,
+                            available_seats = 156,
+                            price = 65
+                        },
+                        new Flight
+                        {
+                            airline = "Emirates",
+                            planetype = "Boeing 777",
+                            departure_time = DateTime.Now.AddDays(12),
+                            arrival_time = DateTime.Now.AddDays(12).AddHours(6),
+                            departure_city = "Vienna",
+                            departure_country = "Austria",
+                            detination_city = "Dubai",
+                            destination_country = "UAE",
+                            departure_airport = "VIE",
+                            destination_airport = "DXB",
+                            duration = 360,
+                            available_seats = 300,
+                            price = 499
+                        },
+                        new Flight
+                        {
+                            airline = "KLM",
+                            planetype = "Boeing 737",
+                            departure_time = DateTime.Now.AddDays(3),
+                            arrival_time = DateTime.Now.AddDays(3).AddHours(2.5),
+                            departure_city = "Amsterdam",
+                            departure_country = "Netherlands",
+                            detination_city = "Budapest",
+                            destination_country = "Hungary",
+                            departure_airport = "AMS",
+                            destination_airport = "BUD",
+                            duration = 150,
+                            available_seats = 180,
+                            price = 89
+                        },
+                        new Flight
+                        {
+                            airline = "Norwegian",
+                            planetype = "Boeing 787",
+                            departure_time = DateTime.Now.AddDays(20),
+                            arrival_time = DateTime.Now.AddDays(20).AddHours(3.5),
+                            departure_city = "Oslo",
+                            departure_country = "Norway",
+                            detination_city = "Budapest",
+                            destination_country = "Hungary",
+                            departure_airport = "OSL",
+                            destination_airport = "BUD",
+                            duration = 210,
+                            available_seats = 240,
+                            price = 109
+                        },
+                        new Flight
+                        {
+                            airline = "Turkish Airlines",
+                            planetype = "Airbus A321",
+                            departure_time = DateTime.Now.AddDays(14),
+                            arrival_time = DateTime.Now.AddDays(14).AddHours(1.75),
+                            departure_city = "Istanbul",
+                            departure_country = "Turkey",
+                            detination_city = "Vienna",
+                            destination_country = "Austria",
+                            departure_airport = "IST",
+                            destination_airport = "VIE",
+                            duration = 105,
+                            available_seats = 190,
+                            price = 119
+                        },
+                        new Flight
+                        {
+                            airline = "Swiss International",
+                            planetype = "Airbus A220",
+                            departure_time = DateTime.Now.AddDays(6),
+                            arrival_time = DateTime.Now.AddDays(6).AddHours(1.25),
+                            departure_city = "Zurich",
+                            departure_country = "Switzerland",
+                            detination_city = "Vienna",
+                            destination_country = "Austria",
+                            departure_airport = "ZRH",
+                            destination_airport = "VIE",
+                            duration = 75,
+                            available_seats = 120,
+                            price = 89
+                        },
+                        new Flight
+                        {
+                            airline = "Air France",
+                            planetype = "Airbus A320",
+                            departure_time = DateTime.Now.AddDays(9),
+                            arrival_time = DateTime.Now.AddDays(9).AddHours(2.25),
+                            departure_city = "Paris",
+                            departure_country = "France",
+                            detination_city = "Budapest",
+                            destination_country = "Hungary",
+                            departure_airport = "CDG",
+                            destination_airport = "BUD",
+                            duration = 135,
+                            available_seats = 168,
+                            price = 99
+                        },
+                        new Flight
+                        {
+                            airline = "Qatar Airways",
+                            planetype = "Boeing 787",
+                            departure_time = DateTime.Now.AddDays(25),
+                            arrival_time = DateTime.Now.AddDays(25).AddHours(6.5),
+                            departure_city = "Budapest",
+                            departure_country = "Hungary",
+                            detination_city = "Doha",
+                            destination_country = "Qatar",
+                            departure_airport = "BUD",
+                            destination_airport = "DOH",
+                            duration = 390,
+                            available_seats = 240,
+                            price = 549
+                        },
+                        new Flight
+                        {
+                            airline = "Finnair",
+                            planetype = "Airbus A350",
+                            departure_time = DateTime.Now.AddDays(18),
+                            arrival_time = DateTime.Now.AddDays(18).AddHours(2.75),
+                            departure_city = "Helsinki",
+                            departure_country = "Finland",
+                            detination_city = "Vienna",
+                            destination_country = "Austria",
+                            departure_airport = "HEL",
+                            destination_airport = "VIE",
+                            duration = 165,
+                            available_seats = 280,
+                            price = 139
+                        },
+                        new Flight
+                        {
+                            airline = "Iberia",
+                            planetype = "Airbus A320",
+                            departure_time = DateTime.Now.AddDays(11),
+                            arrival_time = DateTime.Now.AddDays(11).AddHours(2.5),
+                            departure_city = "Madrid",
+                            departure_country = "Spain",
+                            detination_city = "Budapest",
+                            destination_country = "Hungary",
+                            departure_airport = "MAD",
+                            destination_airport = "BUD",
+                            duration = 150,
+                            available_seats = 174,
+                            price = 79
                         }
                     );
                 }
@@ -342,7 +502,6 @@ namespace UtazasSzervezo_Library.Models
                 //        }
                 //    );
                 //}
-
                 context.SaveChanges();
             }
         }

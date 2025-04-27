@@ -85,14 +85,11 @@ namespace UtazasSzervezo_API.Controllers
             try
             {
                 bool available = await _bookingService.CheckAccommodationAvailability(accommodationId, startDate, endDate);
-                if (available)
-                    return Ok(new { available = true});
-                else
-                    return Ok(new { available = false, message = "No rooms available at this time" });
+                return Ok(available);
             }
             catch (Exception ex)
             {
-                return BadRequest(new { message = ex.Message });
+                return BadRequest(false);
             }
         }
 

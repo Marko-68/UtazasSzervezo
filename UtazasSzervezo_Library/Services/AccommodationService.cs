@@ -1,6 +1,7 @@
 ﻿using UtazasSzervezo_Library.Models;
 using UtazasSzervezo_Library;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 
 public class AccommodationService
 {
@@ -100,5 +101,10 @@ public class AccommodationService
         _context.Accommodations.Remove(accommodation);
         await _context.SaveChangesAsync();
         return true;
+    }
+
+    public async Task<bool> ExistAtAddress(string address)
+    {
+        return await _context.Accommodations.AnyAsync(a => a.address == address);
     }
 }

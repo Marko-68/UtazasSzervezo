@@ -51,23 +51,30 @@ namespace UtazasSzervezo_Library.Services
             if (booking.accommodation_id != null)
             {
                 var accommodation = await _context.Accommodations.FindAsync(booking.accommodation_id);
-                if (accommodation != null && accommodation.available_rooms > 0)
+                if (accommodation == null)
                 {
-                    accommodation.available_rooms -= 1;
-                    booking.Accommodation = accommodation;
+                    throw new InvalidOperationException("Accommodation not found.");
                 }
-                else
+
+                //Lekérdezzük az átfedő foglalásokat az adott időszakra
+                var bookedRooms = await _context.Bookings
+                    .Where(b => b.accommodation_id == booking.accommodation_id &&
+                                b.start_date < booking.end_date &&
+                                b.end_date > booking.start_date)
+                    .CountAsync();
+
+                if (bookedRooms >= accommodation.available_rooms)
                 {
-                    throw new InvalidOperationException("No available rooms left.");
+                    throw new InvalidOperationException("No available rooms for the selected dates.");
                 }
+
+                booking.Accommodation = accommodation;
             }
 
             _context.Bookings.Add(booking);
             await _context.SaveChangesAsync();
             return booking;
         }
-
-
 
         public async Task<bool> UpdateBooking(int id, Booking booking)
         {
@@ -77,7 +84,6 @@ namespace UtazasSzervezo_Library.Services
                 return false;
             }
 
-            existing.description = booking.description;
             existing.start_date = booking.start_date;
             existing.end_date = booking.end_date;
             existing.total_price = booking.total_price;
@@ -96,5 +102,25 @@ namespace UtazasSzervezo_Library.Services
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public async Task<bool> CheckAccommodationAvailability(int accommodationId, DateTime startDate, DateTime endDate)
+        {
+            var accommodation = await _context.Accommodations.FindAsync(accommodationId);
+            if (accommodation == null)
+                throw new InvalidOperationException("Accommodation not found.");
+
+            //Lekérjük az átfedő foglalásokat
+            var overlappingBookings = await _context.Bookings
+                .Where(b => b.accommodation_id == accommodationId &&
+                            b.start_date <= endDate &&
+                            b.end_date >= startDate)
+                .ToListAsync();
+
+            int availableRooms = accommodation.available_rooms - overlappingBookings.Count;
+
+            return availableRooms > 0;
+        }
+
+
     }
 }

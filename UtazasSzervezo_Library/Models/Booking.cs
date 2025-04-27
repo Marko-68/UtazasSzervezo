@@ -24,8 +24,6 @@ namespace UtazasSzervezo_Library.Models
         [Required]
         public DateTime end_date { get; set; }
         
-        public string description { get; set; }
-        
         public string status { get; set; }
         public string? special_request { get; set; }
         [Required]

@@ -63,5 +63,16 @@ namespace UtazasSzervezo_Library.Services
             await _context.SaveChangesAsync();
             return true;
         }
+
+
+        public async Task FlightSeatIncrement(int flightId)
+        {
+            var flight = await _context.Flights.FindAsync(flightId);
+            if (flight != null)
+            {
+                flight.available_seats++;
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }
