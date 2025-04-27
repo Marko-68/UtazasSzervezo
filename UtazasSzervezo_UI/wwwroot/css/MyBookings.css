@@ -1,4 +1,5 @@
-﻿body {
+﻿.my-bookings-page {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     max-width: 1200px;
     border-radius: 12px;
     padding: 2rem;
@@ -13,10 +14,10 @@
     letter-spacing: 0.3px;
 }
 
-.filter-buttons .btn i {
-    font-size: 1.1rem;
-    vertical-align: middle;
-}
+    .filter-buttons .btn i {
+        font-size: 1.1rem;
+        vertical-align: middle;
+    }
 
 
 .card-header {
@@ -46,10 +47,10 @@
     font-size: 0.8rem;
 }
 
-.booking-detail i {
-    margin-right: 6px;
-    color: #6c757d;
-}
+    .booking-detail i {
+        margin-right: 6px;
+        color: #6c757d;
+    }
 
 .empty-state {
     background-color: white;
@@ -62,10 +63,10 @@
     color: #e9ecef;
 }
 
-.empty-state-icon i {
-    font-size: 5rem;
-    opacity: 0.7;
-}
+    .empty-state-icon i {
+        font-size: 5rem;
+        opacity: 0.7;
+    }
 
 .flight-route-display {
     height: 100%;
@@ -116,11 +117,11 @@
     border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-.booking-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 0.5rem 1.25rem rgba(0, 0, 0, 0.1) !important;
-    border-color: rgba(0, 114, 229, 0.2);
-}
+    .booking-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 0.5rem 1.25rem rgba(0, 0, 0, 0.1) !important;
+        border-color: rgba(0, 114, 229, 0.2);
+    }
 
 .flight-path {
     position: relative;

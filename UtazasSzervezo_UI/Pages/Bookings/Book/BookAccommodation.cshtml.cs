@@ -74,11 +74,7 @@ namespace UtazasSzervezo_UI.Pages.Bookings.Book
             {
                 return NotFound();
             }
-            else
-            {
-                var nights = (Booking.end_date - Booking.start_date).Days;
-                Booking.total_price = nights * Accommodation.price_per_night;
-            }
+            
 
             Booking.accommodation_id = accommodationId;
 
@@ -92,6 +88,9 @@ namespace UtazasSzervezo_UI.Pages.Bookings.Book
                 Booking.start_date = DateTime.Today.AddDays(30);
                 Booking.end_date = DateTime.Today.AddDays(33);
             }
+            var nights = (Booking.end_date - Booking.start_date).Days;
+            Booking.total_price = nights * Accommodation.price_per_night;
+           
 
             var user = await _userManager.GetUserAsync(User);
             if (user != null)
