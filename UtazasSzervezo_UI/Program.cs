@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using System.Globalization;
 using UtazasSzervezo_Library;
 using UtazasSzervezo_Library.Models;
 using UtazasSzervezo_UI.Services;
@@ -13,6 +14,10 @@ public class Program
     public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+        var defaultCulture = new CultureInfo("en-US");
+        CultureInfo.DefaultThreadCurrentCulture = defaultCulture;
+        CultureInfo.DefaultThreadCurrentUICulture = defaultCulture;
+
         var connectionString = builder.Configuration.GetConnectionString("UtazasSzervezoDbContextConnection") ?? throw new InvalidOperationException("Connection string 'UtazasSzervezoDbContextConnection' not found.");
 
         builder.Services.AddDbContext<UtazasSzervezoDbContext>(options =>
