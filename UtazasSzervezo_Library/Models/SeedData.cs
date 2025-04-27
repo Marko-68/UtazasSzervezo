@@ -465,7 +465,6 @@ namespace UtazasSzervezo_Library.Models
                 //            start_date = DateTime.Now.AddDays(10),
                 //            end_date = DateTime.Now.AddDays(15),
                 //            description = "vacation",
-                //            status = "Confirmed",
                 //            special_request = "Late check-in",
                 //            total_price = 749
                 //        },
@@ -476,7 +475,6 @@ namespace UtazasSzervezo_Library.Models
                 //            start_date = DateTime.Now.AddDays(20),
                 //            end_date = DateTime.Now.AddDays(25),
                 //            description = "Winter getaway",
-                //            status = "Pending",
                 //            special_request = "Extra blanket",
                 //            total_price = 999
                 //        }

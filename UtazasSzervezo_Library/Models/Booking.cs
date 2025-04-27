@@ -23,14 +23,12 @@ namespace UtazasSzervezo_Library.Models
         public DateTime start_date { get; set; }
         [Required]
         public DateTime end_date { get; set; }
-        
-        public string status { get; set; }
         public string? special_request { get; set; }
         [Required]
         [Precision(10, 2)]
         public decimal total_price { get; set; }
 
-        public string user_id { get; set; }
+        public string? user_id { get; set; }
 
         [JsonIgnore]
         public virtual User? User { get; set; }
