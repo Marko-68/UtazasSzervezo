@@ -48,7 +48,7 @@
                             </div>
                             @if (Model.Accommodation.star_rating.HasValue)
                             {
-                                <div class="bg-warning text-dark px-2 py-1 rounded">
+                                <div class="bg-warning px-2 py-1 rounded" style="color: white;">
                                     @for (int i = 0; i < Model.Accommodation.star_rating; i++)
                                     {
                                         @:★
@@ -82,7 +82,7 @@
                                     <div class="d-flex align-items-center">
                                         <i class="bi bi-currency-dollar fs-3 me-3 text-primary"></i>
                                         <div>
-                                            <h5 class="mb-0">@Model.Accommodation.price_per_night</h5>
+                                            <h5 class="mb-0">$@Model.Accommodation.price_per_night</h5>
                                             <small class="text-muted">Per night</small>
                                         </div>
                                     </div>
