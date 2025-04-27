@@ -21,11 +21,6 @@ namespace UtazasSzervezo_UI.Pages.Bookings.BookingDetails
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null)
-            {
-                return NotFound("Booking ID not provided.");
-            }
-
             try
             {
                 var response = await _httpClient.GetAsync($"http://localhost:5133/api/Booking/{id.Value}");
@@ -38,7 +33,7 @@ namespace UtazasSzervezo_UI.Pages.Bookings.BookingDetails
 
                     if (Booking == null || Booking.flight_id == null || Booking.Flight == null)
                     {
-                        ErrorMessage = "The requested booking is not a valid flight booking or data is missing.";
+                        ErrorMessage = "The requested booking is not valid";
                         Booking = null;
                         return Page();
                     }
@@ -47,39 +42,27 @@ namespace UtazasSzervezo_UI.Pages.Bookings.BookingDetails
                 }
                 else
                 {
-                    ErrorMessage = $"Error fetching booking details. Status code: {response.StatusCode}";
+                    ErrorMessage = $"Error:{response.StatusCode}";
                     return Page();
                 }
             }
             catch (Exception ex)
             {
-                ErrorMessage = $"An unexpected error occurred: {ex.Message}";
+                ErrorMessage = $"Error: {ex.Message}";
                 return Page();
             }
         }
 
         public async Task<IActionResult> OnPostCancelBookingAsync(int? id)
         {
-            if (id == null)
-            {
-                return NotFound("Booking ID not provided for cancellation.");
-            }
-
             try
             {
                 var getResponse = await _httpClient.GetAsync($"http://localhost:5133/api/Booking/{id.Value}");
 
                 if (!getResponse.IsSuccessStatusCode)
                 {
-                    if (getResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
-                    {
-                        return NotFound($"Booking with ID {id.Value} not found for cancellation.");
-                    }
-                    else
-                    {
-                        ErrorMessage = $"Error fetching booking details for cancellation. Status code: {getResponse.StatusCode}";
-                        return RedirectToPage(new { id = id.Value });
-                    }
+                    ErrorMessage = $"Error: {getResponse.StatusCode}";
+                    return NotFound($"Booking not found");
                 }
 
                 var json = await getResponse.Content.ReadAsStringAsync();
@@ -88,13 +71,13 @@ namespace UtazasSzervezo_UI.Pages.Bookings.BookingDetails
 
                 if (bookingToCancel == null || bookingToCancel.Flight == null)
                 {
-                    ErrorMessage = "Could not retrieve flight booking details for cancellation.";
+                    ErrorMessage = "Could not retrieve flight booking details for cancellation";
                     return RedirectToPage(new { id = id.Value });
                 }
 
                 if (bookingToCancel.Flight.departure_time <= DateTime.Now)
                 {
-                    ErrorMessage = "This flight booking cannot be cancelled as the departure time has already passed.";
+                    ErrorMessage = "This flight booking cannot be cancelled because the departure time has already passed.";
                     return RedirectToPage(new { id = id.Value });
                 }
 
@@ -102,21 +85,17 @@ namespace UtazasSzervezo_UI.Pages.Bookings.BookingDetails
 
                 if (deleteResponse.IsSuccessStatusCode)
                 {
-                    return new ContentResult
-                    {
-                        ContentType = "text/html",
-                        Content = "<script>window.location.href='/Bookings/MyBookings';</script>"
-                    };
+                    return RedirectToPage("/Bookings/MyBookings");
                 }
                 else
                 {
-                    ErrorMessage = $"Failed to cancel the flight booking. Status code: {deleteResponse.StatusCode}";
+                    ErrorMessage = $"Failed to cancel the flight booking: {deleteResponse.StatusCode}";
                     return RedirectToPage(new { id = id.Value });
                 }
             }
             catch (Exception ex)
             {
-                ErrorMessage = $"An unexpected error occurred during flight booking cancellation: {ex.Message}";
+                ErrorMessage = $"Unexpected error:{ex.Message}";
                 return RedirectToPage(new { id = id.Value });
             }
         }

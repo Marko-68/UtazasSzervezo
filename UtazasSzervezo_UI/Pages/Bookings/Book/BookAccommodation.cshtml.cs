@@ -74,6 +74,11 @@ namespace UtazasSzervezo_UI.Pages.Bookings.Book
             {
                 return NotFound();
             }
+            else
+            {
+                var nights = (Booking.end_date - Booking.start_date).Days;
+                Booking.total_price = nights * Accommodation.price_per_night;
+            }
 
             Booking.accommodation_id = accommodationId;
 
@@ -88,24 +93,16 @@ namespace UtazasSzervezo_UI.Pages.Bookings.Book
                 Booking.end_date = DateTime.Today.AddDays(33);
             }
 
-            if (Accommodation != null)
-            {
-                var nights = (Booking.end_date - Booking.start_date).Days;
-                Booking.total_price = nights * Accommodation.price_per_night;
-            }
-
-            Booking.status = "Pending";
-
             var user = await _userManager.GetUserAsync(User);
             if (user != null)
             {
                 Booking.user_id = user.Id;
-                FirstName = user.FirstName ?? string.Empty;
-                LastName = user.LastName ?? string.Empty;
-                Email = user.Email ?? string.Empty;
-                PhoneNumber = user.PhoneNumber ?? string.Empty;
-                Country = user.Country ?? string.Empty;
-                PostalCode = user.PostalCode.ToString() ?? string.Empty;
+                FirstName = user.FirstName;
+                LastName = user.LastName;
+                Email = user.Email;
+                PhoneNumber = user.PhoneNumber;
+                Country = user.Country;
+                PostalCode = user.PostalCode.ToString();
             }
 
             return Page();
@@ -131,13 +128,6 @@ namespace UtazasSzervezo_UI.Pages.Bookings.Book
                 // Ellenõrizzük a rendelkezésre állást az API-n keresztül
                 var availabilityResponse = await _httpClient.GetAsync($"http://localhost:5133/api/Booking/CheckAvailability?accommodationId={accommodationId}&startDate={Booking.start_date:yyyy-MM-dd}&endDate={Booking.end_date:yyyy-MM-dd}");
 
-                if (!availabilityResponse.IsSuccessStatusCode)
-                {
-                    ModelState.AddModelError("", "Failed to check availability. Please try again.");
-                    await OnGetAsync(accommodationId, _startDate, _endDate);
-                    return Page();
-                }
-
                 var availabilityJson = await availabilityResponse.Content.ReadAsStringAsync();
                 var availabilityResult = JsonSerializer.Deserialize<bool>(availabilityJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
@@ -156,7 +146,6 @@ namespace UtazasSzervezo_UI.Pages.Bookings.Book
 
                 Booking.user_id = user.Id;
                 Booking.accommodation_id = accommodationId;
-                Booking.status = "Pending";
 
                 var responseAccommodation = await _httpClient.GetAsync($"http://localhost:5133/api/Accommodation/{accommodationId}");
                 if (!responseAccommodation.IsSuccessStatusCode)
@@ -186,17 +175,18 @@ namespace UtazasSzervezo_UI.Pages.Bookings.Book
                 if (response.IsSuccessStatusCode)
                 {
                     BookingSuccessful = true;
-                    return Page();
+                }
+                else
+                {
+                    var error = await response.Content.ReadAsStringAsync();
+                    ModelState.AddModelError("", $"Failed to submit booking.{error}");
                 }
 
-                var error = await response.Content.ReadAsStringAsync();
-                ModelState.AddModelError("", $"Failed to submit booking. Server response: {error}");
-                await OnGetAsync(accommodationId, _startDate, _endDate);
                 return Page();
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("", $"An error occurred: {ex.Message}");
+                ModelState.AddModelError("", $"Error: {ex.Message}");
                 await OnGetAsync(accommodationId, _startDate, _endDate);
                 return Page();
             }

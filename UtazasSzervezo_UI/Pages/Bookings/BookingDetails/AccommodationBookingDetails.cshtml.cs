@@ -23,11 +23,6 @@ namespace UtazasSzervezo_UI.Pages.Bookings.BookingDetails
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null)
-            {
-                return NotFound("Booking ID not provided.");
-            }
-
             try
             {
                 var response = await _httpClient.GetAsync($"http://localhost:5133/api/Booking/{id.Value}");
@@ -37,51 +32,31 @@ namespace UtazasSzervezo_UI.Pages.Bookings.BookingDetails
                     var json = await response.Content.ReadAsStringAsync();
                     var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
                     Booking = JsonSerializer.Deserialize<Booking>(json, options);
-
-                    if (Booking == null || Booking.accommodation_id == null || Booking.Accommodation == null)
-                    {
-                        ErrorMessage = "The requested booking is not a valid accommodation booking or data is missing.";
-                        Booking = null;
-                        return Page();
-                    }
-
-                    return Page();
+                   
                 }
                 else
                 {
-                    ErrorMessage = $"Error fetching booking details. Status code: {response.StatusCode}";
-                    return Page();
+                    ErrorMessage = $"Error:{response.StatusCode}";
                 }
             }
             catch (Exception ex)
             {
-                ErrorMessage = $"An unexpected error occurred: {ex.Message}";
-                return Page();
+                ErrorMessage = $"Error{ex.Message}";
+                
             }
+            return Page();
         }
 
         public async Task<IActionResult> OnPostCancelBookingAsync(int? id)
         {
-            if (id == null)
-            {
-                return NotFound("Booking ID not provided for cancellation.");
-            }
-
             try
             {
                 var getResponse = await _httpClient.GetAsync($"http://localhost:5133/api/Booking/{id.Value}");
 
                 if (!getResponse.IsSuccessStatusCode)
                 {
-                    if (getResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
-                    {
-                        return NotFound($"Booking with ID {id.Value} not found for cancellation.");
-                    }
-                    else
-                    {
-                        ErrorMessage = $"Error fetching booking details for cancellation. Status code: {getResponse.StatusCode}";
-                        return RedirectToPage(new { id = id.Value });
-                    }
+                    ErrorMessage = $"Error: {getResponse.StatusCode}";
+                    return NotFound();
                 }
 
                 var json = await getResponse.Content.ReadAsStringAsync();
@@ -109,13 +84,13 @@ namespace UtazasSzervezo_UI.Pages.Bookings.BookingDetails
                 }
                 else
                 {
-                    ErrorMessage = $"Failed to cancel the booking. Status code: {deleteResponse.StatusCode}";
+                    ErrorMessage = $"Failed to cancel the booking. {deleteResponse.StatusCode}";
                     return RedirectToPage(new { id = id.Value });
                 }
             }
             catch (Exception ex)
             {
-                ErrorMessage = $"An unexpected error occurred during cancellation: {ex.Message}";
+                ErrorMessage = $"Error{ex.Message}";
                 return RedirectToPage(new { id = id.Value });
             }
         }

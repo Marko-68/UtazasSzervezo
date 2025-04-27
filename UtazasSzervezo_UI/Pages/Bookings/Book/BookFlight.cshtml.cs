@@ -118,7 +118,6 @@ namespace UtazasSzervezo_UI.Pages.Bookings.Book
             }
 
             Booking.total_price = flight.price;
-            Booking.status = "Pending";
             Booking.start_date = flight.departure_time; 
             Booking.end_date = flight.arrival_time;
 
