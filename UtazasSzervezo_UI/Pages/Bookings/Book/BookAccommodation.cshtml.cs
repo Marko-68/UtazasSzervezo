@@ -117,6 +117,14 @@ namespace UtazasSzervezo_UI.Pages.Bookings.Book
                     return Page();
                 }
 
+                //Ellenõrzések
+                if (Booking.start_date < DateTime.Now.Date)
+                {
+                    ModelState.AddModelError("", "Check-in date cannot be in the past.");
+                    await OnGetAsync(accommodationId, _startDate, _endDate);
+                    return Page();
+                }
+
                 if (Booking.start_date >= Booking.end_date)
                 {
                     ModelState.AddModelError("", "Check-out date must be after check-in date.");
@@ -124,7 +132,6 @@ namespace UtazasSzervezo_UI.Pages.Bookings.Book
                     return Page();
                 }
 
-                // Ellenõrizzük a rendelkezésre állást az API-n keresztül
                 var availabilityResponse = await _httpClient.GetAsync($"http://localhost:5133/api/Booking/CheckAvailability?accommodationId={accommodationId}&startDate={Booking.start_date:yyyy-MM-dd}&endDate={Booking.end_date:yyyy-MM-dd}");
 
                 var availabilityJson = await availabilityResponse.Content.ReadAsStringAsync();
