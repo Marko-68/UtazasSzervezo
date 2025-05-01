@@ -108,13 +108,13 @@
                             @if (User.Identity.IsAuthenticated)
                             {
                                 <a href="/Bookings/Book/BookFlight/@Model.Flight.id" class="btn btn-primary btn-lg">
-                                    <i class="bi bi-check-circle me-2"></i>Confirm Booking
+                                    <i class="bi bi-check-circle me-2"></i>Book now
                                 </a>
                             }
                             else
                             {
                                 <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#loginModal">
-                                    <i class="bi bi-lock me-2"></i>Login to Book
+                                    <i class="bi bi-lock me-2"></i>Book now
                                 </button>
                             }
                         </div>
@@ -123,8 +123,30 @@
             </div>
         </div>
 
-        <!-- Login Modal remains the same -->
-        <!-- ... -->
+        <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header border-0">
+                        <h5 class="modal-title fw-bold" id="loginModalLabel">Login Required</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body py-4">
+                        <div class="text-center mb-4">
+                            <i class="bi bi-person-circle text-primary" style="font-size: 3rem;"></i>
+                            <h4 class="mt-3">Please login to book this Accommodation</h4>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <a href="/Identity/Account/Login?returnUrl=@Uri.EscapeDataString(Request.Path)" class="btn btn-primary btn-lg">
+                                <i class="bi bi-box-arrow-in-right me-2"></i>Login
+                            </a>
+                            <a href="/Identity/Account/Register?returnUrl=@Uri.EscapeDataString(Request.Path)" class="btn btn-outline-primary btn-lg">
+                                <i class="bi bi-person-plus me-2"></i>Register
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     }
     else
     {
