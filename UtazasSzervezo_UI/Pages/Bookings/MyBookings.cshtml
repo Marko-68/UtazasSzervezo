@@ -43,68 +43,72 @@
         <div class="row g-4">
             @foreach (var item in Model.Bookings)
             {
+                var isExpired = item.end_date < DateTime.Now;
                 <div class="col-md-6 col-lg-4">
-                    <div class="card booking-card shadow-sm border-0 rounded-3 h-100 overflow-hidden"
+                    <div class="card booking-card shadow-sm border-0 rounded-3 h-100 overflow-hidden @(isExpired ? "expired-booking" : "")"
                          data-booking-id="@item.id"
                          style="cursor: pointer;">
                         @if (item.accommodation_id != null || item.Accommodation != null)
                         {
-                        <a asp-page="BookingDetails/AccommodationBookingDetails" asp-route-id="@item.id" class="text-decoration-none text-dark">
-                            <div class="card booking-card shadow-sm border-0 rounded-3 h-100 overflow-hidden" data-booking-id="@item.id" style="cursor: pointer;">
-                                <div class="card-header bg-light py-3">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span class="badge rounded-pill bg-info">
-                                            @item.Accommodation.type
-                                        </span>
-                                        <span class="text-muted small">
-                                            @item.start_date.ToString("MMM dd") - @item.end_date.ToString("MMM dd")
-                                        </span>
+                            <a asp-page="BookingDetails/AccommodationBookingDetails" asp-route-id="@item.id" class="text-decoration-none text-dark">
+                                <div class="card booking-card shadow-sm border-0 rounded-3 h-100 overflow-hidden @(isExpired ? "expired-booking" : "")" data-booking-id="@item.id" style="cursor: pointer;">
+                                    <div class="card-header bg-light py-3">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="badge rounded-pill bg-info">
+                                                @item.Accommodation.type
+                                            </span>
+                                            <span class="text-muted small">
+                                                @item.start_date.ToString("MMM dd") - @item.end_date.ToString("MMM dd")
+                                            </span>
+                                            @if (isExpired)
+                                            {
+                                                <span class="badge rounded-pill bg-secondary ms-2">Expired</span>
+                                            }
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="card-body">
-                                    <div class="d-flex align-items-start mb-3">
-                                        <div>
-                                            <h5 class="card-title fw-semibold mb-1">@item.Accommodation?.name</h5>
-                                            <div class="text-muted small">
-                                                <i class="bi bi-geo-alt me-1"></i>
-                                                @(item.Accommodation?.city ?? "Location")
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-start mb-3">
+                                            <div>
+                                                <h5 class="card-title fw-semibold mb-1">@item.Accommodation?.name</h5>
+                                                <div class="text-muted small">
+                                                    <i class="bi bi-geo-alt me-1"></i>
+                                                    @(item.Accommodation?.city ?? "Location")
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="booking-details">
+                                            <div class="booking-detail">
+                                                <i class="bi bi-people"></i>
+                                                <span>@(item.Accommodation.guests) Guest</span>
+                                            </div>
+                                            <div class="booking-detail">
+                                                <span>@((item.end_date - item.start_date).TotalDays) Nights</span>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center mt-4">
+                                            <div>
+                                                <span class="text-muted small">Total price</span>
+                                                <div class="fw-bold text-success fs-5">$@item.total_price</div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="booking-details">
-                                        <div class="booking-detail">
-                                            <i class="bi bi-people"></i>
-                                            <span>@(item.Accommodation.guests) Guest</span>
-                                        </div>
-                                        <div class="booking-detail">
-                                            <span>@((item.end_date - item.start_date).TotalDays) Nights</span>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-center mt-4">
-                                        <div>
-                                            <span class="text-muted small">Total price</span>
-                                            <div class="fw-bold text-success fs-5">$@item.total_price</div>
-                                        </div>
-                                    </div>
                                 </div>
-                            </div>
-                        </a>
+                            </a>
                         }
-                        @if(item.flight_id != null || item.Flight != null)
+                        @if (item.flight_id != null || item.Flight != null)
                         {
                             <a asp-page="BookingDetails/FlightBookingDetails" asp-route-id="@item.id" class="text-decoration-none text-dark">
-                                <div class="card booking-card shadow-sm border-0 rounded-3 h-100 overflow-hidden">
+                                <div class="card booking-card shadow-sm border-0 rounded-3 h-100 overflow-hidden @(isExpired ? "expired-booking" : "")">
                                     <div class="card-header bg-light bg-opacity-25 py-3 border-0">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill">
                                                 <i class="bi bi-airplane me-1"></i> Flight
                                             </span>
                                             <span class="text-muted small">
-                                                @item.Flight.departure_time.ToString("MMM dd, yyyy")
+                                                @item.Flight.departure_time.ToString("MMM dd, HH:mm")
                                             </span>
                                         </div>
                                     </div>
-
                                     <div class="card-body">
                                         <div class="d-flex align-items-center mb-3">
                                             <div>
@@ -114,14 +118,12 @@
                                                 </p>
                                             </div>
                                         </div>
-
                                         <div class="flight-timeline mb-3 p-3 bg-light rounded-2">
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <div class="text-center">
                                                     <div class="fw-bold">@item.Flight?.departure_time.ToString("HH:mm")</div>
                                                     <div class="text-muted small">@item.Flight?.departure_airport</div>
                                                 </div>
-
                                                 <div class="text-center px-2">
                                                     <div class="position-relative">
                                                         <hr class="flight-path">
@@ -130,14 +132,12 @@
                                                         @(item.Flight?.duration / 60)h @(item.Flight?.duration % 60)m
                                                     </div>
                                                 </div>
-
                                                 <div class="text-center">
                                                     <div class="fw-bold">@item.Flight?.arrival_time.ToString("HH:mm")</div>
                                                     <div class="text-muted small">@item.Flight?.destination_airport</div>
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
                                             <div>
                                                 <span class="text-muted small">From</span>
@@ -152,7 +152,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="card-footer bg-transparent border-0 py-3">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div>

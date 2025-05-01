@@ -151,3 +151,13 @@
     content: "";
     background-color: rgba(0, 0, 0, 0);
 }
+
+.expired-booking {
+    filter: grayscale(80%);
+    opacity: 0.8;
+}
+
+.expired-booking:hover {
+    filter: grayscale(0%); 
+    opacity: 1;
+}
