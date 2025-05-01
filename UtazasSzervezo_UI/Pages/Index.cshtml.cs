@@ -20,9 +20,17 @@ namespace UtazasSzervezo_UI.Pages
             if (response.IsSuccessStatusCode)
             {
                 var json = await response.Content.ReadAsStringAsync();
-                Accommodations = JsonSerializer.Deserialize<List<AccommodationDto>>(json) ?? new List<AccommodationDto>();
+
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+
+                Accommodations = JsonSerializer.Deserialize<List<AccommodationDto>>(json, options)
+                                 ?? new List<AccommodationDto>();
             }
         }
+
     }
 
     public class AccommodationDto
