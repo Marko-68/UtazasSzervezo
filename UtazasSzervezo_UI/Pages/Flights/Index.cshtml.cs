@@ -17,9 +17,15 @@ namespace UtazasSzervezo_UI.Pages.Flights
 
         [BindProperty(SupportsGet = true)]
         public int? MinPrice { get; set; } = 0;
+        public int? SliderMaxPrice { get; set; }
 
+        private int? _maxPrice;
         [BindProperty(SupportsGet = true)]
-        public int? MaxPrice { get; set; }
+        public int? MaxPrice
+        {
+            get => _maxPrice ?? SliderMaxPrice;
+            set => _maxPrice = value;
+        }
 
         [BindProperty(SupportsGet = true)]
         public string? DepartureCity { get; set; }
@@ -46,10 +52,9 @@ namespace UtazasSzervezo_UI.Pages.Flights
 
                 Airlines = AllFlights.Select(f => f.airline).Distinct().OrderBy(a => a).ToList();
 
-                //MaxPrice dinamikus beállítása
                 if (AllFlights.Any())
                 {
-                    MaxPrice = (int)AllFlights.Max(f => f.price);
+                    SliderMaxPrice = (int)AllFlights.Max(f => f.price);
                 }
 
                 FilteredFlights = ApplyFilters(AllFlights);

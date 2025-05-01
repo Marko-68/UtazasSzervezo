@@ -2,11 +2,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Text.Json;
 using UtazasSzervezo_Library.Models;
-using System.Net.Http; // HttpClient miatt szükséges lehet, bár már be volt injektálva
-using System.Threading.Tasks; // Task miatt szükséges
-using System.Linq; // LINQ mûveletek miatt
-using System.Collections.Generic; // List miatt
-using System; // DateTime, StringComparison stb. miatt
+using System.Net.Http; 
+using System.Threading.Tasks;
+using System.Linq; 
+using System.Collections.Generic; 
+using System;
 
 namespace UtazasSzervezo_UI.Pages.Accommodations
 {
@@ -16,7 +16,7 @@ namespace UtazasSzervezo_UI.Pages.Accommodations
         public List<Accommodation> AllAccommodations { get; set; } = new();
         public List<Accommodation> FilteredAccommodations { get; set; } = new();
         public List<string> AccommodationTypes { get; set; } = new();
-        public List<Amenity> Amenities { get; set; } = new(); // Maradunk az eredeti névnél
+        public List<Amenity> Amenities { get; set; } = new(); 
 
         [BindProperty(SupportsGet = true)]
         public string? SearchString { get; set; }

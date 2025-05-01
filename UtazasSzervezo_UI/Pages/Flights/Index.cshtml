@@ -36,12 +36,12 @@
                 <div class="mb-3">
                     <label class="form-label fw-bold">Price Range</label><br />
                     <label for="MinPrice" class="form-label">Min Price</label>
-                    <input type="range" class="form-range" name="MinPrice" min="0" max="@Model.MaxPrice"
+                    <input type="range" class="form-range" name="MinPrice" min="0" max="@Model.SliderMaxPrice"
                            value="@Model.MinPrice" oninput="this.form.submit()">
                     <p>Min Price: <strong>$@Model.MinPrice</strong> </p>
 
                     <label for="MaxPrice" class="form-label">Max Price</label>
-                    <input type="range" class="form-range" name="MaxPrice" min="0" max="@Model.MaxPrice"
+                    <input type="range" class="form-range" name="MaxPrice" min="0" max="@Model.SliderMaxPrice"
                            value="@Model.MaxPrice" oninput="this.form.submit()">
                     <p>Max Price: <strong>$@Model.MaxPrice</strong> </p>
                 </div>
