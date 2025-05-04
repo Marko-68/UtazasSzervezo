@@ -1,6 +1,7 @@
-﻿using UtazasSzervezo_Library.Models;
+﻿using Microsoft.Extensions.Configuration;
+using UtazasSzervezo_Library.Models;
 
-namespace UtazasSzervezo_UI.Services
+namespace UtazasSzervezo_Library.Services
 {
     public class ApiService
     {

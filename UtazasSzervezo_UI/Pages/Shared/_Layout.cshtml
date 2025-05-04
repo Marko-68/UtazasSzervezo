@@ -31,13 +31,15 @@
                             <a class="nav-link" asp-page="/Flights/Index">Flights</a>
                         </li>
                     </ul>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <a class="nav-link" asp-page="/Launchwpfapp">Admin panel</a>
+                    }
                     @if (User.Identity.IsAuthenticated)
                     {
                         <a class="nav-link" asp-page="/Bookings/MyBookings">My Bookings</a>
                     }
-                    else
-                    {
-                    }
+                   
                     <partial name="_LoginPartial" />
                 </div>
             </div>
@@ -51,12 +53,10 @@
     <br />
     <br />
     <br />
-    <br />
-    <br />
 
     <footer class="footer">
         <div class="container">
-            &copy; 2025 - UtazasSzervezo - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            &copy; @DateTime.Now.Year - UtazasSzervezo - <a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>
     </footer>
 

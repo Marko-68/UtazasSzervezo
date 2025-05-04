@@ -68,6 +68,9 @@ namespace UtazasSzervezo_UI.Areas.Identity.Pages.Account.Manage
 
             [Display(Name = "Country")]
             public string Country { get; set; }
+
+            [Display(Name = "Phone Number")]
+            public string PhoneNumber { get; set; }
         }
 
         private async Task<User> LoadUser(UserManager<User> userManager)
@@ -97,7 +100,8 @@ namespace UtazasSzervezo_UI.Areas.Identity.Pages.Account.Manage
                 PostalCode = user.PostalCode,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                Country = user.Country
+                Country = user.Country,
+                PhoneNumber = user.PhoneNumber
             };
 
             return Page();
@@ -121,6 +125,7 @@ namespace UtazasSzervezo_UI.Areas.Identity.Pages.Account.Manage
             user.FirstName = Input.FirstName;
             user.LastName = Input.LastName;
             user.Country = Input.Country;
+            user.PhoneNumber = Input.PhoneNumber;
 
             var updateResult = await _userManager.UpdateAsync(user);
             if (!updateResult.Succeeded)

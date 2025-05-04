@@ -67,12 +67,20 @@ namespace UtazasSzervezo_UI.Pages.Flights
 
             if (!string.IsNullOrEmpty(DepartureCity))
             {
-                filtered = filtered.Where(f => f.departure_city.Contains(DepartureCity, StringComparison.OrdinalIgnoreCase));
+                filtered = filtered.Where(f => 
+                    (f.departure_city.Contains(DepartureCity, StringComparison.OrdinalIgnoreCase) ||
+                    (f.departure_airport.Contains(DepartureCity, StringComparison.OrdinalIgnoreCase)) ||
+                    (f.departure_country.Contains(DepartureCity, StringComparison.OrdinalIgnoreCase))
+                    ));
             }
 
             if (!string.IsNullOrEmpty(DestinationCity))
             {
-                filtered = filtered.Where(f => f.detination_city.Contains(DestinationCity, StringComparison.OrdinalIgnoreCase));
+                filtered = filtered.Where(f => 
+                    (f.detination_city.Contains(DestinationCity, StringComparison.OrdinalIgnoreCase) ||
+                    (f.destination_airport.Contains(DestinationCity, StringComparison.OrdinalIgnoreCase)) ||
+                    (f.destination_country.Contains(DestinationCity, StringComparison.OrdinalIgnoreCase))
+                    ));
             }
 
             if (DepartureDate.HasValue)
