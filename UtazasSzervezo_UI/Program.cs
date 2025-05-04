@@ -5,7 +5,7 @@ using Microsoft.Extensions.Options;
 using System.Globalization;
 using UtazasSzervezo_Library;
 using UtazasSzervezo_Library.Models;
-using UtazasSzervezo_UI.Services;
+using UtazasSzervezo_Library.Services;
 
 namespace UtazasSzervezo_UI;
 
@@ -74,7 +74,7 @@ public class Program
         using(var scope = app.Services.CreateScope())
         {
             var RoleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            var roles = new List<string> { "Admin" ,"User" };
+            var roles = new List<string> { "Admin"};
             foreach (var role in roles)
             {
                 if (!RoleManager.RoleExistsAsync(role).Result)
@@ -86,25 +86,42 @@ public class Program
 
         using (var scope = app.Services.CreateScope())
         {
+            //admin felhasználó hozzáadása
             var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
             var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-            string email = "admin@gmail.com";
-            string password = "Admin1@";
+            string adminemail = builder.Configuration["AdminData:Email"];
+            string adminpassword = builder.Configuration["AdminData:Password"];
 
-            if (await userManager.FindByEmailAsync(email) == null)
+            if (await userManager.FindByEmailAsync(adminemail) == null)
             {
                 var user = new User 
                 {
-                    UserName = email,
-                    Email = email,
-                    Name = "Admin" 
+                    UserName = adminemail,
+                    Email = adminemail,
+                    Name = "Admin",
+                    EmailConfirmed = true
                 };
 
-                await userManager.CreateAsync(user, password);
+                await userManager.CreateAsync(user, adminpassword);
 
                 await userManager.AddToRoleAsync(user, "Admin");
                    
+            }
+
+            //sima user hozzáadása
+            string userEmail = builder.Configuration["DefaultUser:Email"];
+            string userPassword = builder.Configuration["DefaultUser:Password"];
+
+            if (await userManager.FindByEmailAsync(userEmail) == null)
+            {
+                var regularUser = new User
+                {
+                    UserName = userEmail, 
+                    Email = userEmail
+                };
+
+                await userManager.CreateAsync(regularUser, userPassword);
             }
         }
 

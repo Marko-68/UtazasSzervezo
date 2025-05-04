@@ -20,12 +20,18 @@ namespace UtazasSzervezo_API
             builder.Services.AddSwaggerGen();
 
             //DBContext injection
-            
-            builder.Services.AddDbContext<UtazasSzervezoDbContext>(options =>
-            options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
-                ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection")),
-                b => b.MigrationsAssembly("UtazasSzervezo_Library")
-            ));
+            try
+            {
+                builder.Services.AddDbContext<UtazasSzervezoDbContext>(options =>
+                options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
+                    ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection")),
+                    b => b.MigrationsAssembly("UtazasSzervezo_Library")
+                ));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error connecting to the database: " + ex.Message);
+            }
 
 
             builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
