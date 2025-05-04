@@ -33,7 +33,9 @@
                     </ul>
                     @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                     {
-                        <a class="nav-link" asp-page="/Launchwpfapp">Admin panel</a>
+                        <form method="post" asp-page="/Index" asp-page-handler="LaunchWpf">
+                            <button type="submit" class="btn btn-warning">Admin Panel Indítása</button>
+                        </form>
                     }
                     @if (User.Identity.IsAuthenticated)
                     {
