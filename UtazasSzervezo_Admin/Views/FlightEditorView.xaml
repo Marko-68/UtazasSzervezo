@@ -1,33 +1,71 @@
 ﻿<Window x:Class="UtazasSzervezo_Admin.Views.FlightEditorView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Járat szerkesztése" Height="400" Width="400" WindowStartupLocation="CenterScreen">
+        Title="Járat szerkesztése" Height="650" Width="500" WindowStartupLocation="CenterScreen">
     <Grid Margin="20">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Row="0" Margin="0 0 0 10">
-            <TextBlock Text="Légitársaság:"/>
-            <TextBox Text="{Binding airline}" Margin="0 0 0 10"/>
+        <Label Grid.Row="0" Grid.Column="0" Content="Légitársaság:" Margin="5"/>
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding airline}" Margin="5"/>
 
-            <TextBlock Text="Indulás ideje:"/>
-            <DatePicker SelectedDate="{Binding departure_time}" Margin="0 0 0 10"/>
+        <Label Grid.Row="1" Grid.Column="0" Content="Gép típusa:" Margin="5"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding planetype}" Margin="5"/>
 
-            <TextBlock Text="Érkezés ideje:"/>
-            <DatePicker SelectedDate="{Binding arrival_time}" Margin="0 0 0 10"/>
+        <Label Grid.Row="2" Grid.Column="0" Content="Indulás ideje:" Margin="5"/>
+        <DatePicker Grid.Row="2" Grid.Column="1" SelectedDate="{Binding departure_time}" Margin="5"/>
 
-            <TextBlock Text="Indulási reptér (IATA kód):"/>
-            <TextBox Text="{Binding departure_airport}" Margin="0 0 0 10"/>
+        <Label Grid.Row="3" Grid.Column="0" Content="Érkezés ideje:" Margin="5"/>
+        <DatePicker Grid.Row="3" Grid.Column="1" SelectedDate="{Binding arrival_time}" Margin="5"/>
 
-            <TextBlock Text="Érkezési reptér (IATA kód):"/>
-            <TextBox Text="{Binding destination_airport}" Margin="0 0 0 10"/>
-        </StackPanel>
+        <Label Grid.Row="4" Grid.Column="0" Content="Induló reptér (3 betű):" Margin="5"/>
+        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding departure_airport}" Margin="5"/>
 
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Content="Mégse" Click="Cancel_Click" Margin="0 0 10 0"/>
-            <Button Content="Mentés" Click="Save_Click"/>
+        <Label Grid.Row="5" Grid.Column="0" Content="Érkező reptér (3 betű):" Margin="5"/>
+        <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding destination_airport}" Margin="5"/>
+
+        <Label Grid.Row="6" Grid.Column="0" Content="Induló város:" Margin="5"/>
+        <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding departure_city}" Margin="5"/>
+
+        <Label Grid.Row="7" Grid.Column="0" Content="Induló ország:" Margin="5"/>
+        <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding departure_country}" Margin="5"/>
+
+        <Label Grid.Row="8" Grid.Column="0" Content="Érkező város:" Margin="5"/>
+        <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding detination_city}" Margin="5"/>
+
+        <Label Grid.Row="9" Grid.Column="0" Content="Érkező ország:" Margin="5"/>
+        <TextBox Grid.Row="9" Grid.Column="1" Text="{Binding destination_country}" Margin="5"/>
+
+        <Label Grid.Row="10" Grid.Column="0" Content="Utazás időtartama (perc):" Margin="5"/>
+        <TextBox Grid.Row="10" Grid.Column="1" Text="{Binding duration}" Margin="5"/>
+
+        <Label Grid.Row="11" Grid.Column="0" Content="Szabad helyek száma:" Margin="5"/>
+        <TextBox Grid.Row="11" Grid.Column="1" Text="{Binding available_seats}" Margin="5"/>
+
+        <Label Grid.Row="12" Grid.Column="0" Content="Ár (Ft):" Margin="5"/>
+        <TextBox Grid.Row="12" Grid.Column="1" Text="{Binding price}" Margin="5"/>
+
+        <StackPanel Grid.Row="13" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
+            <Button Content="Mégse" Width="80" Margin="5" IsCancel="True"/>
+            <Button Content="Mentés" Width="80" Margin="5" Click="Save_Click"/>
         </StackPanel>
     </Grid>
 </Window>
