@@ -30,10 +30,18 @@ namespace UtazasSzervezo_Admin.Views
             {
                 id = flight.id,
                 airline = flight.airline,
+                planetype = flight.planetype,
                 departure_time = flight.departure_time,
                 arrival_time = flight.arrival_time,
                 departure_airport = flight.departure_airport,
-                destination_airport = flight.destination_airport
+                destination_airport = flight.destination_airport,
+                departure_city = flight.departure_city,
+                departure_country = flight.departure_country,
+                detination_city = flight.detination_city,
+                destination_country = flight.destination_country,
+                duration = flight.duration,
+                available_seats = flight.available_seats,
+                price = flight.price
             } : new Flight
             {
                 departure_time = DateTime.Now,

@@ -25,7 +25,7 @@ namespace UtazasSzervezo_Admin.ViewModels
         public ObservableCollection<string> Months { get; set; } = new();
 
         public SeriesCollection RevenuePerMonthSeries { get; set; } = new();
-        public Func<double, string> CurrencyFormatter => value => value.ToString("C0", new CultureInfo("hu-HU"));
+        public Func<double, string> CurrencyFormatter => value => value.ToString("C0", new CultureInfo("en-US"));
         public Func<double, string> RevenuePerMonthLabels => value => value.ToString("C0", new CultureInfo("hu-HU"));
 
         public SeriesCollection PopularCitiesSeries { get; set; } = new();
@@ -113,7 +113,7 @@ namespace UtazasSzervezo_Admin.ViewModels
 
                 RevenuePerMonthSeries.Add(new ColumnSeries
                 {
-                    Title = "Bevétel (Ft)",
+                    Title = "Bevétel ($)",
                     Values = values
                 });
 
@@ -159,13 +159,9 @@ namespace UtazasSzervezo_Admin.ViewModels
             }
         }
 
-        //public record MonthStat(int Month, int Count);
+        public record MonthStat(int month, int count);
         private record MonthRevenueStat(int month, decimal total);
         private record CityStat(string city, int count);
-        public class MonthStat()
-        {
-            public int month { get; set; }
-            public int count { get; set; }
-        }
+        
     }
 }

@@ -55,7 +55,7 @@
                     <lvc:Axis Title="Hónapok" Labels="{Binding Months}" />
                 </lvc:CartesianChart.AxisX>
                 <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="Bevétel (Ft)" LabelFormatter="{Binding CurrencyFormatter}" />
+                    <lvc:Axis Title="Bevétel ($)" LabelFormatter="{Binding CurrencyFormatter}" />
                 </lvc:CartesianChart.AxisY>
             </lvc:CartesianChart>
         </GroupBox>

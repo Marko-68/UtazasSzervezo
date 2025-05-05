@@ -38,7 +38,7 @@
                 Command="{Binding ShowFlightCommand}"
                 Style="{StaticResource ModernNavButtonStyle}" />
 
-                <Button Content="💬 Értékelések kezelése"
+                <Button Content="💬 Értékelések"
                 Command="{Binding ShowReviewCommand}"
                 Style="{StaticResource ModernNavButtonStyle}" />
 

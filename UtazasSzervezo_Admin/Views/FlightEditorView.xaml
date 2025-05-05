@@ -30,12 +30,6 @@
         <Label Grid.Row="1" Grid.Column="0" Content="Gép típusa:" Margin="5"/>
         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding planetype}" Margin="5"/>
 
-        <Label Grid.Row="2" Grid.Column="0" Content="Indulás ideje:" Margin="5"/>
-        <DatePicker Grid.Row="2" Grid.Column="1" SelectedDate="{Binding departure_time}" Margin="5"/>
-
-        <Label Grid.Row="3" Grid.Column="0" Content="Érkezés ideje:" Margin="5"/>
-        <DatePicker Grid.Row="3" Grid.Column="1" SelectedDate="{Binding arrival_time}" Margin="5"/>
-
         <Label Grid.Row="4" Grid.Column="0" Content="Induló reptér (3 betű):" Margin="5"/>
         <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding departure_airport}" Margin="5"/>
 
