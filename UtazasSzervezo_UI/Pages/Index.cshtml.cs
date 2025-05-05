@@ -37,7 +37,9 @@ namespace UtazasSzervezo_UI.Pages
         {
             if (User.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
             {
-                string exePath = @"C:\Users\gigle\Documents\suli\13\Vizsgaremek\UtazasSzervezo-master\UtazasSzervezo-master\UtazasSzervezo_Admin\bin\Debug\net8.0-windows\UtazasSzervezo_Admin.exe";
+                string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+                string exeRelativePath = Path.Combine(baseDir, @"..\..\..\..\UtazasSzervezo_Admin\bin\Debug\net8.0-windows\UtazasSzervezo_Admin.exe");
+                string exePath = Path.GetFullPath(exeRelativePath);
 
                 try
                 {
@@ -50,7 +52,7 @@ namespace UtazasSzervezo_UI.Pages
                 }
                 catch (Exception ex)
                 {
-                    ModelState.AddModelError("", "Nem sikerült elindítani az admin alkalmazást: " + ex.Message);
+                    ModelState.AddModelError("", "Failed to start the admin application: " + ex.Message);
                 }
             }
 
