@@ -27,7 +27,8 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-
+        
+        <!-- Hibaüzenet megjelenítése -->
         <TextBlock Grid.Row="0"
                    Text="{Binding ErrorMessage}"
                    Foreground="Red"
