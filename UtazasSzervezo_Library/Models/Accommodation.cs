@@ -20,7 +20,6 @@ namespace UtazasSzervezo_Library.Models
         [Required]
         public string description { get; set; }
         [Required]
-        //selectable string list 
         public string type { get; set; }
         [Required]
         public int number_of_rooms { get; set; }
