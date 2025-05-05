@@ -18,8 +18,6 @@ namespace UtazasSzervezo_Library.Models
         public string? LastName { get; set; }
         public int? PostalCode { get; set; }
         public string? Country { get; set; }
-
-        [Display(Name = "Phone Number")]
         public override string? PhoneNumber { get; set; }
 
     }
