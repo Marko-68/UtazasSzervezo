@@ -4,6 +4,8 @@
     ViewData["Title"] = "Home Page";
 }
 
+<link rel="stylesheet" href="~/css/MainPage.css" />
+
 <div class="hero-section d-flex align-items-center justify-content-center text-center position-relative">
     <div class="overlay"></div>
     <div class="container position-absolute top-50 start-50 translate-middle">
@@ -57,65 +59,3 @@
         <a href="/Accommodations" class="btn btn-success btn-lg">View All Accommodations</a>
     </div>
 </div>
-
-<style>
-    .hero-section {
-        background: url('/images/marvin-meyer-unsplash.jpg') no-repeat center center;
-        background-size: cover;
-        height: 60vh;
-        border-radius: 20px;
-        position: relative;
-        margin: 20px;
-    }
-
-    .hero-section .overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0,0,0,0.4);
-        border-radius: 20px;
-    }
-
-    .text-white {
-        color: white !important;
-    }
-
-    .fade-in {
-        animation: fadeInAnimation ease 2s;
-        animation-iteration-count: 1;
-        animation-fill-mode: forwards;
-    }
-
-    @@keyframes fadeInAnimation {
-        0% {
-            opacity: 0;
-        }
-
-        100% {
-            opacity: 1;
-        }
-    }
-
-    html {
-        scroll-behavior: smooth;
-    }
-
-    .fixed-image-size {
-        height: 200px; 
-        object-fit: cover;
-    }
-
-    .accommodation-card {
-        cursor: pointer;
-        text-decoration: none;
-        color: inherit;
-    }
-
-    .accommodation-card:hover {
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        transform: translateY(-2px);
-        transition: box-shadow 0.3s ease, transform 0.3s ease;
-    }
-</style>

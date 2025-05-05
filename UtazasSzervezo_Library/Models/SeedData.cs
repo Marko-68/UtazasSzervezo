@@ -113,7 +113,7 @@ namespace UtazasSzervezo_Library.Models
                             available_rooms = 18,
                             dinning = "Breakfast",
                             cover_img = "./images/Accommodation_img/acc_5_cover.jpg",
-                            images_url = ["/images/Accommodation_img/acc_5_1jpg",
+                            images_url = ["/images/Accommodation_img/acc_5_1.jpg",
                                             "/images/Accommodation_img/acc_5_2.jpg",
                                             "/images/Accommodation_img/acc_5_3.jpg"]
                         },

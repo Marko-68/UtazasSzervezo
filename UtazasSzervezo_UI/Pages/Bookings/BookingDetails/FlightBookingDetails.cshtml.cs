@@ -85,6 +85,7 @@ namespace UtazasSzervezo_UI.Pages.Bookings.BookingDetails
 
                 if (deleteResponse.IsSuccessStatusCode)
                 {
+                    TempData["SuccessMessage"] = "Booking cancelled successfully.";
                     return RedirectToPage("/Bookings/MyBookings");
                 }
                 else

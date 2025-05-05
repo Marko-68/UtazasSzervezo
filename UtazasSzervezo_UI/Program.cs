@@ -20,11 +20,18 @@ public class Program
 
         var connectionString = builder.Configuration.GetConnectionString("UtazasSzervezoDbContextConnection") ?? throw new InvalidOperationException("Connection string 'UtazasSzervezoDbContextConnection' not found.");
 
-        builder.Services.AddDbContext<UtazasSzervezoDbContext>(options =>
-        options.UseMySql(
-            builder.Configuration.GetConnectionString("UtazasSzervezoDbContextConnection"),
-            ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("UtazasSzervezoDbContextConnection"))
-        ));
+        try
+        {
+            builder.Services.AddDbContext<UtazasSzervezoDbContext>(options =>
+            options.UseMySql(
+                builder.Configuration.GetConnectionString("UtazasSzervezoDbContextConnection"),
+                ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("UtazasSzervezoDbContextConnection"))
+            ));
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error connecting to the database: " + ex.Message);
+        }
 
         builder.Services.AddDefaultIdentity<User>(options =>
         {
