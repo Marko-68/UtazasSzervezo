@@ -21,6 +21,8 @@
                   IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Felhasználó" Binding="{Binding user_id}" />
+                <DataGridTextColumn Header="Szállás" Binding="{Binding accommodation_id}" />
+                <DataGridTextColumn Header="Repülö" Binding="{Binding flight_id}" />
                 <DataGridTextColumn Header="Értékelés" Binding="{Binding rating}" />
                 <DataGridTextColumn Header="Megjegyzés" Binding="{Binding comment}" />
             </DataGrid.Columns>
