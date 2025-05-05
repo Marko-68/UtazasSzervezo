@@ -22,7 +22,7 @@ namespace UtazasSzervezo_Admin.ViewModels
         };
 
         public SeriesCollection BookingsPerMonthSeries { get; set; } = new();
-        public string[] Months { get; set; } = Array.Empty<string>();
+        public ObservableCollection<string> Months { get; set; } = new();
 
         public SeriesCollection RevenuePerMonthSeries { get; set; } = new();
         public Func<double, string> CurrencyFormatter => value => value.ToString("C0", new CultureInfo("hu-HU"));
@@ -30,6 +30,16 @@ namespace UtazasSzervezo_Admin.ViewModels
 
         public SeriesCollection PopularCitiesSeries { get; set; } = new();
         public ObservableCollection<string> CityLabels { get; set; } = new();
+        private string _errorMessage;
+        public string ErrorMessage
+        {
+            get => _errorMessage;
+            set
+            {
+                _errorMessage = value;
+                OnPropertyChanged();
+            }
+        }
 
         public StatisticsViewModel()
         {
@@ -53,22 +63,20 @@ namespace UtazasSzervezo_Admin.ViewModels
                 response.EnsureSuccessStatusCode();
 
                 var json = await response.Content.ReadAsStringAsync();
-                var data = JsonSerializer.Deserialize<List<MonthStat>>(json)!;
+                var data = JsonSerializer.Deserialize<List<MonthStat>>(json);
 
                 BookingsPerMonthSeries.Clear();
-                var monthsList = new List<string>();
                 var values = new ChartValues<int>();
 
                 foreach (var item in data)
                 {
-                    if (item.Month >= 1 && item.Month <= 12)
+                    if (item.month >= 1 && item.month <= 12)
                     {
-                        monthsList.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(item.Month));
-                        values.Add(item.Count);
+                        Months.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(item.month));
+                        values.Add(item.count);
                     }
                 }
-
-                Months = monthsList.ToArray();
+                //throw new Exception("Invalid month data");
 
                 BookingsPerMonthSeries.Add(new ColumnSeries
                 {
@@ -81,7 +89,7 @@ namespace UtazasSzervezo_Admin.ViewModels
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Hiba a foglalások statisztikánál: {ex.Message}");
+                ErrorMessage = $"Hiba a foglalások statisztikánál: {ex.Message}";
             }
         }
 
@@ -100,7 +108,7 @@ namespace UtazasSzervezo_Admin.ViewModels
 
                 foreach (var item in data)
                 {
-                    values.Add(item.Total);
+                    values.Add(item.total);
                 }
 
                 RevenuePerMonthSeries.Add(new ColumnSeries
@@ -113,7 +121,7 @@ namespace UtazasSzervezo_Admin.ViewModels
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Hiba a bevétel statisztikánál: {ex.Message}");
+                ErrorMessage = $"Hiba a bevétel statisztikánál: {ex.Message}";
             }
         }
 
@@ -135,11 +143,11 @@ namespace UtazasSzervezo_Admin.ViewModels
                 {
                     pieSeries.Add(new PieSeries
                     {
-                        Title = city.City,
-                        Values = new ChartValues<int> { city.Count },
+                        Title = city.city,
+                        Values = new ChartValues<int> { city.count },
                         DataLabels = true
                     });
-                    CityLabels.Add(city.City);
+                    CityLabels.Add(city.city);
                 }
 
                 PopularCitiesSeries = pieSeries;
@@ -147,12 +155,17 @@ namespace UtazasSzervezo_Admin.ViewModels
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Hiba a népszerű városok statisztikánál: {ex.Message}");
+                ErrorMessage = $"Hiba a népszerű városok statisztikánál: {ex.Message}";
             }
         }
 
-        private record MonthStat(int Month, int Count);
-        private record MonthRevenueStat(int Month, decimal Total);
-        private record CityStat(string City, int Count);
+        //public record MonthStat(int Month, int Count);
+        private record MonthRevenueStat(int month, decimal total);
+        private record CityStat(string city, int count);
+        public class MonthStat()
+        {
+            public int month { get; set; }
+            public int count { get; set; }
+        }
     }
 }

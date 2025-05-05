@@ -44,7 +44,6 @@ namespace UtazasSzervezo_Library.Models
 
         public string? cover_img { get; set; }
         public List<string>? images_url { get; set; }
-
         public ICollection<AccommodationAmenities>? AccommodationAmenities { get; set; }
     }
 }

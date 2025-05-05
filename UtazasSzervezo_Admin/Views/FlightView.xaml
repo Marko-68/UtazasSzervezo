@@ -24,10 +24,11 @@
 
         <DataGrid Grid.Row="1"
                   ItemsSource="{Binding Flights}"
-                  SelectedItem="{Binding SelectedFlight, Mode=TwoWay}"
                   AutoGenerateColumns="False"
                   IsReadOnly="True"
+                  SelectedItem="{Binding SelectedFlight, Mode=TwoWay}"  
                   SelectionMode="Single">
+            
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding id}" Width="50"/>
                 <DataGridTextColumn Header="Légitársaság" Binding="{Binding airline}" Width="150"/>

@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -30,6 +32,31 @@ namespace UtazasSzervezo_UI.Pages
                                  ?? new List<AccommodationDto>();
             }
         }
+
+        public IActionResult OnPostLaunchWpf()
+        {
+            if (User.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
+            {
+                string exePath = @"C:\Users\gigle\Documents\suli\13\Vizsgaremek\UtazasSzervezo-master\UtazasSzervezo-master\UtazasSzervezo_Admin\bin\Debug\net8.0-windows\UtazasSzervezo_Admin.exe";
+
+                try
+                {
+                    ProcessStartInfo startInfo = new ProcessStartInfo
+                    {
+                        FileName = exePath,
+                        UseShellExecute = true 
+                    };
+                    Process.Start(startInfo);
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", "Nem sikerült elindítani az admin alkalmazást: " + ex.Message);
+                }
+            }
+
+            return RedirectToPage("/Index");
+        }
+
 
     }
 
